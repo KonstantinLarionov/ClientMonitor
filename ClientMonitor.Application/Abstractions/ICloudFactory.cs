@@ -10,7 +10,6 @@ namespace ClientMonitor.Application.Abstractions
 {
     public interface ICloudFactory
     {
-        ICloud GetFilesAndFoldersAsync(List<CloudFilesInfo> type);
 
     }
 }

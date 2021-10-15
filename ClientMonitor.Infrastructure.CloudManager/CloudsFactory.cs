@@ -19,14 +19,10 @@ namespace ClientMonitor.Infrastructure.CloudManager
         {
             _adaptors = new Dictionary<CloudTypes, ICloud>()
             {
-                {CloudTypes.YandexCloud, new YandexAdaptor(cloudOptions) }
+                {CloudTypes.YandexCloud, new YandexAdaptor(null); }
             };
         }
         public ICloud GetCloud(CloudTypes type) => _adaptors.FirstOrDefault(x => x.Key == type).Value;
 
-        public ICloud GetFilesAndFoldersAsync(List<CloudFilesInfo> type)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
