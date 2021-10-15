@@ -1,3 +1,5 @@
+using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Infrastructure.CloudManager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +30,8 @@ namespace ClientMonitor
         {
 
             services.AddControllers();
+            services.AddInfrastructureCloudManager();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientMonitor", Version = "v1" });
@@ -35,8 +39,9 @@ namespace ClientMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICloudFactory cloud)
         {
+            var yandex = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
