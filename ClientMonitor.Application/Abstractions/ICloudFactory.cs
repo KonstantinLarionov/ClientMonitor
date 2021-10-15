@@ -12,7 +12,5 @@ namespace ClientMonitor.Application.Abstractions
     public interface ICloudFactory
     {
         ICloud GetCloud(CloudTypes type);
-
-
     }
 }

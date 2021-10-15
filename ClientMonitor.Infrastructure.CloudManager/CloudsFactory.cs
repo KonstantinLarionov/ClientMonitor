@@ -25,10 +25,5 @@ namespace ClientMonitor.Infrastructure.CloudManager
             };
         }
         public ICloud GetCloud(CloudTypes type) => _adaptors.FirstOrDefault(x => x.Key == type).Value;
-
-        public ICloud GetFilesAndFoldersAsync(List<CloudFilesInfo> type)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
