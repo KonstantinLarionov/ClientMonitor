@@ -42,6 +42,8 @@ namespace ClientMonitor
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICloudFactory cloud)
         {
             var yandex = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
+            var test = yandex.GetFilesAndFoldersAsync();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
