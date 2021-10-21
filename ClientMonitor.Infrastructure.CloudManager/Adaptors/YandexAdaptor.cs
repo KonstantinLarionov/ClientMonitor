@@ -16,42 +16,44 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
     public class YandexAdaptor : ICloud
     {
         readonly CloudOptions CloudOptions;
+        readonly IMapper Mapper;
 
-        public YandexAdaptor(CloudOptions cloudOptions)
+        public YandexAdaptor(CloudOptions cloudOptions, IMapper mapper)
         {
             CloudOptions = cloudOptions;
+            Mapper = mapper;
         }
 
         public async Task<List<CloudFilesInfo>> GetFilesAndFoldersAsync()
         {
             try
             {
+                var conect = new DiskHttpApi(CloudOptions.Token);
 
-            var conect = new DiskHttpApi(CloudOptions.Token);
+                var rootFolderData = await conect.MetaInfo.GetInfoAsync(new ResourceRequest { Path = CloudOptions.Path });
 
-            var rootFolderData = await conect.MetaInfo.GetInfoAsync(new ResourceRequest { Path = CloudOptions.Path });
+                List<CloudFilesInfo> filesAndFoldersList = new List<CloudFilesInfo>();
 
-            List<CloudFilesInfo> filesAndFoldersList = new List<CloudFilesInfo>();
+                //CloudFilesInfo filesAndFolders = new CloudFilesInfo();
 
-            CloudFilesInfo filesAndFolders = new CloudFilesInfo();
+                foreach (var item in rootFolderData.Embedded.Items)
+                {
+                    filesAndFoldersList.Add(Mapper.Map<CloudFilesInfo>(item));
 
-            foreach (var item in rootFolderData.Embedded.Items)
-            {      
-                
-                filesAndFolders.Name = item.Name;
-                filesAndFolders.MimeType = item.MimeType;
-                filesAndFolders.FilesType = (Application.Domanes.Enums.FilesType)item.Type;
-                filesAndFolders.Created = item.Created;
-                filesAndFolders.Size = item.Size;
-                filesAndFolders.PublicUrl = item.PublicUrl;
-                filesAndFolders.Path = item.Path;
-                filesAndFoldersList.Add(filesAndFolders);
+                    //filesAndFolders.Name = item.Name;
+                    //filesAndFolders.MimeType = item.MimeType;
+                    //filesAndFolders.FilesType = (Application.Domanes.Enums.FilesType)item.Type;
+                    //filesAndFolders.Created = item.Created;
+                    //filesAndFolders.Size = item.Size;
+                    //filesAndFolders.PublicUrl = item.PublicUrl;
+                    //filesAndFolders.Path = item.Path;
+                    //filesAndFoldersList.Add(filesAndFolders);
+
+                }
+
+                return filesAndFoldersList;
             }
-
-            return filesAndFoldersList;
-
-            }
-            catch(Exception ex) { return null; }
+            catch (Exception ex) { return null; }
         }
 
         public async Task UploadFiles(UploadedFilesInfo uploadedFilesInfo)
