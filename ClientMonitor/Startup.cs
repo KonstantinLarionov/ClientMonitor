@@ -1,5 +1,7 @@
 using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.CloudManager;
+using ClientMonitor.Infrastructure.Notifications;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +33,7 @@ namespace ClientMonitor
 
             services.AddControllers();
             services.AddInfrastructureCloudManager();
+            services.AddInfrastructureNotifications();
 
             services.AddSwaggerGen(c =>
             {
@@ -39,10 +42,13 @@ namespace ClientMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICloudFactory cloud)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICloudFactory cloud, INotificationFactory mas)
         {
-            var yandex = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
-            var test = yandex.GetFilesAndFoldersAsync();
+            //var yandex = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
+            //var test = yandex.GetFilesAndFoldersAsync();
+            //var test1 = yandex.UploadFiles(new UploadedFilesInfo());
+            var tg = mas.GetNotification(Application.Domanes.Enums.NotificationTypes.Telegram);
+            tg.SendMassage("398615402","привет");
 
             if (env.IsDevelopment())
             {

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClientMonitor.Application.Domanes.Objects
+namespace ClientMonitor.Application.Domanes.Enums
 {
-    public class CloudFilesLink
+    public enum NotificationTypes
     {
-
+        Telegram,
+        Mail,
     }
 }
