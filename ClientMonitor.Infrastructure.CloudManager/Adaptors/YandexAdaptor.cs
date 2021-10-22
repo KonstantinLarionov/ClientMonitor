@@ -41,7 +41,7 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
                     filesAndFoldersList.Add(new CloudFilesInfo() { 
                         Name = item.Name, 
                         MimeType =item.MimeType, 
-                        Type = (Application.Domanes.Enums.FilesType)item.Type, 
+                        Type = (Application.Domanes.Enums.FilesTypes)item.Type, 
                         Created = item.Created, Size = item.Size, 
                         PublicUrl = item.PublicUrl, 
                         Path = item.Path 
@@ -65,7 +65,7 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
 
                 var conect = new DiskHttpApi(CloudOptions.Token);
 
-                if(!rootFolderData.Any(_=>_.Type == Application.Domanes.Enums.FilesType.Dir && _.Name == uploadedFilesInfo.FolderName))
+                if(!rootFolderData.Any(_=>_.Type == Application.Domanes.Enums.FilesTypes.Dir && _.Name == uploadedFilesInfo.FolderName))
                 {
                     await conect.Commands.CreateDictionaryAsync("/" + uploadedFilesInfo.FolderName);
                 }
@@ -123,7 +123,7 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
                 {
                     Name = item.Name,
                     MimeType = item.MimeType,
-                    Type = (Application.Domanes.Enums.FilesType)item.Type,
+                    Type = (Application.Domanes.Enums.FilesTypes)item.Type,
                     Created = item.Created,
                     Size = item.Size,
                     PublicUrl = item.PublicUrl,
