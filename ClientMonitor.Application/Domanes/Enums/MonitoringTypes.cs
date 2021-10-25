@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class MonitoringType
+public class MonitoringTypes
 {
-    public enum MonitoringType
+    public enum MonitoringTypes
     {
         RAM,
         CPU,
