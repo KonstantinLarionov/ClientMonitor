@@ -6,12 +6,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 	public class ProcAdaptor : IMonitor
 	{
 
-		public void StartMonitoring()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void StopMonitoring()
+		public string ReceiveInfoMonitor()
 		{
 			throw new NotImplementedException();
 		}

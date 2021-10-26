@@ -27,7 +27,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 Thread.Sleep(1000);
                 //return;
             }
-            return (s);
+            return s;
 
         }
 
