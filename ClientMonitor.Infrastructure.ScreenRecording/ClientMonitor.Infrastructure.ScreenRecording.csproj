@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-    <PackageReference Include="VisioForge.DotNet.VideoCapture.TRIAL" Version="14.4.16" />
   </ItemGroup>
 
   <ItemGroup>

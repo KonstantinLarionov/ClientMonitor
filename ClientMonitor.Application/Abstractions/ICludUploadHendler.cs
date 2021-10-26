@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Abstractions
 {
-    public interface INotification
+    public interface ICludUploadHendler
     {
-        Task SendMassage(string to, string massage);
+        Task Handle();
     }
 }
