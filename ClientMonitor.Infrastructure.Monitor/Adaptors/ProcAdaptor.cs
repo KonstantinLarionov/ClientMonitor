@@ -1,5 +1,7 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
@@ -8,7 +10,16 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 
 		public string ReceiveInfoMonitor()
 		{
-			throw new NotImplementedException();
+			Process[] processes;
+			List<string> listProc = new List<string>();
+			processes = Process.GetProcesses();
+			foreach (Process instance in processes)
+				listProc.Add(instance.ProcessName);
+			string test="";
+			foreach (var list in listProc)
+				test = list + ",";
+			return test;
+
 		}
 
 	}
