@@ -1,14 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Enums;
+using ClientMonitor.Application.Domanes.Objects;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public class CpuAdaptor
+namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
-	public Class1()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+    public class CpuAdaptor : IMonitor
+    {
+        public CpuAdaptor()
+        {
+
+        }
+
+        public string ReceiveInfoMonitor()
+        {
+            var cpuload = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            string s = "";
+            int i = 2;
+            while (i>0)
+            {
+                s=cpuload.NextValue().ToString();
+                i--;
+                Thread.Sleep(1000);
+                //return;
+            }
+            return (s);
+
+        }
+
+
+    }
 }

@@ -1,14 +1,20 @@
-﻿using System;
+﻿using ClientMonitor.Application.Abstractions;
+using System;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public class ProcAdaptor
+namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
-	public Class1()
+	public class ProcAdaptor : IMonitor
 	{
-		//
-		// TODO: Add constructor logic here
-		//
+
+		public void StartMonitoring()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void StopMonitoring()
+		{
+			throw new NotImplementedException();
+		}
+
 	}
 }

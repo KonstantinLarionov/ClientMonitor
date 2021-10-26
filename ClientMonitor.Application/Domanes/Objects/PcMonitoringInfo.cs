@@ -1,11 +1,12 @@
 ﻿using System;
+using ClientMonitor.Application.Domanes.Enums;
 
-public class PcMonitoringInfo
+namespace ClientMonitor.Application.Domanes.Objects
 {
-    class PcMonitoringInfo
-    {
-        public MonitoringType MonitoringType { get; set; }
+    public class PcMonitoringInfo
+{
+        public MonitoringTypes MonitoringType { get; set; }
         public string Message { get; set; }
         public DateTime DateTime { get; set; }
-    }
+}
 }

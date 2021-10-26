@@ -1,10 +1,11 @@
 ﻿using System;
+using ClientMonitor.Application.Domanes.Enums;
+using ClientMonitor.Application.Domanes.Objects;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public interface IMonitor
+namespace ClientMonitor.Application.Abstractions
 {
-    void PcMonitoringInfo ReceiveInfoMonitor (MonitoringType monitoringType, string message, DateTime dateTime)
-
+    public interface IMonitor
+    {
+        string ReceiveInfoMonitor();
+    }
 }

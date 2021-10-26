@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor", "ClientMonitor\ClientMonitor.csproj", "{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{02FCA541-C83D-4853-BBB6-A6F94573DF90} = {02FCA541-C83D-4853-BBB6-A6F94573DF90}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.CloudManager", "ClientMonitor.Infrastructure.CloudManager\ClientMonitor.Infrastructure.CloudManager.csproj", "{26F0B314-D15A-4080-BB18-BE629FFBAA61}"
 EndProject
@@ -17,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Application",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.Notifications", "ClientMonitor.Infrastructure.Notifications\ClientMonitor.Infrastructure.Notifications.csproj", "{199DEEF6-207B-4CBE-BEE5-15DD584A7170}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientMonitor.Infrastructure.ScreenRecording", "ClientMonitor.Infrastructure.ScreenRecording\ClientMonitor.Infrastructure.ScreenRecording.csproj", "{381C077E-DB55-47AB-ACF1-8828E1838918}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.ScreenRecording", "ClientMonitor.Infrastructure.ScreenRecording\ClientMonitor.Infrastructure.ScreenRecording.csproj", "{381C077E-DB55-47AB-ACF1-8828E1838918}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

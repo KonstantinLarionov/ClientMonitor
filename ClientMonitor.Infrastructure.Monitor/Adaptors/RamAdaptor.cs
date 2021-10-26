@@ -1,14 +1,21 @@
-﻿using System;
+﻿using ClientMonitor.Application.Abstractions;
+using System;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public class RamAdaptor
+namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
-	public Class1()
+	public class RamAdaptor : IMonitor
 	{
-		//
-		// TODO: Add constructor logic here
-		//
+
+
+		public void StartMonitoring()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void StopMonitoring()
+		{
+			throw new NotImplementedException();
+		}
+
 	}
 }

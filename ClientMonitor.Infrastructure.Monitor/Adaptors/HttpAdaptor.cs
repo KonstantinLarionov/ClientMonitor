@@ -1,14 +1,36 @@
-﻿using System;
+﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Objects;
+using System;
+using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public class HttpAdaptor
+namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
-	public Class1()
+	public class HttpAdaptor : IMonitor
 	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+		public HttpAdaptor()
+        {
+			
+        }
+		public void StartMonitoring()
+        {
+			GetHttp();
+		}
+
+		public void StopMonitoring()
+		{
+			throw new NotImplementedException();
+		}
+
+
+        public void GetHttp()
+        {
+            
+        }
+
+
+
+    }
 }

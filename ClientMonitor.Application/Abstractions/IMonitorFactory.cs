@@ -1,12 +1,11 @@
-﻿using System;
+﻿using ClientMonitor.Application.Domanes.Enums;
+using System;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public class IMonitorFactory
+namespace ClientMonitor.Application.Abstractions
 {
-	public interface IMonitorFactory()
+	public interface IMonitorFactory
 	{
 		IMonitor GetMonitor(MonitoringTypes type);
+	}
 }
-}
+

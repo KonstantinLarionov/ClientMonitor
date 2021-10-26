@@ -1,9 +1,9 @@
 ﻿using System;
-
-public class MonitoringTypes
+namespace ClientMonitor.Application.Domanes.Enums
 {
     public enum MonitoringTypes
     {
+        None,
         RAM,
         CPU,
         Proc,
