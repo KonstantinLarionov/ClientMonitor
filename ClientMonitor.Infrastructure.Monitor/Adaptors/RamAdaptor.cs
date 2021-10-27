@@ -7,7 +7,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
 	public class RamAdaptor : IMonitor
 	{
-		public string ReceiveInfoMonitor()
+		public object ReceiveInfoMonitor()
 		{
             var ramCounter = new PerformanceCounter("Memory", "Available MBytes");
             string s = "";

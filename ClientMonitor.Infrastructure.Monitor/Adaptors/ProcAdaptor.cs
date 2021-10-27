@@ -8,7 +8,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 	public class ProcAdaptor : IMonitor
 	{
 
-		public string ReceiveInfoMonitor()
+		public object ReceiveInfoMonitor()
 		{
 			Process[] processes;
 			//List<string> listProc = new List<string>();

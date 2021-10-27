@@ -6,6 +6,6 @@ namespace ClientMonitor.Application.Abstractions
 {
     public interface IMonitor
     {
-        string ReceiveInfoMonitor();
+        object ReceiveInfoMonitor();
     }
 }

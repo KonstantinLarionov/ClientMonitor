@@ -7,6 +7,8 @@ namespace ClientMonitor.Application.Domanes.Enums
         RAM,
         CPU,
         Proc,
-        HTTP
+        HTTP,
+        Sites,
+        Servers
     }
 }

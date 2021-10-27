@@ -61,8 +61,6 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             {
                 var rootFolderData = await GetFilesAndFoldersAsync();
 
-                var files = Directory.GetFiles(uploadedFilesInfo.Path, uploadedFilesInfo.Extension);
-
                 var conect = new DiskHttpApi(CloudOptions.Token);
 
                 if(!rootFolderData.Any(_=>_.Type == Application.Domanes.Enums.FilesTypes.Dir && _.Name == uploadedFilesInfo.FolderName))
@@ -70,13 +68,10 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
                     await conect.Commands.CreateDictionaryAsync("/" + uploadedFilesInfo.FolderName);
                 }
 
-                foreach (var file in files)
+                var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
+                using (var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
                 {
-                    var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
-                    using (var fs = File.OpenRead(file))
-                    {
-                        await conect.Files.UploadAsync(link, fs);
-                    }
+                    await conect.Files.UploadAsync(link, fs);
                 }
             }
             catch (Exception ex)
@@ -106,7 +101,7 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             catch(Exception ex) { return false; }
         }
 
-        public async Task<List<CloudFilesInfo>> GetFilesIntoFolders(string path)
+        private async Task<List<CloudFilesInfo>> GetFilesIntoFolders(string path)
         {
 
             var conect = new DiskHttpApi(CloudOptions.Token);

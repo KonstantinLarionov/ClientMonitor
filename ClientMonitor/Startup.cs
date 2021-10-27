@@ -1,3 +1,4 @@
+using ClientMonitor.Application;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.CloudManager;
@@ -16,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor
@@ -37,7 +39,7 @@ namespace ClientMonitor
             services.AddInfrastructureCloudManager();
             services.AddInfrastructureNotifications();
             services.AddInfrastructureScreenRecording();
-
+            services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
 
             services.AddSwaggerGen(c =>
@@ -47,25 +49,8 @@ namespace ClientMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMonitorFactory mon)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-            //var yandex = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
-            //var test = yandex.GetFilesAndFoldersAsync();
-            //var test1 = yandex.UploadFiles(new UploadedFilesInfo());
-            //var tg = mas.GetNotification(Application.Domanes.Enums.NotificationTypes.Telegram);
-            //tg.SendMassage("398615402","привет");
-
-            //sr.StartScreenRecording();
-
-            var test = mon.GetMonitor(Application.Domanes.Enums.MonitoringTypes.Proc);
-            var test1 = test.ReceiveInfoMonitor();
-
-            
-            Console.WriteLine(test1.ToString());
-
-            
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -83,6 +68,20 @@ namespace ClientMonitor
             {
                 endpoints.MapControllers();
             });
+
+            #region [WorkBehind]
+            //Работа с облаком и видео
+            app.UseCloudUploading(cloudHandler => 
+            {
+                cloudHandler.Handle(); 
+            });
+
+            //Работа с проверкой сайтов и серверов
+            app.UseExternalMonitor(externalMonitorHandler =>
+            {
+                externalMonitorHandler.Handle();
+            });
+            #endregion
         }
     }
 }

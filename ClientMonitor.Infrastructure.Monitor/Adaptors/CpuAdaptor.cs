@@ -15,7 +15,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 
         }
 
-        public string ReceiveInfoMonitor()
+        public object ReceiveInfoMonitor()
         {
             var cpuload = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             string s = "";
