@@ -3,6 +3,7 @@ using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.CloudManager;
 using ClientMonitor.Infrastructure.Notifications;
 using ClientMonitor.Infrastructure.ScreenRecording;
+using ClientMonitor.Infrastructure.Monitor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -56,10 +57,14 @@ namespace ClientMonitor
             //tg.SendMassage("398615402","привет");
 
             //sr.StartScreenRecording();
-            
-            //var test = mon.GetMonitor(Application.Domanes.Enums.MonitoringTypes.CPU);
-            //string s = mon.ReceiveInfoMonitor();
 
+            var test = mon.GetMonitor(Application.Domanes.Enums.MonitoringTypes.Proc);
+            var test1 = test.ReceiveInfoMonitor();
+
+            
+            Console.WriteLine(test1.ToString());
+
+            
 
             if (env.IsDevelopment())
             {

@@ -11,14 +11,19 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 		public string ReceiveInfoMonitor()
 		{
 			Process[] processes;
-			List<string> listProc = new List<string>();
+			//List<string> listProc = new List<string>();
 			processes = Process.GetProcesses();
+			string listproc = "";
 			foreach (Process instance in processes)
-				listProc.Add(instance.ProcessName);
-			string test="";
-			foreach (var list in listProc)
-				test = list + ",";
-			return test;
+			{
+				listproc=listproc+","+(instance.ProcessName);
+			}
+			//string test="";
+			//foreach (var list in listProc)
+			//{
+			//	test = list + ",";
+			//}
+			return listproc;
 
 		}
 
