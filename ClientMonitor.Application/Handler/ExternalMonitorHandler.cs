@@ -47,7 +47,7 @@ namespace ClientMonitor.Application.Handler
             //    else
             //    { notifyer.SendMessage("-742266994", "Проверка успешна\r\n" + result.Message); }
             //}
-            string test1 = "____";
+            string test1 = "";
             foreach (var result in results)
             {
                 test1 = test1 + "____"+result.Message+ "\r\n";
