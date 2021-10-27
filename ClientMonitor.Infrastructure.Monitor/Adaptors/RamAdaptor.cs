@@ -1,5 +1,7 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Objects;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
@@ -9,6 +11,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 	{
 		public object ReceiveInfoMonitor()
 		{
+            List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
             var ramCounter = new PerformanceCounter("Memory", "Available MBytes");
             string s = "";
             int i = 2;
@@ -18,7 +21,8 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 i--;
                 Thread.Sleep(1000);
             }
-            return s;
+            resultMonitoring.Add(new ResultMonitoring(true, "Полигонная" + s));
+            return resultMonitoring;
         }
 
 	}

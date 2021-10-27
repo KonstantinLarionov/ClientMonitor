@@ -20,10 +20,28 @@ namespace ClientMonitor.Application.Handler
 
         public void Handle()
         {
+            List<ResultMonitoring> results = new List<ResultMonitoring>(); 
             var monitor = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Sites);
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
+            var infocpu = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.CPU);
+            var inforam = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.RAM);
+            var infoproc =  MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Proc);
+            var infoservers = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Servers);
+
             var resultMonitoring = monitor.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            foreach (var result in resultMonitoring)
+            results.AddRange(resultMonitoring);
+            var resultMonitoringcpu = infocpu.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            results.AddRange(resultMonitoringcpu);
+            var resultMonitoringram = inforam.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            results.AddRange(resultMonitoringram);
+            var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            results.AddRange(resultMonitoringproc);
+            var resultMonitoringservers = infoservers.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            results.AddRange(resultMonitoringservers);
+
+
+
+            foreach (var result in results)
             {
                 if (!result.Success)
                 { notifyer.SendMessage("-742266994", "!Ошибка проверки!\r\n" + result.Message); }

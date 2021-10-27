@@ -17,6 +17,8 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 
         public object ReceiveInfoMonitor()
         {
+            List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
+
             var cpuload = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             string s = "";
             int i = 2;
@@ -27,7 +29,8 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 Thread.Sleep(1000);
                 //return;
             }
-            return s;
+            resultMonitoring.Add(new ResultMonitoring(true,"Полигонная"+s));
+            return resultMonitoring;
 
         }
 
