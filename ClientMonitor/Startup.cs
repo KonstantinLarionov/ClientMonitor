@@ -71,10 +71,11 @@ namespace ClientMonitor
 
             #region [WorkBehind]
             //Работа с облаком и видео
+            /*
             app.UseCloudUploading(cloudHandler => 
             {
                 cloudHandler.Handle(); 
-            });
+            });*/
 
             //Работа с проверкой сайтов и серверов
             app.UseExternalMonitor(externalMonitorHandler =>

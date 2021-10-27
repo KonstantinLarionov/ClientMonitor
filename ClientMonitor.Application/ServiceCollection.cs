@@ -16,6 +16,7 @@ namespace ClientMonitor.Application
         {
             //var assembly = typeof(ServiceCollection).GetTypeInfo().Assembly;
             services.AddSingleton<ICludUploadHendler, CloudUploadHendler>();
+            services.AddSingleton<IExternalMonitorHandler, ExternalMonitorHandler>();
         }
     }
 }

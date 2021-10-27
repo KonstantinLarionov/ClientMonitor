@@ -29,7 +29,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 Thread.Sleep(1000);
                 //return;
             }
-            resultMonitoring.Add(new ResultMonitoring(true,"Полигонная"+s));
+            resultMonitoring.Add(new ResultMonitoring(true,"Полигонная % загруженности CPU: "+s));
             return resultMonitoring;
 
         }

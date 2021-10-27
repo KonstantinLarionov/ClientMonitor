@@ -35,13 +35,17 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
         #endregion [ServerData]
         public object ReceiveInfoMonitor()
         {
-            List<ResultStatusRequest> resultMonitoring = new List<ResultStatusRequest>();
+            List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
 
             foreach (var server in Servers)
             {
                 //var resources = server.GetInfo();
                 var result = ResultCheckStatus(server);
-                resultMonitoring.Add(new ResultStatusRequest($"Client: {server.IpServer}, Resource: {server.PortServer}, Path: {result.Message}",DateTime.Now,true));
+                if (result.Success)
+                {
+                    resultMonitoring.Add(new ResultMonitoring(true, $"IpServer: {server.IpServer}, PortServer: {server.PortServer}, ___: {result.Message}"));
+                }
+                else { resultMonitoring.Add(new ResultMonitoring(true, $"IpServer: {server.IpServer}, PortServer: {server.PortServer}, Ошибка")); }
             }
 
             return resultMonitoring;

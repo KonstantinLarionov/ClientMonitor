@@ -21,7 +21,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 i--;
                 Thread.Sleep(1000);
             }
-            resultMonitoring.Add(new ResultMonitoring(true, "Полигонная" + s));
+            resultMonitoring.Add(new ResultMonitoring(true, "Полигонная % загруженности RAM: " + s));
             return resultMonitoring;
         }
 

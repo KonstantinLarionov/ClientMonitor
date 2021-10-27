@@ -18,13 +18,15 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 			string listproc = "";
 			foreach (Process instance in processes)
 			{
-				resultMonitoring.Add(new ResultMonitoring(true, "Полигонная" + instance.ProcessName));			
+				listproc=listproc+ instance.ProcessName+"\n";
+				//resultMonitoring.Add(new ResultMonitoring(true, "Полигонная процессы : " + instance.ProcessName));			
 			}
 			//string test="";
 			//foreach (var list in listProc)
 			//{
 			//	test = list + ",";
 			//}
+			resultMonitoring.Add(new ResultMonitoring(true, listproc));
 			return resultMonitoring;
 
 		}
