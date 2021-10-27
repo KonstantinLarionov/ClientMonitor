@@ -10,7 +10,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
 	public class HttpAdaptor : IMonitor
 	{
-		public string ReceiveInfoMonitor()
+		public object ReceiveInfoMonitor()
 		{
 			throw new NotImplementedException();
 		}
