@@ -24,20 +24,29 @@ namespace ClientMonitor.Application.Handler
         public async Task Handle()
         {
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
-            string[] files = Directory.GetFiles(@"C:\Users\79123\Desktop\Новая папка", "*.txt");
+            string[] files = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Зал", "*.mp4");
             foreach (var file in files)
             {
                 FileInfo fileInf = new FileInfo(file);
-                var uploadFile = GetUploadFile(fileInf, "Тест");
+                var uploadFile = GetUploadFile(fileInf, "Записи/Тест/Зал");
                 await Cloud.UploadFiles(uploadFile);
-                await TelegramNotification.SendMessage("-742266994", $"Файл {uploadFile.Name} загружен {DateTime.Now}" );
+                await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}" );
+                fileInf.Delete();
+            }
+            string[] files2 = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Склад", "*.mp4");
+            foreach (var file in files2)
+            {
+                FileInfo fileInf = new FileInfo(file);
+                var uploadFile = GetUploadFile(fileInf, "Записи/Тест/Склад");
+                await Cloud.UploadFiles(uploadFile);
+                await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                 fileInf.Delete();
             }
             await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов завершена. Файлов отправленно: {files.Length} Время: {DateTime.Now}~~~");
         }
 
         private UploadedFilesInfo GetUploadFile(FileInfo fileInf, string pathToLoad)
-        {         
+        {   
             UploadedFilesInfo uploadedFiles = new UploadedFilesInfo();
 
             uploadedFiles.Name = fileInf.Name;       
@@ -46,8 +55,6 @@ namespace ClientMonitor.Application.Handler
             uploadedFiles.Path = fileInf.DirectoryName;
             uploadedFiles.FolderName = pathToLoad;
             return uploadedFiles;
-        } 
-
-     
+        }     
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace ClientMonitor.Application
                     try
                     {
                         DateTime dateTime = DateTime.Now;
-                        if (dateTime.Hour == 17 && dateTime.Minute <= 50)
+                        if (dateTime.Hour <= 18 && dateTime.Minute <= 50)
                         {
                             handle.Invoke(service);
                             Thread.Sleep(85800000);
@@ -48,12 +49,20 @@ namespace ClientMonitor.Application
 
                 while (true)
                 {
-                    var dateTime = DateTime.Now;
-                    if (dateTime.Hour % 2 == 0)
+                    try
                     {
-                        handle.Invoke(service);
+                        var dateTime = DateTime.Now;
+                        //if (dateTime.Hour % 2 == 0)
+                        if (dateTime.Hour >= 0)
+                        {
+                            handle.Invoke(service);
+                        }
+                        Thread.Sleep(600000);
                     }
-                    Thread.Sleep(600000);
+                    catch (Exception ex)
+                    {
+                        //TODO: Send message telegram mb wait mb app off
+                    }
                 }
             });
             thread.Start();
