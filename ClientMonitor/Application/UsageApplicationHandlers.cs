@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application
 {
-    public static class UseCloudUploadHandler
+    public static class UsageApplicationHandlers
     {
         public static void UseCloudUploading(this IApplicationBuilder application, Action<ICludUploadHendler> handle)
         {
