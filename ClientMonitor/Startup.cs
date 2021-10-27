@@ -47,36 +47,8 @@ namespace ClientMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICludUploadHendler hendler)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            Thread thread = new Thread(()=> {
-                while (true)
-                {
-                    DateTime dateTime = DateTime.Now;
-                    if (dateTime.Hour == 17 && dateTime.Minute <= 50)
-                    {
-                        hendler.Handle();
-                        Thread.Sleep(85800000);
-                    }
-                    else
-                    {
-                        Thread.Sleep(10000);
-                    }
-                }
-            });
-            thread.Start();
-            //var yandex = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
-            //var test = yandex.GetFilesAndFoldersAsync();
-            //var test1 = yandex.UploadFiles(new UploadedFilesInfo());
-            //var tg = mas.GetNotification(Application.Domanes.Enums.NotificationTypes.Telegram);
-            //tg.SendMassage("398615402", "привет");
-
-            //var mail = mas.GetNotification(Application.Domanes.Enums.NotificationTypes.Mail);
-            //mail.SendMassage("afcst28@gmail.com", "привет");
-
-            //var sr = screenrec.GetScreenRecording(Application.Domanes.Enums.ScreenRecordingTypes.ScreenRecording);
-            //sr.StartScreenRecording();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -94,6 +66,19 @@ namespace ClientMonitor
             {
                 endpoints.MapControllers();
             });
+
+            #region [WorkBehind]
+            //–абота с облаком и видео
+            app.UseCloudUploading(cloudHandler => 
+            {
+                cloudHandler.Handle(); 
+            });
+            //–абота с проверкой сайтов и серверов
+            app.UseExternalMonitor(externalMonitorHandler =>
+            {
+                externalMonitorHandler.Handle();
+            });
+            #endregion
         }
     }
 }
