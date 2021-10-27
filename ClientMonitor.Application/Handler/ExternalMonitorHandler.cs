@@ -50,7 +50,7 @@ namespace ClientMonitor.Application.Handler
             string test1 = "";
             foreach (var result in results)
             {
-                test1 = test1 + "____"+result.Message+ "\r\n";
+                test1 = test1 + "__"+result.Message+ "\r\n";
             }
             notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
         }
