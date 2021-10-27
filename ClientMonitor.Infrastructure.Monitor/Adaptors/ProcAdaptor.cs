@@ -19,7 +19,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 			string lastproc = "";
 			foreach (Process instance in processes)
 			{
-				if (instance.ProcessName != "svhost")
+				if (instance.ProcessName != "svchost")
 				{
 					if (lastproc != instance.ProcessName)
 					{
