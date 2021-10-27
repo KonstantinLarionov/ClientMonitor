@@ -40,14 +40,19 @@ namespace ClientMonitor.Application.Handler
             results.AddRange(resultMonitoringservers);
 
 
-
+            //foreach (var result in results)
+            //{
+            //    if (!result.Success)
+            //    { notifyer.SendMessage("-742266994", "!Ошибка проверки!\r\n" + result.Message); }
+            //    else
+            //    { notifyer.SendMessage("-742266994", "Проверка успешна\r\n" + result.Message); }
+            //}
+            string test1 = "____";
             foreach (var result in results)
             {
-                if (!result.Success)
-                { notifyer.SendMessage("-742266994", "!Ошибка проверки!\r\n" + result.Message); }
-                else
-                { notifyer.SendMessage("-742266994", "Проверка успешна\r\n" + result.Message); }
+                test1 = test1 + "____"+result.Message+ "\r\n";
             }
+            notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
         }
     }
 }

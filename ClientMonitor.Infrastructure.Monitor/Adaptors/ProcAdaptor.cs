@@ -15,10 +15,20 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 			Process[] processes;
 			//List<string> listProc = new List<string>();
 			processes = Process.GetProcesses();
-			string listproc = "";
+			string listproc = "Список процессов: ";
+			string lastproc = "";
 			foreach (Process instance in processes)
 			{
-				listproc=listproc+ instance.ProcessName+"\n";
+				if (instance.ProcessName != "svhost")
+				{
+					if (lastproc != instance.ProcessName)
+					{
+						listproc = listproc + instance.ProcessName +"/";
+					}
+				}
+
+				else { continue; }
+				lastproc = instance.ProcessName;
 				//resultMonitoring.Add(new ResultMonitoring(true, "Полигонная процессы : " + instance.ProcessName));			
 			}
 			//string test="";
@@ -26,6 +36,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 			//{
 			//	test = list + ",";
 			//}
+
 			resultMonitoring.Add(new ResultMonitoring(true, listproc));
 			return resultMonitoring;
 
