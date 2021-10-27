@@ -73,6 +73,7 @@ namespace ClientMonitor
             {
                 cloudHandler.Handle(); 
             });
+
             //–абота с проверкой сайтов и серверов
             app.UseExternalMonitor(externalMonitorHandler =>
             {
