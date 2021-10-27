@@ -4,6 +4,7 @@ using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.CloudManager;
 using ClientMonitor.Infrastructure.Notifications;
 using ClientMonitor.Infrastructure.ScreenRecording;
+using ClientMonitor.Infrastructure.Monitor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,7 +40,6 @@ namespace ClientMonitor
             services.AddInfrastructureNotifications();
             services.AddInfrastructureScreenRecording();
             services.AddInfrastructureHandler();
-
             services.AddInfrastructureMonitor();
 
             services.AddSwaggerGen(c =>
@@ -51,18 +51,6 @@ namespace ClientMonitor
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //var yandex = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
-            //var test = yandex.GetFilesAndFoldersAsync();
-            //var test1 = yandex.UploadFiles(new UploadedFilesInfo());
-            //var tg = mas.GetNotification(Application.Domanes.Enums.NotificationTypes.Telegram);
-            //tg.SendMassage("398615402","привет");
-
-            var mail = mas.GetNotification(Application.Domanes.Enums.NotificationTypes.Mail);
-            //mail.SendMassage("afcst28@gmail.com", "привет");
-
-            var sr = screenrec.GetScreenRecording(Application.Domanes.Enums.ScreenRecordingTypes.ScreenRecording);
-            sr.StartScreenRecording();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

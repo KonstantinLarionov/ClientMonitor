@@ -48,8 +48,12 @@ namespace ClientMonitor.Application
 
                 while (true)
                 {
-                   //TODO : Сделать внешнее управление бизнес логикой 
-                   //Вызов основной логики : handler.Invoke(service);
+                    var dateTime = DateTime.Now;
+                    if (dateTime.Hour % 2 == 0)
+                    {
+                        handle.Invoke(service);
+                    }
+                    Thread.Sleep(600000);
                 }
             });
             thread.Start();

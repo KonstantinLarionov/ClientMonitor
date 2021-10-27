@@ -28,7 +28,7 @@ namespace ClientMonitor.Infrastructure.Notifications.Adaptors
             EmailMessage = new MimeMessage();
         }
 
-        public async Task SendMassage(string to, string massage)
+        public async Task SendMessage(string to, string massage)
         {
             EmailMessage.From.Add(new MailboxAddress(Name, Mail));
             EmailMessage.To.Add(new MailboxAddress("", to));

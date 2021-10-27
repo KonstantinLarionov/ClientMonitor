@@ -20,7 +20,7 @@ namespace ClientMonitor.Infrastructure.Notifications.Adaptors
             Client = new TelegramBotClient(Token);
         }
 
-        public async Task SendMassage(string to, string massage)
+        public async Task SendMessage(string to, string massage)
         {
             await Client.SendTextMessageAsync(to, massage);
         }

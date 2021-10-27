@@ -20,7 +20,9 @@ namespace ClientMonitor.Infrastructure.Monitor
                 {MonitoringTypes.RAM, new RamAdaptor() },
                 {MonitoringTypes.CPU, new CpuAdaptor() },
                 {MonitoringTypes.HTTP, new HttpAdaptor() },
-                {MonitoringTypes.Proc, new ProcAdaptor() }
+                {MonitoringTypes.Proc, new ProcAdaptor() },
+                {MonitoringTypes.Sites, new SitesAdaptor() },
+                {MonitoringTypes.Servers, new ServersAdaptor() },
             };
         }
         public IMonitor GetMonitor(MonitoringTypes type) => _adaptors.FirstOrDefault(x => x.Key == type).Value;

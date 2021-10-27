@@ -23,17 +23,17 @@ namespace ClientMonitor.Application.Handler
         }
         public async Task Handle()
         {
-            await TelegramNotification.SendMassage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
+            await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             string[] files = Directory.GetFiles(@"C:\Users\79123\Desktop\Новая папка", "*.txt");
             foreach (var file in files)
             {
                 FileInfo fileInf = new FileInfo(file);
                 var uploadFile = GetUploadFile(fileInf, "Тест");
                 await Cloud.UploadFiles(uploadFile);
-                await TelegramNotification.SendMassage("-742266994", $"Файл {uploadFile.Name} загружен {DateTime.Now}" );
+                await TelegramNotification.SendMessage("-742266994", $"Файл {uploadFile.Name} загружен {DateTime.Now}" );
                 fileInf.Delete();
             }
-            await TelegramNotification.SendMassage("-742266994", $"~~~Отправка файлов завершена. Файлов отправленно: {files.Length} Время: {DateTime.Now}~~~");
+            await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов завершена. Файлов отправленно: {files.Length} Время: {DateTime.Now}~~~");
         }
 
         private UploadedFilesInfo GetUploadFile(FileInfo fileInf, string pathToLoad)
