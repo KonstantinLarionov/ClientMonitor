@@ -56,10 +56,10 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
 
             var conect = new DiskHttpApi(CloudOptions.Token);
 
-            if (!rootFolderData.Any(_ => _.Type == Application.Domanes.Enums.FilesTypes.Dir && _.Name == uploadedFilesInfo.FolderName))
-            {
-                await conect.Commands.CreateDictionaryAsync("/" + uploadedFilesInfo.FolderName);
-            }
+            //if (!rootFolderData.Any(_ => _.Type == Application.Domanes.Enums.FilesTypes.Dir && _.Name == uploadedFilesInfo.FolderName))
+            //{
+            //    await conect.Commands.CreateDictionaryAsync("/" + uploadedFilesInfo.FolderName);
+            //}
 
             var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
             using (var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
