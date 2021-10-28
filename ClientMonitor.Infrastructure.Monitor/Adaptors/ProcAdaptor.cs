@@ -23,7 +23,6 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 						listproc = listproc + instance.ProcessName +"/";
 					}
 				}
-
 				else { continue; }
 				lastproc = instance.ProcessName;		
 			}

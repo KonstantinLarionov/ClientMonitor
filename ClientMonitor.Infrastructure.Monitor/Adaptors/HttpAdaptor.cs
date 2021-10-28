@@ -18,7 +18,6 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 		{
             GetHttp();
             List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
-
 			resultMonitoring.Add(new ResultMonitoring(true, p));
 			return resultMonitoring;
 		}

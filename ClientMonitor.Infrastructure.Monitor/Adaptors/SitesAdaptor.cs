@@ -5,7 +5,6 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 
-
 namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
     public class SitesAdaptor : IMonitor
