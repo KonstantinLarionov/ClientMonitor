@@ -24,7 +24,7 @@ namespace ClientMonitor.Application.Handler
         public async Task Handle()
         {
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
-            string[] files = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Зал", "*.txt");
+            string[] files = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Зал", "*.mp4");
             foreach (var file in files)
             {
                 FileInfo fileInf = new FileInfo(file);

@@ -52,7 +52,7 @@ namespace ClientMonitor.Application
                     try
                     {
                         var dateTime = DateTime.Now;
-                        if (dateTime.Hour % 2 == 0)
+                        if (dateTime.Hour != 0)
                         //if (dateTime.Hour >= 0)
                         {
                             handle.Invoke(service);
