@@ -12,17 +12,14 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
 	public class HttpAdaptor : IMonitor
 	{
-        public static List<string> listpak = new List<string>();
+        private static string p = "";
 
 		public object ReceiveInfoMonitor()
 		{
-			List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
-			string listhttp = "";
-            foreach (var list in listpak)
-            {
-                listhttp = listhttp + list + "\n";
-            }
-			resultMonitoring.Add(new ResultMonitoring(true, listhttp));
+            GetHttp();
+            List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
+
+			resultMonitoring.Add(new ResultMonitoring(true, p));
 			return resultMonitoring;
 		}
 
@@ -67,6 +64,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 {
                     mainSocket.BeginReceive(byteData, 0, byteData.Length, SocketFlags.None, new AsyncCallback(OnReceive), null);
                     k--;
+                    Thread.Sleep(1000);
                 }
 
             }
@@ -102,7 +100,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                     break;
             }
 
-            listpak.Add($"Id {point.Id} From {point.From} To {point.To} Length {point.LenghtData} Protocol {point.Protocol} Время {point.DateTime}");
+            p = p + ($"From {point.From} To {point.To} Length {point.LenghtData} Protocol {point.Protocol} Время {point.DateTime}") + "\n";
         }
         private static string ToSTR(byte[] arr)
         {

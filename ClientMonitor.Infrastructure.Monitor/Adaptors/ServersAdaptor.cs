@@ -42,7 +42,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 var result = ResultCheckStatus(server);
                 if (result.Success)
                 {
-                    resultMonitoring.Add(new ResultMonitoring(true, $"IpServer: {server.IpServer}, PortServer: {server.PortServer}, ___: {result.Message}"));
+                    resultMonitoring.Add(new ResultMonitoring(true, $"IpServer: {server.IpServer}, PortServer: {server.PortServer} : {result.Message}"));
                 }
                 else { resultMonitoring.Add(new ResultMonitoring(true, $"IpServer: {server.IpServer}, PortServer: {server.PortServer}, Ошибка")); }
             }

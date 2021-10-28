@@ -35,12 +35,12 @@ namespace ClientMonitor.Application.Handler
             results.AddRange(resultMonitoringcpu);
             var resultMonitoringram = inforam.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoringram);
-            var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            results.AddRange(resultMonitoringproc);
             var resultMonitoringservers = infoservers.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoringservers);
             var resultMonitoringHttp = infohttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoringHttp);
+            var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            results.AddRange(resultMonitoringproc);
 
 
             //foreach (var result in results)
