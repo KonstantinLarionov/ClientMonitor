@@ -39,7 +39,6 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 
             foreach (var server in Servers)
             {
-                //var resources = server.GetInfo();
                 var result = ResultCheckStatus(server);
                 if (result.Success)
                 {
@@ -69,8 +68,6 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 string rspnc = response.ToString();
                 if (rspnc.ToString() == "1") { return new ResultStatusRequest("Сервер работает", DateTime.Now, true); }
                 else { return new ResultStatusRequest("Сервер НЕ работает", DateTime.Now, false); }
-                //stream.Close();
-                //client.Close();
             }
             catch
             {
