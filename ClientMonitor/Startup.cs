@@ -19,6 +19,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ClientMonitor.Infrastructure.Database;
+using ClientMonitor.Infrastructure.Database.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClientMonitor
 {
@@ -41,6 +44,7 @@ namespace ClientMonitor
             services.AddInfrastructureScreenRecording();
             services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
+            services.AddInfrastructureDatabase();
 
             services.AddSwaggerGen(c =>
             {
@@ -51,6 +55,21 @@ namespace ClientMonitor
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //Пример работы с базой напрямую без репозитория конкретного объекта, надо убрать отсюда 
+            // Ниже строчки можно перенести в конструктор репозитория, что бы база обновлялась и крафтилась если ее нет, иначе не будет подключения без создания базы
+            //                db.Database.EnsureCreated();
+            //                db.Database.Migrate();
+            using (var db = new LoggerContext())
+            {
+                db.Database.EnsureCreated();
+                db.Database.Migrate();
+
+                db.Logs.Add(new Infrastructure.Database.Entities.Log { Text = "1" });
+                db.SaveChanges();
+                var log = db.Logs.Where(x => x.Id == 1).FirstOrDefault();
+            }
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
