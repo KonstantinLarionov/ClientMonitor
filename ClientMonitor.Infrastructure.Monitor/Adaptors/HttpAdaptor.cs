@@ -43,11 +43,10 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
         public static void GetHttp()
         {
             mainSocket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP);
-            String host = Dns.GetHostName();
-            IPAddress ip = Dns.GetHostByName(host).AddressList[0];
+            string myip= GetMyIP();
             try
             {
-                IPAddress Ip = IPAddress.Parse("192.168.89.20");
+                IPAddress Ip = IPAddress.Parse(myip);
                 IPEndPoint Ip_point = new IPEndPoint(Ip, 0);
                 mainSocket.Bind(Ip_point);
                 mainSocket.SetSocketOption(SocketOptionLevel.IP,
@@ -69,6 +68,20 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 
             }
             catch { }
+        }
+
+
+        private static string GetMyIP()
+        {
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            return null;
         }
 
         private static void ParseData(byte[] byteData, int nReceived)
