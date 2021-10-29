@@ -27,7 +27,7 @@ namespace ClientMonitor.Application.Handler
             var inforam = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.RAM);
             //var infoproc =  MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Proc);
             var infoservers = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Servers);
-            var infohttp = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.HTTP);
+            //var infohttp = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.HTTP);
 
             var resultMonitoring = monitor.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoring);
@@ -37,8 +37,8 @@ namespace ClientMonitor.Application.Handler
             results.AddRange(resultMonitoringram);
             var resultMonitoringservers = infoservers.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoringservers);
-            var resultMonitoringHttp = infohttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            results.AddRange(resultMonitoringHttp);
+            //var resultMonitoringHttp = infohttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            //results.AddRange(resultMonitoringHttp);
             //var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
             //results.AddRange(resultMonitoringproc);
 
