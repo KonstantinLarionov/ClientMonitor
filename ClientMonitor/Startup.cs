@@ -95,6 +95,12 @@ namespace ClientMonitor
             {
                 externalMonitorHandler.Handle();
             });
+
+            //проверка пк
+            app.UsePcMonitoring(externalMonitorHandler =>
+            {
+                externalMonitorHandler.Handle();
+            });
             #endregion
         }
     }

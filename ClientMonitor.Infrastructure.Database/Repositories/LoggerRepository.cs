@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClientMonitor.Infrastructure.Database.Repositories
 {
-    class LoggerRepository : IRepository<LogInfo>
+    public class LoggerRepository : IRepository<LogInfo>
     {
         private LoggerContext db;
         public LoggerRepository()
@@ -25,8 +25,6 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.Database.Migrate();
             var log = new Log
             {
-                //Id = info.Id,
-
                 DateTime = info.DateTime,
                 TypeLog = info.TypeLog,
                 Text = info.Text
@@ -35,7 +33,6 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.Logs.Add(log);
             db.SaveChanges();
         }
-
 
         public void DeleteInDb(LogInfo info)
         {

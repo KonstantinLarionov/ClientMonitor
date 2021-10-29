@@ -12,7 +12,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 			List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
 			Process[] processes;
 			processes = Process.GetProcesses();
-			string listproc = "Список процессов: ";
+			string listproc = "";
 			string lastproc = "";
 			foreach (Process instance in processes)
 			{

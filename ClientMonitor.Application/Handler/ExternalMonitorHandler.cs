@@ -23,16 +23,6 @@ namespace ClientMonitor.Application.Handler
 
         public void Handle()
         {
-
-            LogInfo log = new LogInfo
-            {
-                TypeLog = LogTypes.Information,
-                Text = "Успешно",
-                DateTime = DateTime.Now
-            };
-
-            db.AddInDb(log);
-
             List<ResultMonitoring> results = new List<ResultMonitoring>(); 
             var monitor = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Sites);
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
@@ -51,22 +41,32 @@ namespace ClientMonitor.Application.Handler
             var resultMonitoringservers = infoservers.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoringservers);
 
+            string test1 = "";
             //foreach (var result in results)
             //{
-            //    if (!result.Success)
-            //    { notifyer.SendMessage("-742266994", "!Ошибка проверки!\r\n" + result.Message); }
-            //    else
-            //    { notifyer.SendMessage("-742266994", "Проверка успешна\r\n" + result.Message); }
+            //    test1 = test1 + "__" + result.Message + "\r\n";
             //}
 
-            string test1 = "";
+
             foreach (var result in results)
             {
-                test1 = test1 + "__"+result.Message+ "\r\n";
+                if (!result.Success)
+                { test1 = test1+"!Ошибка проверки!\r\n" + result.Message; }
+                else
+                { test1 = test1+"!Проверка успешна!\r\n" + result.Message; }
             }
-            test1 = test1 + "\r\n" + "TypeLog:"+log.TypeLog +"__Status:"+ log.Text +"__Time:"+ log.DateTime;
-            
-            notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
+
+
+            notifyer.SendMessage("-742266994", test1);
+            LogInfo log = new LogInfo
+            {
+                TypeLog = LogTypes.Information,
+                Text = test1,
+                DateTime = DateTime.Now
+            };
+
+            db.AddInDb(log);
+
         }
     }
 }

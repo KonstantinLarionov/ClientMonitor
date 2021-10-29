@@ -13,7 +13,8 @@ namespace ClientMonitor.Application
     {
         public static void UseCloudUploading(this IApplicationBuilder application, Action<ICludUploadHendler> handle)
         {
-            Thread thread = new Thread(() => {
+            Thread thread = new Thread(() =>
+            {
 
                 var service = application.ApplicationServices.GetRequiredService<ICludUploadHendler>();
 
@@ -42,7 +43,8 @@ namespace ClientMonitor.Application
         }
         public static void UseExternalMonitor(this IApplicationBuilder application, Action<IExternalMonitorHandler> handle)
         {
-            Thread thread = new Thread(() => {
+            Thread thread = new Thread(() =>
+            {
 
                 var service = application.ApplicationServices.GetRequiredService<IExternalMonitorHandler>();
 
@@ -57,6 +59,21 @@ namespace ClientMonitor.Application
                 }
             });
             thread.Start();
+        }
+
+        public static void UsePcMonitoring(this IApplicationBuilder application, Action<IPcMonitoringHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
+
+                while (true)
+                {
+                    handle.Invoke(service);
+                }
+                Thread.Sleep(1000);
+            });
+
         }
     }
 }

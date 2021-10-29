@@ -56,15 +56,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 byte[] byOut = new byte[4];
 
                 mainSocket.IOControl(IOControlCode.ReceiveAll, byTrue, byOut);
-
-                int k = 10;
-                while (k > 0)
-                {
-                    mainSocket.BeginReceive(byteData, 0, byteData.Length, SocketFlags.None, new AsyncCallback(OnReceive), null);
-                    k--;
-                    Thread.Sleep(1000);
-                }
-
+                mainSocket.BeginReceive(byteData, 0, byteData.Length, SocketFlags.None, new AsyncCallback(OnReceive), null);
             }
             catch { }
         }
@@ -112,7 +104,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                     break;
             }
 
-            p = p + ($"From {point.From} To {point.To} Length {point.LenghtData} Protocol {point.Protocol} Время {point.DateTime}") + "\n";
+            p = ($"{point.LenghtData}");
         }
         private static string ToSTR(byte[] arr)
         {

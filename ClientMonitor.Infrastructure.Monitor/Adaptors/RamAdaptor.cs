@@ -23,7 +23,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 frrm = ((totalRam - busyRam) / 1024).ToString();
                 bsrm = (busyRam / 1024).ToString();
             }
-            resultMonitoring.Add(new ResultMonitoring(true, "RAM mB свободно: " + frrm + " Занято: "+ bsrm + "__Полигонная"));
+            resultMonitoring.Add(new ResultMonitoring(true, frrm + "/"+ bsrm));
             return resultMonitoring;
         }
 	}

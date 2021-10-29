@@ -123,9 +123,9 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                     {
                         var result = CheckClientResources(resource);
                         if (result.Success)
-                        { resultMonitoring.Add(new ResultMonitoring(true, $"Client: {client.ClientName}, Resource: {resource.Name}, Path: {resource.Path} : Успешно")); }
+                        { resultMonitoring.Add(new ResultMonitoring(true, $"Client: {client.ClientName}, Resource: {resource.Name}, Path: {resource.Path}")); }
                         else
-                        { resultMonitoring.Add(new ResultMonitoring(false, $"Client: {client.ClientName}, Resource: {resource.Name}, Path: {resource.Path} : НЕ РАБОТАЕТ")); }
+                        { resultMonitoring.Add(new ResultMonitoring(false, $"Client: {client.ClientName}, Resource: {resource.Name}, Path: {resource.Path}")); }
 
                     }
                     else { continue; }
