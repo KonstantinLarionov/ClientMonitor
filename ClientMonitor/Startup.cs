@@ -65,8 +65,8 @@ namespace ClientMonitor
                 db.Database.Migrate();
 
                 db.Logs.Add(new Infrastructure.Database.Entities.Log { Text = "1" });
-                db.SaveChanges();
-                var log = db.Logs.Where(x => x.Id == 1).FirstOrDefault();
+                //db.SaveChanges();
+                //var log = db.Logs.Where(x => x.Id == 1).FirstOrDefault();
             }
 
 

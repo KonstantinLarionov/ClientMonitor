@@ -25,7 +25,7 @@ namespace ClientMonitor.Application.Handler
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
             var infocpu = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.CPU);
             var inforam = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.RAM);
-            var infoproc =  MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Proc);
+            //var infoproc =  MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Proc);
             var infoservers = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Servers);
             var infohttp = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.HTTP);
 
@@ -39,8 +39,8 @@ namespace ClientMonitor.Application.Handler
             results.AddRange(resultMonitoringservers);
             var resultMonitoringHttp = infohttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoringHttp);
-            var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            results.AddRange(resultMonitoringproc);
+            //var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            //results.AddRange(resultMonitoringproc);
 
 
             //foreach (var result in results)
@@ -55,7 +55,7 @@ namespace ClientMonitor.Application.Handler
             {
                 test1 = test1 + "__"+result.Message+ "\r\n";
             }
-            notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
+            //notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
         }
     }
 }
