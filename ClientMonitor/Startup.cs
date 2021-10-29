@@ -1,27 +1,19 @@
 using ClientMonitor.Application;
-using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.CloudManager;
 using ClientMonitor.Infrastructure.Notifications;
 using ClientMonitor.Infrastructure.ScreenRecording;
 using ClientMonitor.Infrastructure.Monitor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using ClientMonitor.Infrastructure.Database;
 using ClientMonitor.Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
+using ClientMonitor.Application.Domanes.Enums;
 
 namespace ClientMonitor
 {
@@ -59,15 +51,17 @@ namespace ClientMonitor
             // Ќиже строчки можно перенести в конструктор репозитори€, что бы база обновл€лась и крафтилась если ее нет, иначе не будет подключени€ без создани€ базы
             //                db.Database.EnsureCreated();
             //                db.Database.Migrate();
-            using (var db = new LoggerContext())
-            {
-                db.Database.EnsureCreated();
-                db.Database.Migrate();
 
-                db.Logs.Add(new Infrastructure.Database.Entities.Log { Text = "1" });
-                //db.SaveChanges();
-                //var log = db.Logs.Where(x => x.Id == 1).FirstOrDefault();
-            }
+           //using (var db = new LoggerContext())
+           // {
+           //     db.Database.EnsureCreated();
+           //     db.Database.Migrate();
+
+            //    //db.Logs.Add(new Infrastructure.Database.Entities.Log { Text = "1" });
+            //    db.Logs.Add(new Infrastructure.Database.Entities.Log { DateTime = DateTime.Now, TypeLog = LogTypes.Information, Text = "test" });
+            //    db.SaveChanges();
+            //    //var log = db.Logs.Where(x => x.Id == 1).FirstOrDefault();
+            //}
 
 
             if (env.IsDevelopment())

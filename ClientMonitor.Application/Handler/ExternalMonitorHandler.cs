@@ -1,4 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,26 @@ namespace ClientMonitor.Application.Handler
     {
         IMonitorFactory MonitorFactory;
         INotificationFactory NotificationFactory;
-        public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory)
+        IRepository<LogInfo> db;
+        public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory,IRepository<LogInfo> repository)
         { 
             MonitorFactory = monitorFactory;
             NotificationFactory = notificationFactory;
+            db = repository;
         }
 
         public void Handle()
         {
+
+            LogInfo log = new LogInfo
+            {
+                TypeLog = LogTypes.Information,
+                Text = "Успешно",
+                DateTime = DateTime.Now
+            };
+
+            db.AddInDb(log);
+
             List<ResultMonitoring> results = new List<ResultMonitoring>(); 
             var monitor = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Sites);
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
@@ -37,11 +50,6 @@ namespace ClientMonitor.Application.Handler
             results.AddRange(resultMonitoringram);
             var resultMonitoringservers = infoservers.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoringservers);
-            //var resultMonitoringHttp = infohttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            //results.AddRange(resultMonitoringHttp);
-            //var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            //results.AddRange(resultMonitoringproc);
-
 
             //foreach (var result in results)
             //{
@@ -50,12 +58,14 @@ namespace ClientMonitor.Application.Handler
             //    else
             //    { notifyer.SendMessage("-742266994", "Проверка успешна\r\n" + result.Message); }
             //}
+
             string test1 = "";
             foreach (var result in results)
             {
                 test1 = test1 + "__"+result.Message+ "\r\n";
             }
-            notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
+
+            //notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
         }
     }
 }

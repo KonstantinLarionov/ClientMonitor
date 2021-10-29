@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClientMonitor.Application.Domanes.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,7 @@ namespace ClientMonitor.Application.Abstractions
 {
     public interface IRepository<T>
     {
-        T Get(int id);
-        void Add(T entity);
-        IEnumerable<T> GetAll();
+        void AddInDb(T info);
+        void DeleteInDb(T info);
     }
 }

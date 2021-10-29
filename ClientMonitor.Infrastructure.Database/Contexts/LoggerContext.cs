@@ -1,4 +1,5 @@
-﻿using ClientMonitor.Infrastructure.Database.Entities;
+﻿using ClientMonitor.Application.Domanes.Enums;
+using ClientMonitor.Infrastructure.Database.Entities;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
