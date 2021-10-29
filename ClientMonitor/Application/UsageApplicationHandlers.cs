@@ -23,7 +23,7 @@ namespace ClientMonitor.Application
                     try
                     {
                         DateTime dateTime = DateTime.Now;
-                        if (dateTime.Hour <= 18 && dateTime.Minute <= 50)
+                        if (dateTime.Hour == 0 && dateTime.Minute <= 2)
                         {
                             handle.Invoke(service);
                             Thread.Sleep(85800000);

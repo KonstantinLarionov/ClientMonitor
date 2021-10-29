@@ -24,20 +24,20 @@ namespace ClientMonitor.Application.Handler
         public async Task Handle()
         {
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
-            string[] files = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Зал", "*.mp4");
+            string[] files = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE", "*.mp4");
             foreach (var file in files)
             {
                 FileInfo fileInf = new FileInfo(file);
-                var uploadFile = GetUploadFile(fileInf, "Записи/Тест/Зал");
+                var uploadFile = GetUploadFile(fileInf, "Записи/Выдача");
                 await Cloud.UploadFiles(uploadFile);
                 await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}" );
                 fileInf.Delete();
             }
-            string[] files2 = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Склад", "*.mp4");
+            string[] files2 = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM", "*.mp4");
             foreach (var file in files2)
             {
                 FileInfo fileInf = new FileInfo(file);
-                var uploadFile = GetUploadFile(fileInf, "Записи/Тест/Склад");
+                var uploadFile = GetUploadFile(fileInf, "Записи/Склад");
                 await Cloud.UploadFiles(uploadFile);
                 await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                 fileInf.Delete();
