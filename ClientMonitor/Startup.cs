@@ -1,24 +1,19 @@
 using ClientMonitor.Application;
-using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.CloudManager;
 using ClientMonitor.Infrastructure.Notifications;
 using ClientMonitor.Infrastructure.ScreenRecording;
 using ClientMonitor.Infrastructure.Monitor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using ClientMonitor.Infrastructure.Database;
+using ClientMonitor.Infrastructure.Database.Contexts;
+using Microsoft.EntityFrameworkCore;
+using ClientMonitor.Application.Domanes.Enums;
 
 namespace ClientMonitor
 {
@@ -41,6 +36,7 @@ namespace ClientMonitor
             services.AddInfrastructureScreenRecording();
             services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
+            services.AddInfrastructureDatabase();
 
             services.AddSwaggerGen(c =>
             {
@@ -71,13 +67,20 @@ namespace ClientMonitor
 
             #region [WorkBehind]
             //Работа с облаком и видео
+            /*
             app.UseCloudUploading(cloudHandler => 
             {
                 cloudHandler.Handle(); 
             });
-            
+
             //Работа с проверкой сайтов и серверов
             app.UseExternalMonitor(externalMonitorHandler =>
+            {
+                externalMonitorHandler.Handle();
+            });
+
+            //проверка пк
+            app.UsePcMonitoring(externalMonitorHandler =>
             {
                 externalMonitorHandler.Handle();
             });
