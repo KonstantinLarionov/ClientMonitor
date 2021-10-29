@@ -67,7 +67,7 @@ namespace ClientMonitor
 
             #region [WorkBehind]
             //Работа с облаком и видео
-            /*
+            
             app.UseCloudUploading(cloudHandler => 
             {
                 cloudHandler.Handle(); 

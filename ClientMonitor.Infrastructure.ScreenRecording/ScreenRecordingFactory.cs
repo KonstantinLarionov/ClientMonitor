@@ -17,7 +17,7 @@ namespace ClientMonitor.Infrastructure.ScreenRecording
         {
             _adaptors = new Dictionary<ScreenRecordingTypes, IScreenRecording>()
             {
-                {ScreenRecordingTypes.ScreenRecording, new ScreenRecordingAdaptor()}
+                {ScreenRecordingTypes.ScreenRecording, new ScreenRecordingAdaptor("")}
             };
         }
         public IScreenRecording GetScreenRecording(ScreenRecordingTypes type) => _adaptors.FirstOrDefault(x => x.Key == type).Value;
