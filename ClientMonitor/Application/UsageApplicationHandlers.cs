@@ -52,12 +52,8 @@ namespace ClientMonitor.Application
                     try
                     {
                         var dateTime = DateTime.Now;
-                        //if (dateTime.Hour % 2 == 0)
-                        if (dateTime.Hour >= 0)
-                        {
-                            handle.Invoke(service);
-                        }
-                        Thread.Sleep(600000);
+                        handle.Invoke(service);
+                        Thread.Sleep(3600000);
                     }
                     catch (Exception ex)
                     {
