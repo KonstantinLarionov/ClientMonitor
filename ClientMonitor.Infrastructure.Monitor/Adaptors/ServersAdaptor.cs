@@ -15,12 +15,12 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
         {
         new DataServer
             {
-                IpServer = "192.168.90.124",
+                IpServer = "188.186.238.120",
                 PortServer = 8888,
             },
             new DataServer
             {
-                IpServer = "192.168.89.182",
+                IpServer = "188.186.238.120",
                 PortServer = 8889,
             },
             new DataServer
