@@ -32,7 +32,9 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
 
             List<CloudFilesInfo> filesAndFoldersList = new List<CloudFilesInfo>();
 
-            foreach (var item in rootFolderData.Embedded.Items)
+            var items = rootFolderData.Embedded.Items;
+
+            foreach (var item in items)
             {
                 //filesAndFoldersList.Add(Mapper.Map<Resource,CloudFilesInfo>(item));
 
@@ -56,10 +58,10 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
 
             var conect = new DiskHttpApi(CloudOptions.Token);
 
-            if (!rootFolderData.Any(_ => _.Type == Application.Domanes.Enums.FilesTypes.Dir && _.Name == uploadedFilesInfo.FolderName))
-            {
-                await conect.Commands.CreateDictionaryAsync("/" + uploadedFilesInfo.FolderName);
-            }
+            //if (!rootFolderData.Any(_ => _.Type == Application.Domanes.Enums.FilesTypes.Dir && _.Name == uploadedFilesInfo.FolderName))
+            //{
+            //    await conect.Commands.CreateDictionaryAsync("/" + uploadedFilesInfo.FolderName);
+            //}
 
             var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
             using (var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
@@ -85,31 +87,33 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             return true;
         }
 
-        private async Task<List<CloudFilesInfo>> GetFilesIntoFolders(string path)
-        {
+        //private async Task<List<CloudFilesInfo>> GetFilesIntoFolders(string path)
+        //{
 
-            var conect = new DiskHttpApi(CloudOptions.Token);
+        //    var conect = new DiskHttpApi(CloudOptions.Token);
 
-            var rootFolderData = await conect.MetaInfo.GetInfoAsync(new ResourceRequest { Path = path });
+        //    var rootFolderData = await conect.MetaInfo.GetInfoAsync(new ResourceRequest { Path = path });
 
-            List<CloudFilesInfo> filesAndFoldersList = new List<CloudFilesInfo>();
+        //    List<CloudFilesInfo> filesAndFoldersList = new List<CloudFilesInfo>();
 
-            foreach (var item in rootFolderData.Embedded.Items)
-            {
-                //filesAndFoldersList.Add(Mapper.Map<Resource,CloudFilesInfo>(item));
+        //    var items = rootFolderData.Embedded.Items;
 
-                filesAndFoldersList.Add(new CloudFilesInfo()
-                {
-                    Name = item.Name,
-                    MimeType = item.MimeType,
-                    Type = (Application.Domanes.Enums.FilesTypes)item.Type,
-                    Created = item.Created,
-                    Size = item.Size,
-                    PublicUrl = item.PublicUrl,
-                    Path = item.Path
-                });
-            }
-            return filesAndFoldersList;
-        }
+        //    foreach (var item in items)
+        //    {
+        //        //filesAndFoldersList.Add(Mapper.Map<Resource,CloudFilesInfo>(item));
+
+        //        filesAndFoldersList.Add(new CloudFilesInfo()
+        //        {
+        //            Name = item.Name,
+        //            MimeType = item.MimeType,
+        //            Type = (Application.Domanes.Enums.FilesTypes)item.Type,
+        //            Created = item.Created,
+        //            Size = item.Size,
+        //            PublicUrl = item.PublicUrl,
+        //            Path = item.Path
+        //        });
+        //    }
+        //    return filesAndFoldersList;
+        //}
     }
 }

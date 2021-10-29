@@ -19,7 +19,7 @@ namespace ClientMonitor.Infrastructure.Monitor
             {
                 {MonitoringTypes.RAM, new RamAdaptor() },
                 {MonitoringTypes.CPU, new CpuAdaptor() },
-                {MonitoringTypes.HTTP, new HttpAdaptor() },
+                //{MonitoringTypes.HTTP, new HttpAdaptor() },
                 {MonitoringTypes.Proc, new ProcAdaptor() },
                 {MonitoringTypes.Sites, new SitesAdaptor() },
                 {MonitoringTypes.Servers, new ServersAdaptor() },
