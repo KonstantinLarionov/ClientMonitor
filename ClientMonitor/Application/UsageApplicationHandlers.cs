@@ -55,7 +55,7 @@ namespace ClientMonitor.Application
                     {
                         var dateTime = DateTime.Now;
                         handle.Invoke(service);
-                        Thread.Sleep(3600000);
+                        Thread.Sleep(7200000);
                     }
                     catch (Exception ex)
                     {
