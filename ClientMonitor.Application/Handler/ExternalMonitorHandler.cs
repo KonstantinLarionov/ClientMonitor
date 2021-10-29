@@ -64,8 +64,9 @@ namespace ClientMonitor.Application.Handler
             {
                 test1 = test1 + "__"+result.Message+ "\r\n";
             }
-
-            //notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
+            test1 = test1 + "\r\n" + "TypeLog:"+log.TypeLog +"__Status:"+ log.Text +"__Time:"+ log.DateTime;
+            
+            notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
         }
     }
 }
