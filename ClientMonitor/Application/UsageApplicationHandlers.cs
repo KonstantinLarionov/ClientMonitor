@@ -61,19 +61,23 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
-        public static void UsePcMonitoring(this IApplicationBuilder application, Action<IPcMonitoringHandler> handle)
+        public static void UsePcMonitoring(this IApplicationBuilder application, params Action<IPcMonitoringHandler>[] handlers)
         {
-            Thread thread = new Thread(() =>
-            {
-                var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
 
-                while (true)
+            foreach (var i in handlers)
+            {
+                Thread thread = new Thread(() =>
                 {
-                    handle.Invoke(service);
-                    Thread.Sleep(1000);
-                }
-            });
-            thread.Start();
+                    var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
+
+                    while (true)
+                    {
+                        i.Invoke(service);
+                        Thread.Sleep(1000);
+                    }
+                });
+                thread.Start();
+            }
         }
     }
 }

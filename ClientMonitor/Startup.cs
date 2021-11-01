@@ -97,10 +97,24 @@ namespace ClientMonitor
             });
 
             //проверка пк
-            app.UsePcMonitoring(pcMonitoringHandler =>
+            app.UsePcMonitoring(
+            cpuHandler =>
             {
-                pcMonitoringHandler.Handle();
-            });
+                cpuHandler.HandleCpu();
+            }, 
+            ramHandler => 
+            {
+                ramHandler.HandleRam();
+            },
+            procHandler =>
+            {
+                procHandler.HandleProc();
+            },
+             httpHandler =>
+             {
+                 httpHandler.HandleHttp();
+             }
+            );
             #endregion
         }
     }

@@ -8,6 +8,9 @@ namespace ClientMonitor.Application.Abstractions
 {
     public interface IPcMonitoringHandler
     {
-        void Handle();
+        void HandleCpu();
+        void HandleRam();
+        void HandleProc();
+        void HandleHttp();
     }
 }
