@@ -12,7 +12,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
 	public class HttpAdaptor : IMonitor
 	{
-        private static string p = "";
+        private static string p;
 
 		public object ReceiveInfoMonitor()
 		{
@@ -104,7 +104,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                     break;
             }
 
-            p = ($"{point.LenghtData}");
+            p = point.LenghtData.ToString();
         }
         private static string ToSTR(byte[] arr)
         {

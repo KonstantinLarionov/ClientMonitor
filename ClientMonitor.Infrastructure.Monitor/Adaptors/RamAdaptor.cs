@@ -23,7 +23,8 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 frrm = ((totalRam - busyRam) / 1024).ToString();
                 bsrm = (busyRam / 1024).ToString();
             }
-            resultMonitoring.Add(new ResultMonitoring(true, frrm + "/"+ bsrm));
+            resultMonitoring.Add(new ResultMonitoring(true, frrm));
+            resultMonitoring.Add(new ResultMonitoring(true, bsrm));
             return resultMonitoring;
         }
 	}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using ClientMonitor.Application.Abstractions;
@@ -12,15 +13,17 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
         {
             List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
             var cpuload = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            string s = "";
+            double s=0;
             int i = 2;
             while (i>0)
             {
-                s=cpuload.NextValue().ToString();
+                s=cpuload.NextValue();
                 i--;
                 Thread.Sleep(1000);
             }
-            resultMonitoring.Add(new ResultMonitoring(true, s));
+            double s1 = 100 - s;
+            resultMonitoring.Add(new ResultMonitoring(true, s.ToString()));
+            resultMonitoring.Add(new ResultMonitoring(true, s1.ToString()));
             return resultMonitoring;
         }
     }

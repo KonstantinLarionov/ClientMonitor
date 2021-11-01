@@ -1,34 +1,30 @@
 ﻿using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.Database.Contexts;
 using ClientMonitor.Infrastructure.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace ClientMonitor.Infrastructure.Database.Repositories
 {
-    public class MonitoringRepository : IRepository<PcInfo>
+    public class RamRepository : IRepository<RamInfo>
     {
         private LoggerContext db;
-        public MonitoringRepository()
+        public RamRepository()
         {
             db = new LoggerContext();
         }
 
-        public void AddInDb(PcInfo info)
+        public void AddInDb(RamInfo info)
         {
             db.Database.EnsureCreated();
             db.Database.Migrate();
-            var mon = new InfoMonitoring
+            var log = new EntitiesRam
             {
                 DateTime = info.DateTime,
-                Cpu = info.Cpu,
-                Ram=info.Ram,
-                Proc=info.Proc,
-                Http=info.Http,
+                BusyRam = info.BusyRam,
+                FreeRam = info.FreeRam,
             };
 
-            db.InfoMonitorings.Add(mon);
+            db.ERams.Add(log);
             db.SaveChanges();
         }
     }
