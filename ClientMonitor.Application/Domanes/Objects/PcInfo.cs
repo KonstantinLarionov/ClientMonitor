@@ -8,6 +8,7 @@ namespace ClientMonitor.Application.Domanes.Objects
 {
     public class PcInfo
     {
+        public int Id { get; set; }
         public DateTime DateTime { get; set; }
         public string Cpu { get; set; }
         public string Ram { get; set; }

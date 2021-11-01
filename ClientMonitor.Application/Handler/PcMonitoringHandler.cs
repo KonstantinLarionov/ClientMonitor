@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
 {
-    class PcMonitoringHandler : IPcMonitoringHandler
+    public class PcMonitoringHandler : IPcMonitoringHandler
     {
         IMonitorFactory MonitorFactory;
-        IRepositoryPc<PcInfo> db;
-        public PcMonitoringHandler(IMonitorFactory monitorFactory, IRepositoryPc<PcInfo> repository)
+        IRepository<PcInfo> db;
+        public PcMonitoringHandler(IMonitorFactory monitorFactory, IRepository<PcInfo> repository)
         {
             MonitorFactory = monitorFactory;
             db = repository;
@@ -26,17 +26,18 @@ namespace ClientMonitor.Application.Handler
             var infohttp = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.HTTP);
 
             var resultMonitoringcpu = infocpu.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            results.AddRange(resultMonitoringcpu);
             var resultMonitoringram = inforam.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            results.AddRange(resultMonitoringram);
+            var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            var resultMonitoringhttp = infohttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
 
             PcInfo stat = new PcInfo
             {
                 DateTime = DateTime.Now,
-                Cpu = infocpu.ToString(),
-                Ram = inforam.ToString(),
-                Proc = infoproc.ToString(),
-                Http = infohttp.ToString(),
+                //Cpu = infocpu.ToString(),
+                Cpu = resultMonitoringcpu.ToString(),
+                Ram = resultMonitoringram.ToString(),
+                Proc = resultMonitoringproc.ToString(),
+                Http = resultMonitoringhttp.ToString(),
             };
 
             db.AddInDb(stat);

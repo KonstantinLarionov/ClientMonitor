@@ -73,7 +73,7 @@ namespace ClientMonitor.Application
                     Thread.Sleep(1000);
                 }
             });
-
+            thread.Start();
         }
     }
 }

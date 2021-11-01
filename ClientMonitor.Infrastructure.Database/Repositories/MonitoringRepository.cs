@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClientMonitor.Infrastructure.Database.Repositories
 {
-    public class MonitoringRepository : IRepositoryPc<PcInfo>
+    public class MonitoringRepository : IRepository<PcInfo>
     {
-        private PcContext db;
+        private LoggerContext db;
         public MonitoringRepository()
         {
-            db = new PcContext();
+            db = new LoggerContext();
         }
 
         public void AddInDb(PcInfo info)

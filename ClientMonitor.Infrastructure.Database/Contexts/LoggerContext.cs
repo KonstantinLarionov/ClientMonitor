@@ -8,6 +8,7 @@ namespace ClientMonitor.Infrastructure.Database.Contexts
     public class LoggerContext : DbContext
     {
         public DbSet<Log> Logs { get; set; }
+        public DbSet<InfoMonitoring> InfoMonitorings { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource =  $"MonitorDB.db" };

@@ -10,6 +10,5 @@ namespace ClientMonitor.Application.Abstractions
     public interface IRepository<T>
     {
         void AddInDb(T info);
-        void DeleteInDb(T info);
     }
 }

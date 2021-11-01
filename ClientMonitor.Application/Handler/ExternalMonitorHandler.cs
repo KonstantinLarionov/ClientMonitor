@@ -74,7 +74,6 @@ namespace ClientMonitor.Application.Handler
                 }
             }
 
-
             //notifyer.SendMessage("-742266994", test1);
 
             //LogInfo log = new LogInfo
@@ -85,6 +84,7 @@ namespace ClientMonitor.Application.Handler
             //};
 
             //db.AddInDb(log);
+
 
         }
     }

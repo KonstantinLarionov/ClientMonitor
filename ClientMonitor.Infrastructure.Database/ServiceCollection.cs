@@ -13,6 +13,9 @@ namespace ClientMonitor.Infrastructure.Database
         {
             services.AddEntityFrameworkSqlite().AddDbContext<LoggerContext>();
             services.AddSingleton<IRepository<LogInfo>, LoggerRepository>();
+
+            //services.AddEntityFrameworkSqlite().AddDbContext<PcContext>();
+            services.AddSingleton<IRepository<PcInfo>, MonitoringRepository>();
             //TODO : Регистрация репозитория на интерфейс IRepositories
         }
     }
