@@ -30,13 +30,6 @@ namespace ClientMonitor.Application.Handler
             var resultMonitoringram = inforam.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoringram);
 
-            string test1 = "";
-            //foreach (var result in results)
-            //{
-            //    test1 = test1 + "__" + result.Message + "\r\n";
-            //}
-
-
             PcInfo stat = new PcInfo
             {
                 DateTime = DateTime.Now,

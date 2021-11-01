@@ -97,9 +97,9 @@ namespace ClientMonitor
             });
 
             //проверка пк
-            app.UsePcMonitoring(externalMonitorHandler =>
+            app.UsePcMonitoring(pcMonitoringHandler =>
             {
-                externalMonitorHandler.Handle();
+                pcMonitoringHandler.Handle();
             });
             #endregion
         }

@@ -70,8 +70,8 @@ namespace ClientMonitor.Application
                 while (true)
                 {
                     handle.Invoke(service);
+                    Thread.Sleep(1000);
                 }
-                Thread.Sleep(1000);
             });
 
         }

@@ -1,4 +1,5 @@
-﻿using ClientMonitor.Application.Domanes.Objects;
+﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.Database.Contexts;
 using ClientMonitor.Infrastructure.Database.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClientMonitor.Infrastructure.Database.Repositories
 {
-    public class MonitoringRepository
+    public class MonitoringRepository : IRepositoryPc<PcInfo>
     {
         private PcContext db;
         public MonitoringRepository()
