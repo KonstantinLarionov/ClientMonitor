@@ -151,17 +151,17 @@ namespace ClientMonitor.Application.Handler
             {
                 test = test + "\r\n" + $"Цп использовалось % Мин: {Math.Round(resCpu[0], 3)} Max: {Math.Round(resCpu[1], 3)} Сред: {Math.Round(resCpu[2], 3)}";
             }
-            else { proverkaOnNull = "Ошибка проверки CPU"; }
+            else { proverkaOnNull = proverkaOnNull +"\r\n" + "Ошибка проверки CPU"; }
             if (resRam.Count != 0)
             {
                 test = test + "\r\n" + $"Используемая память mB Мин: {Math.Round(resRam[0], 3)} Max: {Math.Round(resRam[1], 3)} Сред: {Math.Round(resRam[2], 3)}";
             }
-            else { proverkaOnNull = "Ошибка проверки RAM"; }
+            else { proverkaOnNull = proverkaOnNull + "\r\n" +"Ошибка проверки RAM"; }
             if (resHttp.Count != 0)
             {
                 test = test + "\r\n" + $"Сумма пакетов http в байтах: {resHttp[0]}";
             }
-            else { proverkaOnNull = "Ошибка проверки HTTP"; }
+            else { proverkaOnNull = proverkaOnNull + "\r\n" + "Ошибка проверки HTTP"; }
             if(proverkaOnNull!="")
             { 
                 LogInfo log = new LogInfo
