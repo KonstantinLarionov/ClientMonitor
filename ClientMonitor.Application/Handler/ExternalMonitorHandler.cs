@@ -58,6 +58,8 @@ namespace ClientMonitor.Application.Handler
                     db.AddInDb(log);
                 }
             }
+
+            //notifyer.SendMessage("-742266994", test1);
         }
     }
 }

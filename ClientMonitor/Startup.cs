@@ -115,6 +115,12 @@ namespace ClientMonitor
                  httpHandler.HandleHttp();
              }
             );
+
+            app.UsePcMonitoringMessage(messageHandler =>
+            {
+                messageHandler.HandleMessageMonitoringPc();
+            }
+            );
             #endregion
         }
     }

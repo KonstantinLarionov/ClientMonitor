@@ -12,5 +12,6 @@ namespace ClientMonitor.Application.Abstractions
         void HandleRam();
         void HandleProc();
         void HandleHttp();
+        void HandleMessageMonitoringPc();
     }
 }

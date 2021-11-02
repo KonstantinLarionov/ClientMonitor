@@ -79,5 +79,43 @@ namespace ClientMonitor.Application
                 thread.Start();
             }
         }
+
+        public static void UsePcMonitoringMessage(this IApplicationBuilder application, Action<IPcMonitoringHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
+                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
+
+                while (true)
+                {
+                    try
+                    {
+                        DateTime dateTime = DateTime.Now;
+
+                        if (date.Hour== dateTime.Hour && date.Minute == dateTime.Minute)
+                        {
+                            handle.Invoke(service);
+                            Thread.Sleep(60000);
+                        }
+                        if (date1.Hour == dateTime.Hour && date1.Minute == dateTime.Minute)
+                        {
+                            handle.Invoke(service);
+                            Thread.Sleep(60000);
+                        }
+                        else
+                        {
+                            Thread.Sleep(10000);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO: Send message telegram mb wait mb app off
+                    }
+                }
+            });
+            thread.Start();
+        }
     }
 }

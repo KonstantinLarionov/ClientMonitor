@@ -3,6 +3,7 @@ using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.Database.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
@@ -14,13 +15,16 @@ namespace ClientMonitor.Application.Handler
         IRepository<RamInfo> dbRam;
         IRepository<ProcInfo> dbProc;
         IRepository<HttpInfo> dbHttp;
-        public PcMonitoringHandler(IMonitorFactory monitorFactory, IRepository<CpuInfo> repositoryCpu, IRepository<RamInfo> repositoryRam, IRepository<ProcInfo> repositoryProc, IRepository<HttpInfo> repositoryHttp)
+        INotificationFactory NotificationFactory;
+
+        public PcMonitoringHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory, IRepository<CpuInfo> repositoryCpu, IRepository<RamInfo> repositoryRam, IRepository<ProcInfo> repositoryProc, IRepository<HttpInfo> repositoryHttp)
         {
             MonitorFactory = monitorFactory;
             dbCpu = repositoryCpu;
             dbRam = repositoryRam;
             dbProc = repositoryProc;
             dbHttp = repositoryHttp;
+            NotificationFactory = notificationFactory;
         }
         public void HandleCpu()
         {
@@ -74,6 +78,24 @@ namespace ClientMonitor.Application.Handler
                 Length = Convert.ToInt32(resultMonitoringhttp[0].Message),
             };
             dbHttp.AddInDb(http);
+        }
+
+        public void HandleMessageMonitoringPc()
+        {
+            var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
+
+            var resCpu = dbCpu.StatDb(DateTime.Now);
+            //var resCpu = dbCpu.StatDb(DateTime.Now) as List<ResultMonitoring>;
+
+            var resRam = dbRam.StatDb(DateTime.Now);
+            var resHttp = dbHttp.StatDb(DateTime.Now);
+            string test = $"Статистика CPU, RAM и HTTP на {DateTime.Now}";
+
+            test = test + "\r\n" + $"Цп использовалось % Мин: {Math.Round(resCpu[0],3)} Max: {Math.Round(resCpu[1], 3)} Сред: {Math.Round(resCpu[2], 3)}";
+            test = test + "\r\n" + $"Используемая память mB Мин: {Math.Round(resRam[0],3)} Max: {Math.Round(resRam[1], 3)} Сред: {Math.Round(resRam[2], 3)}";
+            test = test + "\r\n" + $"Сумма пакетов http в байтах: {resHttp[0]}";
+            notifyer.SendMessage("-742266994", test);
+
         }
     } 
 }
