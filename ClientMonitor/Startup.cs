@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ClientMonitor.Infrastructure.StreamingRecording;
 
 namespace ClientMonitor
 {
@@ -41,6 +42,7 @@ namespace ClientMonitor
             services.AddInfrastructureScreenRecording();
             services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
+            services.AddInfrastructureStreamingRecording();
 
             services.AddSwaggerGen(c =>
             {
@@ -49,7 +51,7 @@ namespace ClientMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IStreamingRecording streamingRecording)
         {
             if (env.IsDevelopment())
             {
@@ -57,6 +59,9 @@ namespace ClientMonitor
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClientMonitor v1"));
             }
+
+            streamingRecording.StartStreamingRecording();
+
 
             app.UseHttpsRedirection();
 
@@ -71,7 +76,7 @@ namespace ClientMonitor
 
             #region [WorkBehind]
             //Работа с облаком и видео
-            
+            /*
             app.UseCloudUploading(cloudHandler => 
             {
                 cloudHandler.Handle(); 
@@ -81,7 +86,7 @@ namespace ClientMonitor
             app.UseExternalMonitor(externalMonitorHandler =>
             {
                 externalMonitorHandler.Handle();
-            });
+            });*/
             #endregion
         }
     }

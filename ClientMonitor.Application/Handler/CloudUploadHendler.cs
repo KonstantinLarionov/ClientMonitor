@@ -24,10 +24,10 @@ namespace ClientMonitor.Application.Handler
         public async Task Handle()
         {
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
-            string[] getfiles = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE", "*.mp4");
-            if (getfiles.Length != 0)
+            string[] getFilesFromHall = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE", "*.mp4");
+            if (getFilesFromHall.Length != 0)
             {
-                string[] files = GetWitoutLastElement(getfiles, getfiles.Length);
+                string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
 
                 foreach (var file in files)
                 {
@@ -37,17 +37,17 @@ namespace ClientMonitor.Application.Handler
                     await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                     fileInf.Delete();
                 }
-                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Выдача\" завершена. Файлов отправленно: {getfiles.Length - 1} Время: {DateTime.Now}~~~");
+                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Выдача\" завершена. Файлов отправленно: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
             }
             else
             {
                 await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправленны из папки: \"Выдача\" так как она пуста.~~~!");
             }
 
-            string[] getfiles2 = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM", "*.mp4");
-            if (getfiles2.Length != 0)
+            string[] getFilesFromtorage = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM", "*.mp4");
+            if (getFilesFromtorage.Length != 0)
             {
-                string[] files2 = GetWitoutLastElement(getfiles2, getfiles2.Length);
+                string[] files2 = GetWitoutLastElement(getFilesFromtorage, getFilesFromtorage.Length);
                 foreach (var file in files2)
                 {
                     FileInfo fileInf = new FileInfo(file);
@@ -56,7 +56,7 @@ namespace ClientMonitor.Application.Handler
                     await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                     fileInf.Delete();
                 }
-                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправленно: {getfiles2.Length-1} Время: {DateTime.Now}~~~");
+                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправленно: {getFilesFromtorage.Length-1} Время: {DateTime.Now}~~~");
             }
             else
             {
