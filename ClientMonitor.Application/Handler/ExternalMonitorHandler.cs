@@ -21,9 +21,21 @@ namespace ClientMonitor.Application.Handler
 
         public void Handle()
         {
+            var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
+            if (notifyer == null) 
+            {
+                LogInfo log = new LogInfo
+                {
+                    TypeLog = LogTypes.Error,
+                    Text = "Ошибка соединения",
+                    DateTime = DateTime.Now
+                };
+                db.AddInDb(log);
+                return;
+            }
+
             List<ResultMonitoring> results = new List<ResultMonitoring>(); 
             var monitor = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Sites);
-            var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
             var infoservers = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Servers);
             var resultMonitoring = monitor.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoring);
@@ -58,7 +70,6 @@ namespace ClientMonitor.Application.Handler
                     db.AddInDb(log);
                 }
             }
-
             //notifyer.SendMessage("-742266994", test1);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,43 @@ namespace ClientMonitor.Application.Handler
         readonly ICloud Cloud;
         readonly INotification TelegramNotification;
         readonly INotification MaileNotification;
+        readonly IRepository<LogInfo> dbLog;
 
-        public CloudUploadHendler(ICloudFactory cloud, INotificationFactory notification)
+        public CloudUploadHendler(ICloudFactory cloud, INotificationFactory notification, IRepository<LogInfo> repositoryLog)
         {
             Cloud = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
             TelegramNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
             MaileNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Mail);
+            dbLog = repositoryLog;
         }
         public async Task Handle()
         {
+            if (TelegramNotification==null)
+            {
+                LogInfo log = new LogInfo
+                {
+                    TypeLog = LogTypes.Error,
+                    Text = "Ошибка соединения",
+                    DateTime = DateTime.Now
+                };
+                dbLog.AddInDb(log);
+                return;
+            }
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             string[] files = Directory.GetFiles(@"C:\Users\79123\Desktop\Новая папка", "*.txt");
+
+            if ((files == null) && files.Any())
+            {
+                LogInfo log = new LogInfo
+                {
+                    TypeLog = LogTypes.Error,
+                    Text = "Ошибка загрузки файла отправки в облако",
+                    DateTime = DateTime.Now
+                };
+                dbLog.AddInDb(log);
+                return;
+            }
+
             foreach (var file in files)
             {
                 FileInfo fileInf = new FileInfo(file);

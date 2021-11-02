@@ -20,22 +20,15 @@ namespace ClientMonitor.Application
 
                 while (true)
                 {
-                    try
+                    DateTime dateTime = DateTime.Now;
+                    if (dateTime.Hour == 17 && dateTime.Minute <= 50)
                     {
-                        DateTime dateTime = DateTime.Now;
-                        if (dateTime.Hour == 17 && dateTime.Minute <= 50)
-                        {
-                            handle.Invoke(service);
-                            Thread.Sleep(85800000);
-                        }
-                        else
-                        {
-                            Thread.Sleep(10000);
-                        }
+                        handle.Invoke(service);
+                        Thread.Sleep(85800000);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        //TODO: Send message telegram mb wait mb app off
+                        Thread.Sleep(10000);
                     }
                 }
             });
@@ -45,7 +38,6 @@ namespace ClientMonitor.Application
         {
             Thread thread = new Thread(() =>
             {
-
                 var service = application.ApplicationServices.GetRequiredService<IExternalMonitorHandler>();
 
                 while (true)
@@ -63,13 +55,11 @@ namespace ClientMonitor.Application
 
         public static void UsePcMonitoring(this IApplicationBuilder application, params Action<IPcMonitoringHandler>[] handlers)
         {
-
             foreach (var i in handlers)
             {
                 Thread thread = new Thread(() =>
                 {
                     var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-
                     while (true)
                     {
                         i.Invoke(service);
@@ -90,29 +80,19 @@ namespace ClientMonitor.Application
 
                 while (true)
                 {
-                    try
-                    {
                         DateTime dateTime = DateTime.Now;
 
                         if (date.Hour== dateTime.Hour && date.Minute == dateTime.Minute)
                         {
                             handle.Invoke(service);
-                            Thread.Sleep(60000);
+                            Thread.Sleep(32400000);
                         }
-                        if (date1.Hour == dateTime.Hour && date1.Minute == dateTime.Minute)
+                        else if (date1.Hour == dateTime.Hour && date1.Minute == dateTime.Minute)
                         {
                             handle.Invoke(service);
-                            Thread.Sleep(60000);
+                            Thread.Sleep(32400000);
                         }
-                        else
-                        {
-                            Thread.Sleep(10000);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //TODO: Send message telegram mb wait mb app off
-                    }
+                    Thread.Sleep(10000);
                 }
             });
             thread.Start();
