@@ -151,7 +151,7 @@ namespace ClientMonitor.Application.Handler
             {
                 test = test + "\r\n" + $"Цп использовалось % Мин: {Math.Round(resCpu[0], 3)} Max: {Math.Round(resCpu[1], 3)} Сред: {Math.Round(resCpu[2], 3)}";
             }
-            else { proverkaOnNull = proverkaOnNull +"\r\n" + "Ошибка проверки CPU"; }
+            else { proverkaOnNull = "Ошибка проверки CPU"; }
             if (resRam.Count != 0)
             {
                 test = test + "\r\n" + $"Используемая память mB Мин: {Math.Round(resRam[0], 3)} Max: {Math.Round(resRam[1], 3)} Сред: {Math.Round(resRam[2], 3)}";
