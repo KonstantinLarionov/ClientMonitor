@@ -40,7 +40,7 @@ namespace ClientMonitor.Application.Handler
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             string[] files = Directory.GetFiles(@"C:\Users\79123\Desktop\Новая папка", "*.txt");
 
-            if ((files == null) && files.Any())
+            if (files.Length == 0)
             {
                 LogInfo log = new LogInfo
                 {

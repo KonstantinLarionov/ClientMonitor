@@ -34,7 +34,7 @@ namespace ClientMonitor.Application.Handler
         {
             var infocpu = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.CPU);
             var resultMonitoringcpu = infocpu.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            if ((resultMonitoringcpu == null) && (resultMonitoringcpu.Any())) 
+            if (resultMonitoringcpu.Count == 0) 
             {
                 LogInfo log = new LogInfo
                 {
@@ -59,7 +59,7 @@ namespace ClientMonitor.Application.Handler
         {
             var inforam = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.RAM);
             var resultMonitoringram = inforam.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            if ((resultMonitoringram == null) && (resultMonitoringram.Any()))
+            if (resultMonitoringram.Count == 0)
             {
                 LogInfo log = new LogInfo
                 {
@@ -86,7 +86,7 @@ namespace ClientMonitor.Application.Handler
 
             var infoproc = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Proc);
             var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            if ((resultMonitoringproc == null) && (resultMonitoringproc.Any()))
+            if (resultMonitoringproc.Count == 0)
             {
                 LogInfo log = new LogInfo
                 {
@@ -109,7 +109,7 @@ namespace ClientMonitor.Application.Handler
         {
             var infohttp = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.HTTP);
             var resultMonitoringhttp = infohttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            if ((resultMonitoringhttp == null) && (resultMonitoringhttp.Any()))
+            if (resultMonitoringhttp.Count == 0)
             {
                 LogInfo log = new LogInfo
                 {
@@ -146,21 +146,24 @@ namespace ClientMonitor.Application.Handler
             var resRam = dbRam.StatDb(DateTime.Now);
             var resHttp = dbHttp.StatDb(DateTime.Now);
             string test = $"Статистика CPU, RAM и HTTP на {DateTime.Now}";
-
-            if ((resCpu != null) && (!resCpu.Any()))
+            string proverkaOnNull = "";
+            if (resCpu.Count != 0)
             {
                 test = test + "\r\n" + $"Цп использовалось % Мин: {Math.Round(resCpu[0], 3)} Max: {Math.Round(resCpu[1], 3)} Сред: {Math.Round(resCpu[2], 3)}";
             }
-            else if ((resRam != null) && (!resRam.Any()))
+            else { proverkaOnNull = "Ошибка проверки CPU"; }
+            if (resRam.Count != 0)
             {
                 test = test + "\r\n" + $"Используемая память mB Мин: {Math.Round(resRam[0], 3)} Max: {Math.Round(resRam[1], 3)} Сред: {Math.Round(resRam[2], 3)}";
             }
-            else if ((resHttp != null) && (!resHttp.Any()))
+            else { proverkaOnNull = "Ошибка проверки RAM"; }
+            if (resHttp.Count != 0)
             {
                 test = test + "\r\n" + $"Сумма пакетов http в байтах: {resHttp[0]}";
             }
-            else
-            {
+            else { proverkaOnNull = "Ошибка проверки HTTP"; }
+            if(proverkaOnNull!="")
+            { 
                 LogInfo log = new LogInfo
                 {
                     TypeLog = LogTypes.Error,
@@ -169,6 +172,7 @@ namespace ClientMonitor.Application.Handler
                 };
                 dbLog.AddInDb(log);
             }
+
             notifyer.SendMessage("-693501604", test);
         }
     } 
