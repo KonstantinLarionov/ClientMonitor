@@ -11,7 +11,7 @@ namespace ClientMonitor.Application.Domanes.Objects
     {
         public string Name { get; set; }
         public string MimeType { get; set; }
-        public FilesType FilesType { get; set; }
+        public FilesTypes Type { get; set; }
         public DateTime Created { get; set; }
         public long Size { get; set; }
         public string PublicUrl { get; set; }

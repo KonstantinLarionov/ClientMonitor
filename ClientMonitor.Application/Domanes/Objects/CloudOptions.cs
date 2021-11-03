@@ -9,7 +9,7 @@ namespace ClientMonitor.Application.Domanes.Objects
 {
     public class CloudOptions
     {
-        public string Token { get; set; } = "AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF";
+        public string Token { get; set; } = "AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF_o";
         public string Adress { get; set; } 
         public CloudTypes Name { get; set; } = CloudTypes.YandexCloud;
         public string Path { get; set; } = "/";

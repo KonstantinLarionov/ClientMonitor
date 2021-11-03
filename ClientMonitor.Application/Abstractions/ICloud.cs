@@ -11,5 +11,9 @@ namespace ClientMonitor.Application.Abstractions
     public interface ICloud
     {
         Task<List<CloudFilesInfo>> GetFilesAndFoldersAsync();
+
+        Task UploadFiles(UploadedFilesInfo uploadedFilesInfo);
+
+        Task<bool> DawnloadFiles(string path, string name, string downloadpath);
     }
 }

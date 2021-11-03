@@ -1,5 +1,6 @@
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Infrastructure.CloudManager;
+using ClientMonitor.Infrastructure.Monitor;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
