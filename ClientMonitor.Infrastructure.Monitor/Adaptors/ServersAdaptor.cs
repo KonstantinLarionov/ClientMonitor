@@ -2,10 +2,8 @@
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
@@ -17,12 +15,12 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
         {
         new DataServer
             {
-                IpServer = "192.168.90.124",
+                IpServer = "188.186.238.120",
                 PortServer = 8888,
             },
             new DataServer
             {
-                IpServer = "192.168.89.182",
+                IpServer = "188.186.238.120",
                 PortServer = 8889,
             },
             new DataServer
@@ -39,13 +37,12 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 
             foreach (var server in Servers)
             {
-                //var resources = server.GetInfo();
                 var result = ResultCheckStatus(server);
                 if (result.Success)
                 {
-                    resultMonitoring.Add(new ResultMonitoring(true, $"IpServer: {server.IpServer}, PortServer: {server.PortServer}, ___: {result.Message}"));
+                    resultMonitoring.Add(new ResultMonitoring(true, $"IpServer: {server.IpServer}, PortServer: {server.PortServer} : {result.Message}"));
                 }
-                else { resultMonitoring.Add(new ResultMonitoring(true, $"IpServer: {server.IpServer}, PortServer: {server.PortServer}, Ошибка")); }
+                else { resultMonitoring.Add(new ResultMonitoring(false, $"IpServer: {server.IpServer}, PortServer: {server.PortServer} : {result.Message}")); }
             }
 
             return resultMonitoring;
@@ -69,8 +66,6 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                 string rspnc = response.ToString();
                 if (rspnc.ToString() == "1") { return new ResultStatusRequest("Сервер работает", DateTime.Now, true); }
                 else { return new ResultStatusRequest("Сервер НЕ работает", DateTime.Now, false); }
-                //stream.Close();
-                //client.Close();
             }
             catch
             {

@@ -1,10 +1,9 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ClientMonitor.Application.Handler
 {
@@ -12,47 +11,66 @@ namespace ClientMonitor.Application.Handler
     {
         IMonitorFactory MonitorFactory;
         INotificationFactory NotificationFactory;
-        public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory)
+        IRepository<LogInfo> db;
+        public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory, IRepository<LogInfo> repository)
         { 
             MonitorFactory = monitorFactory;
             NotificationFactory = notificationFactory;
+            db = repository;
         }
 
         public void Handle()
         {
-            List<ResultMonitoring> results = new List<ResultMonitoring>(); 
-            var monitor = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Sites);
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
-            var infocpu = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.CPU);
-            var inforam = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.RAM);
-            var infoproc =  MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Proc);
-            var infoservers = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Servers);
+            if (notifyer == null)
+            {
+                LogInfo log = new LogInfo
+                {
+                    TypeLog = LogTypes.Error,
+                    Text = "Ошибка соединения",
+                    DateTime = DateTime.Now
+                };
+                db.AddInDb(log);
+                return;
+            }
 
+            List<ResultMonitoring> results = new List<ResultMonitoring>();
+            var monitor = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Sites);
+            var infoservers = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Servers);
             var resultMonitoring = monitor.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoring);
-            var resultMonitoringcpu = infocpu.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            results.AddRange(resultMonitoringcpu);
-            var resultMonitoringram = inforam.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            results.AddRange(resultMonitoringram);
-            var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            results.AddRange(resultMonitoringproc);
             var resultMonitoringservers = infoservers.ReceiveInfoMonitor() as List<ResultMonitoring>;
             results.AddRange(resultMonitoringservers);
-
-
-            //foreach (var result in results)
-            //{
-            //    if (!result.Success)
-            //    { notifyer.SendMessage("-742266994", "!Ошибка проверки!\r\n" + result.Message); }
-            //    else
-            //    { notifyer.SendMessage("-742266994", "Проверка успешна\r\n" + result.Message); }
-            //}
             string test1 = "";
+
             foreach (var result in results)
             {
-                test1 = test1 + "____"+result.Message+ "\r\n";
+                if (!result.Success)
+                {
+                    test1 = test1 + "!Ошибка проверки!\r\n" + result.Message + "\r\n";
+                    LogInfo log = new LogInfo
+                    {
+                        TypeLog = LogTypes.Error,
+                        Text = result.Message,
+                        DateTime = DateTime.Now
+                    };
+
+                    db.AddInDb(log);
+                }
+                else
+                {
+                    test1 = test1 + "!Проверка успешна!\r\n" + result.Message + "\r\n";
+                    LogInfo log = new LogInfo
+                    {
+                        TypeLog = LogTypes.Information,
+                        Text = result.Message,
+                        DateTime = DateTime.Now
+                    };
+
+                    db.AddInDb(log);
+                }
             }
-            notifyer.SendMessage("-742266994", "!Успешная проверка!\r\n" + test1);
+            notifyer.SendMessage("-742266994", test1);
         }
     }
 }

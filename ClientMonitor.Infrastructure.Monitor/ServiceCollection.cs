@@ -10,7 +10,7 @@ namespace ClientMonitor.Infrastructure.Monitor
         {
             var assembly = typeof(ServiceCollection).GetTypeInfo().Assembly;
 
-            services.AddSingleton<IMonitorFactory, MonitorFactory>();
+            services.AddSingleton<IMonitorFactory, MonitorsFactory>();
         }
 
     }

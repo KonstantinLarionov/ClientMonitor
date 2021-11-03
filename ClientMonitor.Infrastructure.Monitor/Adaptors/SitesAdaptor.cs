@@ -4,10 +4,6 @@ using ClientMonitor.Application.Domanes.Objects;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
@@ -127,9 +123,9 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                     {
                         var result = CheckClientResources(resource);
                         if (result.Success)
-                        { resultMonitoring.Add(new ResultMonitoring(true, $"Client: {client.ClientName}, Resource: {resource.Name}, Path: {resource.Path} РАБОТАЕТ")); }
+                        { resultMonitoring.Add(new ResultMonitoring(true, $"Client: {client.ClientName}, Resource: {resource.Name}, Path: {resource.Path}")); }
                         else
-                        { resultMonitoring.Add(new ResultMonitoring(false, $"Client: {client.ClientName}, Resource: {resource.Name}, Path: {resource.Path} НЕ РАБОТАЕТ")); }
+                        { resultMonitoring.Add(new ResultMonitoring(false, $"Client: {client.ClientName}, Resource: {resource.Name}, Path: {resource.Path}")); }
 
                     }
                     else { continue; }

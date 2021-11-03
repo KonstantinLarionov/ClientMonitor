@@ -11,9 +11,11 @@
   <ItemGroup>
     <ProjectReference Include="..\ClientMonitor.Application\ClientMonitor.Application.csproj" />
     <ProjectReference Include="..\ClientMonitor.Infrastructure.CloudManager\ClientMonitor.Infrastructure.CloudManager.csproj" />
+    <ProjectReference Include="..\ClientMonitor.Infrastructure.Database\ClientMonitor.Infrastructure.Database.csproj" />
     <ProjectReference Include="..\ClientMonitor.Infrastructure.Monitor\ClientMonitor.Infrastructure.Monitor.csproj" />
     <ProjectReference Include="..\ClientMonitor.Infrastructure.Notifications\ClientMonitor.Infrastructure.Notifications.csproj" />
     <ProjectReference Include="..\ClientMonitor.Infrastructure.ScreenRecording\ClientMonitor.Infrastructure.ScreenRecording.csproj" />
+    <ProjectReference Include="..\ClientMonitor.Infrastructure.StreamingRecording\ClientMonitor.Infrastructure.StreamingRecording.csproj" />
   </ItemGroup>
 
 </Project>

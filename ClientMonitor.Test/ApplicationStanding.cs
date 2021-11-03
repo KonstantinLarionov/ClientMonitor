@@ -1,5 +1,6 @@
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Infrastructure.CloudManager;
+using ClientMonitor.Infrastructure.Monitor;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -32,11 +33,17 @@ namespace ClientMonitor.Test
                 //{
                 //    services.AddDbContext<DatabaseContext>(opt => opt.UseInMemoryDatabase("Template"));
                 //})
-                 // #endif
-                 .ConfigureTestServices(services =>
-                 {
-                     services.AddSingleton<ICloudFactory, CloudsFactory>();
-                 })
+                // #endif
+
+                // .ConfigureTestServices(services =>
+                // {
+                //     services.AddSingleton<ICloudFactory, CloudsFactory>();
+                // })
+                //.UseStartup<Startup>();
+                .ConfigureTestServices(services =>
+                {
+                    services.AddSingleton<IMonitorFactory, MonitorsFactory>();
+                })
                 .UseStartup<Startup>();
         }
     }

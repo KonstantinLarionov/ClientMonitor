@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Monitor
 {
-    class MonitorFactory : IMonitorFactory
+    public class MonitorsFactory : IMonitorFactory
     {
         private readonly Dictionary<MonitoringTypes, IMonitor> _adaptors;
 
-        public MonitorFactory()
+        public MonitorsFactory()
         {
             _adaptors = new Dictionary<MonitoringTypes, IMonitor>()
             {
                 {MonitoringTypes.RAM, new RamAdaptor() },
                 {MonitoringTypes.CPU, new CpuAdaptor() },
-                //{MonitoringTypes.HTTP, new HttpAdaptor() },
+                {MonitoringTypes.HTTP, new HttpAdaptor() },
                 {MonitoringTypes.Proc, new ProcAdaptor() },
                 {MonitoringTypes.Sites, new SitesAdaptor() },
                 {MonitoringTypes.Servers, new ServersAdaptor() },

@@ -2,8 +2,7 @@
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
+using System.Management;
 
 namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
@@ -12,18 +11,21 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 		public object ReceiveInfoMonitor()
 		{
             List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
-            var ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-            string s = "";
-            int i = 2;
-            while (i > 0)
+
+            string bsrm = "";
+            string frrm = "";
+            ManagementObjectSearcher ramMonitor =    //запрос к WMI для получения памяти ПК
+            new ManagementObjectSearcher("SELECT TotalVisibleMemorySize,FreePhysicalMemory FROM Win32_OperatingSystem");
+            foreach (ManagementObject objram in ramMonitor.Get())
             {
-                s = ramCounter.NextValue().ToString();
-                i--;
-                Thread.Sleep(1000);
+                ulong totalRam = Convert.ToUInt64(objram["TotalVisibleMemorySize"]);    //общая память ОЗУ
+                ulong busyRam = (totalRam - Convert.ToUInt64(objram["FreePhysicalMemory"]));
+                frrm = ((totalRam - busyRam) / 1024).ToString();
+                bsrm = (busyRam / 1024).ToString();
             }
-            resultMonitoring.Add(new ResultMonitoring(true, "Полигонная % загруженности RAM: " + s));
+            resultMonitoring.Add(new ResultMonitoring(true, frrm));
+            resultMonitoring.Add(new ResultMonitoring(true, bsrm));
             return resultMonitoring;
         }
-
 	}
 }

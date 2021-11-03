@@ -1,5 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Infrastructure.CloudManager;
+using ClientMonitor.Infrastructure.Monitor;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,19 +11,19 @@ using Xunit;
 
 namespace ClientMonitor.Test.IntegratedTests
 {
-    public class CloudTests : IClassFixture<ApplicationStanding>
+    public class MonitorTest : IClassFixture<ApplicationStanding>
     {
         WebApplicationFactory<Startup> _factory;
-        ICloudFactory CloudFactory;
-        public CloudTests(ApplicationStanding applicationStanding)
+        IMonitorFactory MonitorFactory;
+        public MonitorTest(ApplicationStanding applicationStanding)
         {
             _factory = applicationStanding;
-            CloudFactory = _factory.Services.GetRequiredService<ICloudFactory>() as CloudsFactory;
+            MonitorFactory = _factory.Services.GetRequiredService<IMonitorFactory>() as MonitorsFactory;
         }
 
         [Fact]
-        public void GetFilesAndFoldersTest()
-        { 
+        public void CpuAdaptorTest()
+        {
 
         }
     }
