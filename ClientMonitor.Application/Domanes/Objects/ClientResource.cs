@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Domanes.Objects
 {
-    public class CloudFilesInfo
+    public class ClientResource
     {
         public string Name { get; set; }
-        public string MimeType { get; set; }
-        public FilesTypes Type { get; set; }
-        public DateTime Created { get; set; }
-        public long Size { get; set; }
-        public string PublicUrl { get; set; }
+        public ClientResourseType Type { get; set; }
         public string Path { get; set; }
+
+        public string GetInfo()
+        {
+            return ($"Название ресурса: {Name}  Путь к ресурсу: {Path}");
+        }
     }
 }

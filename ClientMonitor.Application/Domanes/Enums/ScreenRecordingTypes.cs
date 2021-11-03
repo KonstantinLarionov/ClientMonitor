@@ -6,15 +6,8 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Domanes.Enums
 {
-    public enum FilesType
+    public enum ScreenRecordingTypes
     {
-        //
-        // Сводка:
-        //     Папка
-        Dir = 0,
-        //
-        // Сводка:
-        //     Файл
-        File = 1,
+        ScreenRecording,
     }
 }

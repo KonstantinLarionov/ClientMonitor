@@ -1,4 +1,5 @@
-﻿using ClientMonitor.Application.Abstractions;
+﻿using AutoMapper;
+using ClientMonitor.Application.Abstractions;
 
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
@@ -15,18 +16,13 @@ namespace ClientMonitor.Infrastructure.CloudManager
     {
         private readonly Dictionary<CloudTypes, ICloud> _adaptors;
 
-        public CloudsFactory()
+        public CloudsFactory(IMapper mapper)
         {
             _adaptors = new Dictionary<CloudTypes, ICloud>()
             {
-                {CloudTypes.YandexCloud, new YandexAdaptor(cloudOptions) }
+                {CloudTypes.YandexCloud, new YandexAdaptor(new CloudOptions(), mapper) }
             };
         }
         public ICloud GetCloud(CloudTypes type) => _adaptors.FirstOrDefault(x => x.Key == type).Value;
-
-        public ICloud GetFilesAndFoldersAsync(List<CloudFilesInfo> type)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

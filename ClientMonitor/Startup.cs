@@ -1,5 +1,10 @@
+using ClientMonitor.Application;
 using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.CloudManager;
+using ClientMonitor.Infrastructure.Notifications;
+using ClientMonitor.Infrastructure.ScreenRecording;
+using ClientMonitor.Infrastructure.Monitor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor
@@ -31,6 +37,10 @@ namespace ClientMonitor
 
             services.AddControllers();
             services.AddInfrastructureCloudManager();
+            services.AddInfrastructureNotifications();
+            services.AddInfrastructureScreenRecording();
+            services.AddInfrastructureHandler();
+            services.AddInfrastructureMonitor();
 
             services.AddSwaggerGen(c =>
             {
@@ -39,9 +49,8 @@ namespace ClientMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICloudFactory cloud)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var yandex = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -59,6 +68,21 @@ namespace ClientMonitor
             {
                 endpoints.MapControllers();
             });
+
+            #region [WorkBehind]
+            //Работа с облаком и видео
+            
+            app.UseCloudUploading(cloudHandler => 
+            {
+                cloudHandler.Handle(); 
+            });
+
+            //Работа с проверкой сайтов и серверов
+            app.UseExternalMonitor(externalMonitorHandler =>
+            {
+                externalMonitorHandler.Handle();
+            });
+            #endregion
         }
     }
 }
