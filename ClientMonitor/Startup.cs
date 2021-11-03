@@ -15,6 +15,7 @@ using ClientMonitor.Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Infrastructure.StreamingRecording;
 
 namespace ClientMonitor
 {
@@ -38,6 +39,7 @@ namespace ClientMonitor
             services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
             services.AddInfrastructureDatabase();
+            services.AddInfrastructureStreamingRecording();
 
             services.AddSwaggerGen(c =>
             {
