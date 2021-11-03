@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Monitor
 {
-    class MonitorFactory : IMonitorFactory
+    public class MonitorsFactory : IMonitorFactory
     {
         private readonly Dictionary<MonitoringTypes, IMonitor> _adaptors;
 
-        public MonitorFactory()
+        public MonitorsFactory()
         {
             _adaptors = new Dictionary<MonitoringTypes, IMonitor>()
             {
