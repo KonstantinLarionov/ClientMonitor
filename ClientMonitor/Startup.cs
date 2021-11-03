@@ -36,7 +36,6 @@ namespace ClientMonitor
             services.AddInfrastructureScreenRecording();
             services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
-            services.AddInfrastructureDatabase();
 
             services.AddSwaggerGen(c =>
             {
@@ -45,7 +44,7 @@ namespace ClientMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IStreamingRecording streamingRecording)
         {
             //Пример работы с базой напрямую без репозитория конкретного объекта, надо убрать отсюда 
             // Ниже строчки можно перенести в конструктор репозитория, что бы база обновлялась и крафтилась если ее нет, иначе не будет подключения без создания базы
@@ -71,6 +70,9 @@ namespace ClientMonitor
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClientMonitor v1"));
             }
 
+            streamingRecording.StartStreamingRecording();
+
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -88,39 +90,13 @@ namespace ClientMonitor
             app.UseCloudUploading(cloudHandler => 
             {
                 cloudHandler.Handle(); 
-            });*/
+            });
 
             //Работа с проверкой сайтов и серверов
             app.UseExternalMonitor(externalMonitorHandler =>
             {
                 externalMonitorHandler.Handle();
             });
-
-            //проверка пк
-            app.UsePcMonitoring(
-            cpuHandler =>
-            {
-                cpuHandler.HandleCpu();
-            }, 
-            ramHandler => 
-            {
-                ramHandler.HandleRam();
-            },
-            procHandler =>
-            {
-                procHandler.HandleProc();
-            },
-             httpHandler =>
-             {
-                 httpHandler.HandleHttp();
-             }
-            );
-
-            app.UsePcMonitoringMessage(messageHandler =>
-            {
-                messageHandler.HandleMessageMonitoringPc();
-            }
-            );
             #endregion
         }
     }

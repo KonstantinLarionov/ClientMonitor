@@ -8,10 +8,10 @@ namespace ClientMonitor.Application.Domanes.Objects
 {
     public class UploadedFilesInfo
     {
-        public string Name { get; set; } = "__VSDeploymentFailure__.txt";
-        public string Extension { get; set; } = "*.txt";
+        public string Name { get; set; }
+        public string Extension { get; set; } = "*.mp4";
         public DateTime Create { get; set; }
-        public string Path { get; set; } = @"C:\Users\79123\Documents";
-        public string FolderName { get; set; } = "Тест";
+        public string Path { get; set; } 
+        public string FolderName { get; set; }
     }
 }

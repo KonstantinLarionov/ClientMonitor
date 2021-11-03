@@ -1,6 +1,7 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,15 +21,22 @@ namespace ClientMonitor.Application
 
                 while (true)
                 {
-                    DateTime dateTime = DateTime.Now;
-                    if (dateTime.Hour == 17 && dateTime.Minute <= 50)
+                    try
                     {
-                        handle.Invoke(service);
-                        Thread.Sleep(85800000);
+                        DateTime dateTime = DateTime.Now;
+                        if (dateTime.Hour == 0 && dateTime.Minute <= 2)
+                        {
+                            handle.Invoke(service);
+                            Thread.Sleep(85800000);
+                        }
+                        else
+                        {
+                            Thread.Sleep(10000);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Thread.Sleep(10000);
+                        //TODO: Send message telegram mb wait mb app off
                     }
                 }
             });
@@ -42,12 +50,16 @@ namespace ClientMonitor.Application
 
                 while (true)
                 {
-                    var dateTime = DateTime.Now;
-                    if (dateTime.Hour >= 0)
+                    try
                     {
+                        var dateTime = DateTime.Now;
                         handle.Invoke(service);
+                        Thread.Sleep(3600000);
                     }
-                    Thread.Sleep(600000);
+                    catch (Exception ex)
+                    {
+                        //TODO: Send message telegram mb wait mb app off
+                    }
                 }
             });
             thread.Start();
