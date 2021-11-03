@@ -21,27 +21,21 @@ namespace ClientMonitor.Application
 
                 while (true)
                 {
-                    try
+                    DateTime dateTime = DateTime.Now;
+                    if (dateTime.Hour == 17 && dateTime.Minute <= 50)
                     {
-                        DateTime dateTime = DateTime.Now;
-                        if (dateTime.Hour == 0 && dateTime.Minute <= 2)
-                        {
-                            handle.Invoke(service);
-                            Thread.Sleep(85800000);
-                        }
-                        else
-                        {
-                            Thread.Sleep(10000);
-                        }
+                        handle.Invoke(service);
+                        Thread.Sleep(85800000);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        //TODO: Send message telegram mb wait mb app off
+                        Thread.Sleep(10000);
                     }
                 }
             });
             thread.Start();
         }
+
         public static void UseExternalMonitor(this IApplicationBuilder application, Action<IExternalMonitorHandler> handle)
         {
             Thread thread = new Thread(() =>
@@ -50,16 +44,12 @@ namespace ClientMonitor.Application
 
                 while (true)
                 {
-                    try
+                    var dateTime = DateTime.Now;
+                    if (dateTime.Hour >= 0)
                     {
-                        var dateTime = DateTime.Now;
                         handle.Invoke(service);
-                        Thread.Sleep(3600000);
                     }
-                    catch (Exception ex)
-                    {
-                        //TODO: Send message telegram mb wait mb app off
-                    }
+                    Thread.Sleep(600000);
                 }
             });
             thread.Start();

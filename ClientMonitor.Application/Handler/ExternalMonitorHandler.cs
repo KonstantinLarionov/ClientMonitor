@@ -12,7 +12,7 @@ namespace ClientMonitor.Application.Handler
         IMonitorFactory MonitorFactory;
         INotificationFactory NotificationFactory;
         IRepository<LogInfo> db;
-        public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory,IRepository<LogInfo> repository)
+        public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory, IRepository<LogInfo> repository)
         { 
             MonitorFactory = monitorFactory;
             NotificationFactory = notificationFactory;
@@ -22,7 +22,7 @@ namespace ClientMonitor.Application.Handler
         public void Handle()
         {
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
-            if (notifyer == null) 
+            if (notifyer == null)
             {
                 LogInfo log = new LogInfo
                 {
@@ -34,7 +34,7 @@ namespace ClientMonitor.Application.Handler
                 return;
             }
 
-            List<ResultMonitoring> results = new List<ResultMonitoring>(); 
+            List<ResultMonitoring> results = new List<ResultMonitoring>();
             var monitor = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Sites);
             var infoservers = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Servers);
             var resultMonitoring = monitor.ReceiveInfoMonitor() as List<ResultMonitoring>;
@@ -46,8 +46,8 @@ namespace ClientMonitor.Application.Handler
             foreach (var result in results)
             {
                 if (!result.Success)
-                { 
-                    test1 = test1+"!Ошибка проверки!\r\n" + result.Message+ "r\n";
+                {
+                    test1 = test1 + "!Ошибка проверки!\r\n" + result.Message + "r\n";
                     LogInfo log = new LogInfo
                     {
                         TypeLog = LogTypes.Error,
@@ -58,8 +58,8 @@ namespace ClientMonitor.Application.Handler
                     db.AddInDb(log);
                 }
                 else
-                { 
-                    test1 = test1+"!Проверка успешна!\r\n" + result.Message + "r\n";
+                {
+                    test1 = test1 + "!Проверка успешна!\r\n" + result.Message + "r\n";
                     LogInfo log = new LogInfo
                     {
                         TypeLog = LogTypes.Information,
@@ -70,7 +70,7 @@ namespace ClientMonitor.Application.Handler
                     db.AddInDb(log);
                 }
             }
-            //notifyer.SendMessage("-742266994", test1);
+            notifyer.SendMessage("-742266994", test1);
         }
     }
 }

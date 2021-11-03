@@ -37,11 +37,25 @@ namespace ClientMonitor.Application.Handler
                 dbLog.AddInDb(log);
                 return;
             }
+
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             string[] getFilesFromHall = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE", "*.mp4");
+
             if (getFilesFromHall.Length != 0)
             {
                 string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
+
+                if (files.Length == 0)
+                {
+                    LogInfo log = new LogInfo
+                    {
+                        TypeLog = LogTypes.Error,
+                        Text = "Ошибка загрузки файла отправки в облако",
+                        DateTime = DateTime.Now
+                    };
+                    dbLog.AddInDb(log);
+                    return;
+                }
 
                 foreach (var file in files)
                 {
