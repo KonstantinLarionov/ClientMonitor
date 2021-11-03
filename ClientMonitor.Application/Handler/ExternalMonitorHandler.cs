@@ -47,7 +47,7 @@ namespace ClientMonitor.Application.Handler
             {
                 if (!result.Success)
                 {
-                    test1 = test1 + "!Ошибка проверки!\r\n" + result.Message + "r\n";
+                    test1 = test1 + "!Ошибка проверки!\r\n" + result.Message + "\r\n";
                     LogInfo log = new LogInfo
                     {
                         TypeLog = LogTypes.Error,
@@ -59,7 +59,7 @@ namespace ClientMonitor.Application.Handler
                 }
                 else
                 {
-                    test1 = test1 + "!Проверка успешна!\r\n" + result.Message + "r\n";
+                    test1 = test1 + "!Проверка успешна!\r\n" + result.Message + "\r\n";
                     LogInfo log = new LogInfo
                     {
                         TypeLog = LogTypes.Information,

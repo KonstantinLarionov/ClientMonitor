@@ -32,7 +32,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public List<double> StatDb(DateTime dateTime)
         {
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 10, 30, 0);
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
             DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
             DateTime end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 17, 1, 0);
 

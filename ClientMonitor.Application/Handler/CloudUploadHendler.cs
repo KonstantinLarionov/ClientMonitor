@@ -26,15 +26,9 @@ namespace ClientMonitor.Application.Handler
         }
         public async Task Handle()
         {
-            if (TelegramNotification==null)
+            if (TelegramNotification == null)
             {
-                LogInfo log = new LogInfo
-                {
-                    TypeLog = LogTypes.Error,
-                    Text = "Ошибка соединения",
-                    DateTime = DateTime.Now
-                };
-                dbLog.AddInDb(log);
+                AddInBd("Ошибка соединения с телеграмом");
                 return;
             }
 
@@ -44,19 +38,6 @@ namespace ClientMonitor.Application.Handler
             if (getFilesFromHall.Length != 0)
             {
                 string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
-
-                if (files.Length == 0)
-                {
-                    LogInfo log = new LogInfo
-                    {
-                        TypeLog = LogTypes.Error,
-                        Text = "Ошибка загрузки файла отправки в облако",
-                        DateTime = DateTime.Now
-                    };
-                    dbLog.AddInDb(log);
-                    return;
-                }
-
                 foreach (var file in files)
                 {
                     FileInfo fileInf = new FileInfo(file);
@@ -65,13 +46,15 @@ namespace ClientMonitor.Application.Handler
                     await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                     fileInf.Delete();
                 }
-                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Выдача\" завершена. Файлов отправленно: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
+                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Выдача\" завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
             }
             else
             {
-                await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправленны из папки: \"Выдача\" так как она пуста.~~~!");
+                await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправлены из папки: \"Выдача\" так как она пуста.~~~!");
+                AddInBd($"!~~~Файлы не были отправлены из папки: \"Выдача\" так как она пуста.~~~!");
             }
 
+            //string[] getFilesFromtorage = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM", "*.mp4");
             string[] getFilesFromtorage = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM", "*.mp4");
             if (getFilesFromtorage.Length != 0)
             {
@@ -79,16 +62,17 @@ namespace ClientMonitor.Application.Handler
                 foreach (var file in files2)
                 {
                     FileInfo fileInf = new FileInfo(file);
-                    var uploadFile = GetUploadFile(fileInf, "Записи/Склад");
+                    var uploadFile = GetUploadFile(fileInf, "Записи/Выдача");
                     await Cloud.UploadFiles(uploadFile);
                     await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                     fileInf.Delete();
                 }
-                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправленно: {getFilesFromtorage.Length-1} Время: {DateTime.Now}~~~");
+                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length-1} Время: {DateTime.Now}~~~");
             }
             else
             {
-                await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправленны из папки: \"Склад\" так как она пуста.~~~!");
+                await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправлены из папки: \"Склад\" так как она пуста.~~~!");
+                AddInBd($"!~~~Файлы не были отправленны из папки: \"Склад\" так как она пуста.~~~!");
             }
         }
 
@@ -110,6 +94,17 @@ namespace ClientMonitor.Application.Handler
             for (int i = 0; i < leght - 1; i++)
                 files[i] = mas[i];
             return files;
+        }
+
+        private void AddInBd(string k)
+        {
+            LogInfo log = new LogInfo
+            {
+                TypeLog = LogTypes.Error,
+                Text = k,
+                DateTime = DateTime.Now
+            };
+            dbLog.AddInDb(log);
         }
     }
 }

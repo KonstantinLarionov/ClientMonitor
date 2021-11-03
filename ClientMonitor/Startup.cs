@@ -76,7 +76,7 @@ namespace ClientMonitor
             {
                 cloudHandler.Handle(); 
             });
-
+            /*
             app.UseExternalMonitor(externalMonitorHandler =>
             {
                 externalMonitorHandler.Handle();
@@ -105,7 +105,7 @@ namespace ClientMonitor
             {
                 messageHandler.HandleMessageMonitoringPc();
             }
-            );
+            );*/
             #endregion
         }
     }

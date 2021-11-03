@@ -36,13 +36,7 @@ namespace ClientMonitor.Application.Handler
             var resultMonitoringcpu = infocpu.ReceiveInfoMonitor() as List<ResultMonitoring>;
             if (resultMonitoringcpu.Count == 0) 
             {
-                LogInfo log = new LogInfo
-                {
-                    TypeLog = LogTypes.Error,
-                    Text = "Ошибка получения CPU",
-                    DateTime = DateTime.Now
-                };
-                dbLog.AddInDb(log);
+                AddInLog("Ошибка получения CPU");
                 return;
             }
             var t = Convert.ToDouble(resultMonitoringcpu[0].Message);
@@ -61,13 +55,7 @@ namespace ClientMonitor.Application.Handler
             var resultMonitoringram = inforam.ReceiveInfoMonitor() as List<ResultMonitoring>;
             if (resultMonitoringram.Count == 0)
             {
-                LogInfo log = new LogInfo
-                {
-                    TypeLog = LogTypes.Error,
-                    Text = "Ошибка получения RAM",
-                    DateTime = DateTime.Now
-                };
-                dbLog.AddInDb(log);
+                AddInLog("Ошибка получения RAM");
                 return;
             }
             var r = Convert.ToDouble(resultMonitoringram[0].Message);
@@ -88,13 +76,7 @@ namespace ClientMonitor.Application.Handler
             var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
             if (resultMonitoringproc.Count == 0)
             {
-                LogInfo log = new LogInfo
-                {
-                    TypeLog = LogTypes.Error,
-                    Text = "Ошибка проверки Процессов",
-                    DateTime = DateTime.Now
-                };
-                dbLog.AddInDb(log);
+                AddInLog("Ошибка проверки Процессов");
                 return;
             }
             ProcInfo proc = new ProcInfo
@@ -111,13 +93,7 @@ namespace ClientMonitor.Application.Handler
             var resultMonitoringhttp = infohttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
             if (resultMonitoringhttp.Count == 0)
             {
-                LogInfo log = new LogInfo
-                {
-                    TypeLog = LogTypes.Error,
-                    Text = "Ошибка проверки пакетов Http",
-                    DateTime = DateTime.Now
-                };
-                dbLog.AddInDb(log);
+                AddInLog("Ошибка проверки пакетов Http");
                 return;
             }
             HttpInfo http = new HttpInfo
@@ -133,14 +109,8 @@ namespace ClientMonitor.Application.Handler
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
             if (notifyer == null) 
             {
-                LogInfo log = new LogInfo
-                {
-                    TypeLog = LogTypes.Error,
-                    Text = "Ошибка соединения",
-                    DateTime = DateTime.Now
-                };
-                dbLog.AddInDb(log);
-                return; 
+                AddInLog("Ошибка соединения");
+                return;
             }
             var resCpu = dbCpu.StatDb(DateTime.Now);
             var resRam = dbRam.StatDb(DateTime.Now);
@@ -163,17 +133,22 @@ namespace ClientMonitor.Application.Handler
             }
             else { proverkaOnNull = proverkaOnNull + "\r\n" + "Ошибка проверки HTTP"; }
             if(proverkaOnNull!="")
-            { 
-                LogInfo log = new LogInfo
-                {
-                    TypeLog = LogTypes.Error,
-                    Text = "Ошибка получения информации о ПК",
-                    DateTime = DateTime.Now
-                };
-                dbLog.AddInDb(log);
+            {
+                AddInLog($"Ошибка получения информации о ПК: {proverkaOnNull}");
             }
 
             notifyer.SendMessage("-693501604", test);
+        }
+
+        private void AddInLog(string k)
+        {
+            LogInfo log = new LogInfo
+            {
+                TypeLog = LogTypes.Error,
+                Text = k,
+                DateTime = DateTime.Now
+            };
+            dbLog.AddInDb(log);
         }
     } 
 }

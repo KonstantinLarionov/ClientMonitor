@@ -1,12 +1,8 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ClientMonitor.Application
 {
@@ -22,7 +18,7 @@ namespace ClientMonitor.Application
                 while (true)
                 {
                     DateTime dateTime = DateTime.Now;
-                    if (dateTime.Hour == 17 && dateTime.Minute <= 50)
+                    if (dateTime.Hour == 22 && dateTime.Minute <= 2)
                     {
                         handle.Invoke(service);
                         Thread.Sleep(85800000);
@@ -49,7 +45,7 @@ namespace ClientMonitor.Application
                     {
                         handle.Invoke(service);
                     }
-                    Thread.Sleep(600000);
+                    Thread.Sleep(3600000);
                 }
             });
             thread.Start();
@@ -77,7 +73,7 @@ namespace ClientMonitor.Application
             Thread thread = new Thread(() =>
             {
                 var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 10, 30, 0);
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
                 DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
 
                 while (true)
