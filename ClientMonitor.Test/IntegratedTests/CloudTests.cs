@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +8,15 @@ using Xunit;
 
 namespace ClientMonitor.Test.IntegratedTests
 {
-    public class CloudTests
+    public class CloudTests : IClassFixture<ApplicationStanding>
     {
-        [Fact]
-        public void Test1()
-        { 
-        
+        private readonly WebApplicationFactory<Startup> _factory;
+
+        public CloudTests(ApplicationStanding factory)
+        {
+            _factory = factory;
+            //Тут отладка внутри проекта
         }
+
     }
 }

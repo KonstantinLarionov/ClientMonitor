@@ -12,30 +12,13 @@ namespace ClientMonitor.Test
 {
     public class ApplicationStanding : WebApplicationFactory<Startup>
     {
-        /// <summary>
-        ///  [Trait("Category", "Unit")]
-        //public class PostsControllerTests : IClassFixture<ApiFactory>
-        //{
-        //    private readonly WebApplicationFactory<Startup> _factory;
 
-        //    public PostsControllerTests(ApiFactory factory)
-        //    {
-        //        _factory = factory;
-        //    }
-            /// </summary>
-            /// <returns></returns>
-            protected override IWebHostBuilder CreateWebHostBuilder()
+        protected override IWebHostBuilder CreateWebHostBuilder()
         {
             return WebHost.CreateDefaultBuilder()
-                // #if withDatabase
-                //.ConfigureServices(services =>
-                //{
-                //    services.AddDbContext<DatabaseContext>(opt => opt.UseInMemoryDatabase("Template"));
-                //})
-                 // #endif
                  .ConfigureTestServices(services =>
                  {
-                     services.AddSingleton<ICloudFactory, CloudsFactory>();
+                     //TODO: Регистрация ServiceCollections
                  })
                 .UseStartup<Startup>();
         }
