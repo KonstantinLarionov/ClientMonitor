@@ -54,7 +54,6 @@ namespace ClientMonitor.Application.Handler
                 AddInBd($"!~~~Файлы не были отправлены из папки: \"Выдача\" так как она пуста.~~~!");
             }
 
-            //string[] getFilesFromtorage = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM", "*.mp4");
             string[] getFilesFromtorage = Directory.GetFiles(@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM", "*.mp4");
             if (getFilesFromtorage.Length != 0)
             {

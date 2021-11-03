@@ -14,11 +14,11 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 
             string bsrm = "";
             string frrm = "";
-            ManagementObjectSearcher ramMonitor =    //запрос к WMI для получения памяти ПК
+            ManagementObjectSearcher ramMonitor =
             new ManagementObjectSearcher("SELECT TotalVisibleMemorySize,FreePhysicalMemory FROM Win32_OperatingSystem");
             foreach (ManagementObject objram in ramMonitor.Get())
             {
-                ulong totalRam = Convert.ToUInt64(objram["TotalVisibleMemorySize"]);    //общая память ОЗУ
+                ulong totalRam = Convert.ToUInt64(objram["TotalVisibleMemorySize"]);
                 ulong busyRam = (totalRam - Convert.ToUInt64(objram["FreePhysicalMemory"]));
                 frrm = ((totalRam - busyRam) / 1024).ToString();
                 bsrm = (busyRam / 1024).ToString();

@@ -9,11 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
 using ClientMonitor.Infrastructure.Database;
-using ClientMonitor.Infrastructure.Database.Contexts;
-using Microsoft.EntityFrameworkCore;
-using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Infrastructure.StreamingRecording;
 
@@ -76,7 +72,7 @@ namespace ClientMonitor
             {
                 cloudHandler.Handle(); 
             });
-            /*
+            
             app.UseExternalMonitor(externalMonitorHandler =>
             {
                 externalMonitorHandler.Handle();
@@ -105,7 +101,7 @@ namespace ClientMonitor
             {
                 messageHandler.HandleMessageMonitoringPc();
             }
-            );*/
+            );
             #endregion
         }
     }

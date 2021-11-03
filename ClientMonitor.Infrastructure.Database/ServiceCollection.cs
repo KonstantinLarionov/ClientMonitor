@@ -14,8 +14,6 @@ namespace ClientMonitor.Infrastructure.Database
         {
             services.AddEntityFrameworkSqlite().AddDbContext<LoggerContext>();
             services.AddSingleton<IRepository<LogInfo>, LoggerRepository>();
-
-            //services.AddEntityFrameworkSqlite().AddDbContext<PcContext>();
             services.AddSingleton<IRepository<CpuInfo>, CpuRepository>();
             services.AddSingleton<IRepository<RamInfo>, RamRepository>();
             services.AddSingleton<IRepository<ProcInfo>, ProcRepository>();

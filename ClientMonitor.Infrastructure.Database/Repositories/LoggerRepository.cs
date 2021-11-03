@@ -38,15 +38,5 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         {
             throw new System.NotImplementedException();
         }
-
-        //public void DeleteInDb(LogInfo info)
-        //{
-        //    if (info != null)
-        //    {
-        //        var log = db.Logs.Where(x => x.Id == info.Id).FirstOrDefault();
-        //        db.Logs.Remove(log);
-        //        db.SaveChanges();
-        //    }
-        //}
     }
 }
