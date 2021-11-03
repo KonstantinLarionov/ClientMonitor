@@ -40,11 +40,7 @@ namespace ClientMonitor.Application
 
                 while (true)
                 {
-                    var dateTime = DateTime.Now;
-                    if (dateTime.Hour >= 0)
-                    {
-                        handle.Invoke(service);
-                    }
+                    handle.Invoke(service);
                     Thread.Sleep(3600000);
                 }
             });

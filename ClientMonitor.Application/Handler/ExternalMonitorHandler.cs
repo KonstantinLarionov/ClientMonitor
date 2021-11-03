@@ -24,14 +24,8 @@ namespace ClientMonitor.Application.Handler
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
             if (notifyer == null)
             {
-                LogInfo log = new LogInfo
-                {
-                    TypeLog = LogTypes.Error,
-                    Text = "Ошибка соединения",
-                    DateTime = DateTime.Now
-                };
-                db.AddInDb(log);
-                return;
+                AddInLog("Ошибка соединения!");
+                //return;
             }
 
             List<ResultMonitoring> results = new List<ResultMonitoring>();
@@ -48,29 +42,27 @@ namespace ClientMonitor.Application.Handler
                 if (!result.Success)
                 {
                     test1 = test1 + "!Ошибка проверки!\r\n" + result.Message + "\r\n";
-                    LogInfo log = new LogInfo
-                    {
-                        TypeLog = LogTypes.Error,
-                        Text = result.Message,
-                        DateTime = DateTime.Now
-                    };
-
-                    db.AddInDb(log);
+                    AddInLog(result.Message);
                 }
                 else
                 {
                     test1 = test1 + "!Проверка успешна!\r\n" + result.Message + "\r\n";
-                    LogInfo log = new LogInfo
-                    {
-                        TypeLog = LogTypes.Information,
-                        Text = result.Message,
-                        DateTime = DateTime.Now
-                    };
-
-                    db.AddInDb(log);
+                    AddInLog(result.Message);
                 }
             }
             notifyer.SendMessage("-742266994", test1);
+        }
+
+        private void AddInLog(string k)
+        {
+            LogInfo log = new LogInfo
+            {
+                TypeLog = LogTypes.Information,
+                Text = k,
+                DateTime = DateTime.Now
+            };
+
+            db.AddInDb(log);
         }
     }
 }
