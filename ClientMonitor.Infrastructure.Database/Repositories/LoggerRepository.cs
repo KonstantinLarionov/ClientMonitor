@@ -22,14 +22,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public void AddInDb(LogInfo info)
         {
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 10, 0);
-            if ((int)DateTime.Now.DayOfWeek == 1 || (int)DateTime.Now.DayOfWeek == 4 && DateTime.Now == start)
-            {
-                db.Database.EnsureDeleted();
-                Thread.Sleep(60000);
-            }
             db.Database.EnsureCreated();
-            db.Database.Migrate();
+            //db.Database.Migrate();
             var log = new Log
             {
                 DateTime = info.DateTime,
