@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Objects;
@@ -21,6 +22,12 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public void AddInDb(LogInfo info)
         {
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 10, 0);
+            if ((int)DateTime.Now.DayOfWeek == 1 || (int)DateTime.Now.DayOfWeek == 4 && DateTime.Now == start)
+            {
+                db.Database.EnsureDeleted();
+                Thread.Sleep(60000);
+            }
             db.Database.EnsureCreated();
             db.Database.Migrate();
             var log = new Log
@@ -34,7 +41,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.SaveChanges();
         }
 
-        public List<double> StatDb(DateTime dateTime)
+        public List<string> StatDb(DateTime dateTime)
         {
             throw new System.NotImplementedException();
         }

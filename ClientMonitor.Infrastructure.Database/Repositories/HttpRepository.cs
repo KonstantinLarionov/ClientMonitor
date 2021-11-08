@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace ClientMonitor.Infrastructure.Database.Repositories
 {
@@ -18,6 +19,12 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public void AddInDb(HttpInfo info)
         {
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 10, 0);
+            if ((int)DateTime.Now.DayOfWeek == 1 || (int)DateTime.Now.DayOfWeek == 4 && DateTime.Now == start)
+            {
+                db.Database.EnsureDeleted();
+                Thread.Sleep(60000);
+            }
             db.Database.EnsureCreated();
             db.Database.Migrate();
             var mon = new EntitiesHttp
@@ -30,22 +37,22 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.SaveChanges();
         }
 
-        public List<double> StatDb(DateTime dateTime)
+        public List<string> StatDb(DateTime dateTime)
         {
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
-            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
-            DateTime end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 17, 1, 0);
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 0, 0);
+            DateTime end = average.AddDays(-1);
 
             if (dateTime == start)
             {
-                List<double> https = new();
-                https.Add(db.EHttps.Where(p => p.DateTime > end && p.DateTime < start).Sum(u => u.Length));
+                List<string> https = new();
+                https.Add((db.EHttps.Where(p => p.DateTime > end && p.DateTime < start).Sum(u => u.Length)).ToString());
                 return https;
             }
             else
             {
-                List<double> https = new();
-                https.Add(db.EHttps.Where(p => p.DateTime > start && p.DateTime < average).Sum(u => u.Length));
+                List<string> https = new();
+                https.Add(db.EHttps.Where(p => p.DateTime > start && p.DateTime < average).Sum(u => u.Length).ToString());
                 return https;
             }
         }
