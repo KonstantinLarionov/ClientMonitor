@@ -58,7 +58,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
                 var dtram = db.ERams.FirstOrDefault(p => p.BusyRam == maxram);
                 string ram = $"{maxram}(Время: {dtram.DateTime})";
                 rams.Add(ram);
-                rams.Add((db.ERams.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyRam)).ToString());
+                rams.Add((Math.Round(db.ERams.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyRam)),3).ToString());
                 return rams;
             }
         }
