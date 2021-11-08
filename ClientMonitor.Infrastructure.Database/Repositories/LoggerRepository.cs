@@ -22,17 +22,21 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public void AddInDb(LogInfo info)
         {
-            db.Database.EnsureCreated();
-            //db.Database.Migrate();
-            var log = new Log
+            try
             {
-                DateTime = info.DateTime,
-                TypeLog = info.TypeLog,
-                Text = info.Text
-            };
+                db.Database.EnsureCreated();
+                //db.Database.Migrate();
+                var log = new Log
+                {
+                    DateTime = info.DateTime,
+                    TypeLog = info.TypeLog,
+                    Text = info.Text
+                };
 
-            db.Logs.Add(log);
-            db.SaveChanges();
+                db.Logs.Add(log);
+                db.SaveChanges();
+            }
+            catch { }
         }
 
         public List<string> StatDb(DateTime dateTime)

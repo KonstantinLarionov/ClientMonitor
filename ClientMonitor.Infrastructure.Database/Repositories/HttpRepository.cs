@@ -34,7 +34,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         public List<string> StatDb(DateTime dateTime)
         {
             DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
-            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 0, 0);
+            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 24, 0);
             DateTime end = average.AddDays(-1);
 
             if (dateTime == start)
