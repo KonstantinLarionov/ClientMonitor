@@ -31,28 +31,33 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.SaveChanges();
         }
 
-        public List<double> StatDb(DateTime dateTime)
+        public List<string> StatDb(DateTime dateTime)
         {
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
-            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
-            DateTime end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 17, 0, 0);
-
-            if (dateTime == start)
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+            DateTime end = average.AddDays(-1);
+            if (dateTime.Hour == 6)
             {
-                List<double> cpus = new();
-                cpus.Add(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Min(u => u.BusyCpu));
-                cpus.Add(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Max(u => u.BusyCpu));
-                cpus.Add(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Average(u => u.BusyCpu));
+                List<string> cpus = new();
+                cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Min(u => u.BusyCpu), 3).ToString());
+                double maxcpu = db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Max(u => u.BusyCpu);
+                var dtcpu = db.ECpus.FirstOrDefault(p => p.BusyCpu == maxcpu);
+                string cpu = $"{Math.Round(maxcpu, 3)}(Время: {dtcpu.DateTime})";
+                cpus.Add(cpu);
+                cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Average(u => u.BusyCpu), 3).ToString());
                 return cpus;
             }
             else
             {
-                List<double> cpus = new();
-                cpus.Add(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Min(u => u.BusyCpu));
-                cpus.Add(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Max(u => u.BusyCpu));
-                cpus.Add(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyCpu));
+                List<string> cpus = new();
+                cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Min(u => u.BusyCpu), 3).ToString());
+                double maxcpu = db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Max(u => u.BusyCpu);
+                var dtcpu = db.ECpus.FirstOrDefault(p => p.BusyCpu == maxcpu);
+                string cpu = $"{Math.Round(maxcpu, 3)}(Время: {dtcpu.DateTime})";
+                cpus.Add(cpu);
+                cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyCpu), 3).ToString());
                 return cpus;
-            }      
+            }
         }
     }
 }

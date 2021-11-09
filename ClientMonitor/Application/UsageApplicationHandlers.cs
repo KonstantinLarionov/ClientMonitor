@@ -18,7 +18,7 @@ namespace ClientMonitor.Application
                 while (true)
                 {
                     DateTime dateTime = DateTime.Now;
-                    if (dateTime.Hour == 22 && dateTime.Minute <= 2)
+                    if (dateTime.Hour == 20 && dateTime.Minute <= 2)
                     {
                         handle.Invoke(service);
                         Thread.Sleep(85800000);
@@ -69,8 +69,8 @@ namespace ClientMonitor.Application
             Thread thread = new Thread(() =>
             {
                 var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
-                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
 
                 while (true)
                 {

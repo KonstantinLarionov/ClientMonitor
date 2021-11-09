@@ -30,22 +30,22 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.SaveChanges();
         }
 
-        public List<double> StatDb(DateTime dateTime)
+        public List<string> StatDb(DateTime dateTime)
         {
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
-            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
-            DateTime end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 17, 1, 0);
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+            DateTime end = average.AddDays(-1);
 
-            if (dateTime == start)
+            if (dateTime.Hour == 6)
             {
-                List<double> https = new();
-                https.Add(db.EHttps.Where(p => p.DateTime > end && p.DateTime < start).Sum(u => u.Length));
+                List<string> https = new();
+                https.Add((db.EHttps.Where(p => p.DateTime > end && p.DateTime < start).Sum(u => u.Length)).ToString());
                 return https;
             }
             else
             {
-                List<double> https = new();
-                https.Add(db.EHttps.Where(p => p.DateTime > start && p.DateTime < average).Sum(u => u.Length));
+                List<string> https = new();
+                https.Add(db.EHttps.Where(p => p.DateTime > start && p.DateTime < average).Sum(u => u.Length).ToString());
                 return https;
             }
         }

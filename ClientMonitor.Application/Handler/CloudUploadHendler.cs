@@ -29,7 +29,7 @@ namespace ClientMonitor.Application.Handler
             if (TelegramNotification == null)
             {
                 AddInBd("Ошибка соединения с телеграмом");
-                return;
+                //return;
             }
 
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
@@ -66,7 +66,7 @@ namespace ClientMonitor.Application.Handler
                     await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                     fileInf.Delete();
                 }
-                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length-1} Время: {DateTime.Now}~~~");
+                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length - 1} Время: {DateTime.Now}~~~");
             }
             else
             {
@@ -89,7 +89,7 @@ namespace ClientMonitor.Application.Handler
 
         private string[] GetWitoutLastElement(string[] mas, int leght)
         {
-            string[] files = new string[leght-1];
+            string[] files = new string[leght - 1];
             for (int i = 0; i < leght - 1; i++)
                 files[i] = mas[i];
             return files;

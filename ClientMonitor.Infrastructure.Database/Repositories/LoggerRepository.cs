@@ -34,7 +34,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.SaveChanges();
         }
 
-        public List<double> StatDb(DateTime dateTime)
+        public List<string> StatDb(DateTime dateTime)
         {
             throw new System.NotImplementedException();
         }
