@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Database.Repositories
@@ -20,7 +21,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public void AddInDb(ProcInfo info)
         {
-            //db.Database.EnsureCreated();
+            db.Database.EnsureCreated();
             db.Database.Migrate();
             var log = new EntitiesProc
             {
@@ -32,7 +33,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.SaveChanges();
         }
 
-        public List<double> StatDb(DateTime start)
+        public List<string> StatDb(DateTime start)
         {
             throw new System.NotImplementedException();
         }
