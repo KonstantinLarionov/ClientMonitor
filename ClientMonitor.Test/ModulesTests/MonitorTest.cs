@@ -20,6 +20,8 @@ namespace ClientMonitor.Test.ModulesTests
             _factory = factory;
         }
 
+        
+        #region [TestData]
         [Fact]
         public void Cpu_Success()
         {
@@ -36,7 +38,14 @@ namespace ClientMonitor.Test.ModulesTests
             var service = _factory.Services.GetRequiredService<IMonitorFactory>() as MonitorsFactory;
             var infoRam = service.GetMonitor(MonitoringTypes.RAM);
             var resultMonitoringRam = infoRam.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            Assert.NotNull(resultMonitoringRam);
+            //Assert.NotNull(resultMonitoringRam);
+            int k = 0;
+            foreach (var a in resultMonitoringRam)
+            {
+                k++;
+            }
+
+            Assert.True(2 == k);
         }
         [Fact]
         public void Proc_Succes()
@@ -68,9 +77,19 @@ namespace ClientMonitor.Test.ModulesTests
             var service = _factory.Services.GetRequiredService<IMonitorFactory>() as MonitorsFactory;
             var infoHttp = service.GetMonitor(MonitoringTypes.HTTP);
             var resultMonitoringHttp = infoHttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
-            Assert.NotNull(resultMonitoringHttp);
+            int k = 0;
+            foreach (var a in resultMonitoringHttp)
+            {
+                k++;
+            }
+
+            Assert.True(1==k);
+            //Assert.NotNull(resultMonitoringHttp);
         }
 
+        #endregion
+        
+        
 
         [Fact]
         public void NameTest_Error()
