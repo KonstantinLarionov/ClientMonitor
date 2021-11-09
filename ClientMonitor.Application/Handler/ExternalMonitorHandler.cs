@@ -25,39 +25,32 @@ namespace ClientMonitor.Application.Handler
             if (notifyer == null)
             {
                 AddInLog("Ошибка соединения!");
-                return;
+                //return;
             }
-            try
-            {
-                List<ResultMonitoring> results = new List<ResultMonitoring>();
-                var monitor = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Sites);
-                var infoservers = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Servers);
-                var resultMonitoring = monitor.ReceiveInfoMonitor() as List<ResultMonitoring>;
-                results.AddRange(resultMonitoring);
-                var resultMonitoringservers = infoservers.ReceiveInfoMonitor() as List<ResultMonitoring>;
-                results.AddRange(resultMonitoringservers);
-                string test1 = "";
 
-                foreach (var result in results)
-                {
-                    if (!result.Success)
-                    {
-                        test1 = test1 + "!Ошибка проверки!\r\n" + result.Message + "\r\n";
-                        AddInLog(result.Message);
-                    }
-                    else
-                    {
-                        test1 = test1 + "!Проверка успешна!\r\n" + result.Message + "\r\n";
-                        AddInLog(result.Message);
-                    }
-                }
-                notifyer.SendMessage("-742266994", test1);
-            }
-            catch
+            List<ResultMonitoring> results = new List<ResultMonitoring>();
+            var monitor = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Sites);
+            var infoservers = MonitorFactory.GetMonitor(Domanes.Enums.MonitoringTypes.Servers);
+            var resultMonitoring = monitor.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            results.AddRange(resultMonitoring);
+            var resultMonitoringservers = infoservers.ReceiveInfoMonitor() as List<ResultMonitoring>;
+            results.AddRange(resultMonitoringservers);
+            string test1 = "";
+
+            foreach (var result in results)
             {
-                AddInLog("Ошибка выполнения метода проверки сайтов и серверов");
-                notifyer.SendMessage("-742266994", "Ошибка выполнения проверки сайтов и серверов");
+                if (!result.Success)
+                {
+                    test1 = test1 + "!Ошибка проверки!\r\n" + result.Message + "\r\n";
+                    AddInLog(result.Message);
+                }
+                else
+                {
+                    test1 = test1 + "!Проверка успешна!\r\n" + result.Message + "\r\n";
+                    AddInLog(result.Message);
+                }
             }
+            notifyer.SendMessage("-742266994", test1);
         }
 
         private void AddInLog(string k)
