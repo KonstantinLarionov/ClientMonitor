@@ -34,16 +34,16 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public List<string> StatDb(DateTime dateTime)
         {
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 10, 0, 0);
             DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 0, 0);
             DateTime end = average.AddDays(-1);
-            if (dateTime == start)
+            if (dateTime.Hour==8)
             {
                 List<string> cpus = new();
                 cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Min(u => u.BusyCpu), 3).ToString());
-                double maxcpu = Math.Round(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Max(u => u.BusyCpu), 3);
+                double maxcpu = db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Max(u => u.BusyCpu);
                 var dtcpu = db.ECpus.FirstOrDefault(p => p.BusyCpu == maxcpu);
-                string cpu = $"{maxcpu}(Время: {dtcpu.DateTime})";
+                string cpu = $"{Math.Round(maxcpu,3)}(Время: {dtcpu.DateTime})";
                 cpus.Add(cpu);
                 cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Average(u => u.BusyCpu), 3).ToString());
                 return cpus;
@@ -52,10 +52,9 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             {
                 List<string> cpus = new();
                 cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Min(u => u.BusyCpu),3).ToString());
-                double maxcpu = Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Max(u => u.BusyCpu), 3);
-                //var dtcpu = db.ECpus.Where(p => p.BusyCpu == maxcpu).FirstOrDefault(u => u.DateTime);
+                double maxcpu = db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Max(u => u.BusyCpu);
                 var dtcpu = db.ECpus.FirstOrDefault(p => p.BusyCpu == maxcpu);
-                string cpu = $"{maxcpu}(Время: {dtcpu.DateTime})";
+                string cpu = $"{Math.Round(maxcpu,3)}(Время: {dtcpu.DateTime})";
                 cpus.Add(cpu);
                 cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyCpu),3).ToString());
                 return cpus;

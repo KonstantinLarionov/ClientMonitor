@@ -26,8 +26,6 @@ namespace ClientMonitor.Application.Handler
         }
         public async Task Handle()
         {
-            try
-            {
                 if (TelegramNotification == null)
                 {
                     AddInBd("Ошибка соединения с телеграмом");
@@ -76,11 +74,6 @@ namespace ClientMonitor.Application.Handler
                     AddInBd($"!~~~Файлы не были отправленны из папки: \"Склад\" так как она пуста.~~~!");
                 }
             }
-            catch
-            {
-                AddInBd("Ошибка выполнения метода записи в облако");
-            }
-        }
 
         private UploadedFilesInfo GetUploadFile(FileInfo fileInf, string pathToLoad)
         {

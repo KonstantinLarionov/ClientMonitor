@@ -92,7 +92,7 @@ namespace ClientMonitor.Application.Handler
                 if (resultMonitoringproc.Count == 0)
                 {
                     AddInLog("Ошибка проверки Процессов");
-                    //return;
+                    return;
                 }
                 ProcInfo proc = new ProcInfo
                 {
@@ -116,7 +116,7 @@ namespace ClientMonitor.Application.Handler
                 if (resultMonitoringhttp.Count == 0)
                 {
                     AddInLog("Ошибка проверки пакетов Http");
-                    //return;
+                    return;
                 }
                 HttpInfo http = new HttpInfo
                 {
