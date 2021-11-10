@@ -51,12 +51,12 @@ namespace ClientMonitor.Application.Handler
                         AddInLog(result.Message);
                     }
                 }
-                notifyer.SendMessage("-742266994", test1);
+                //notifyer.SendMessage("-742266994", test1);
             }
             catch
             {
                 AddInLog("Ошибка выполнения метода проверки сайтов и серверов");
-                notifyer.SendMessage("-742266994", "Ошибка выполнения проверки сайтов и серверов");
+                //notifyer.SendMessage("-742266994", "Ошибка выполнения проверки сайтов и серверов");
             }
         }
 

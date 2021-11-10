@@ -1,17 +1,16 @@
 ﻿using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Infrastructure.Database.Contexts;
+using ClientMonitor.Application.Domanes.Enums;
+using ClientMonitor.Application.Domanes.Objects;
+using ClientMonitor.Controllers;
 using ClientMonitor.Infrastructure.Database.Entities;
-using ClientMonitor.Infrastructure.Database.Repositories;
 using ClientMonitor.Infrastructure.Monitor;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
+
 
 namespace ClientMonitor.Test.IntegratedTests
 {
@@ -25,54 +24,24 @@ namespace ClientMonitor.Test.IntegratedTests
             //Тут отладка внутри проекта
         }
 
-
-
-        IRepository<CpuInfo> dbCpu;
-        protected DbContextOptions<LoggerContext> ContextOptions { get; }
-        protected MonitorTests(DbContextOptions<LoggerContext> contextOptions)
-        {
-            ContextOptions = contextOptions;
-            Seed();
-        }
-
-        private void Seed()
-        {
-            using (var context = new LoggerContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-
-                var one = new CpuInfo
-                {
-                    DateTime = DateTime.Now,
-                    BusyCpu = 1000,
-                    FreeCpu = 1000,
-                };
-                context.AddRange(one);
-                context.SaveChanges();
-
-            }
-        }
-
-/*
+        //интеграц выше мод
+        //интеграц вызывать хендлер 
+        //
         [Fact]
-        public void Can_get_items()
+        public void Test()
         {
-            using (var context = new LoggerContext())
-            {
-                var controller = new CpuRepository(context);
+            // Arrange
+            var mock = new Moq.Mock<IRepository<CpuInfo>>();
+            DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 10, 0, 0);
+            mock.Setup(a => a.StatDb(now)).Returns(new List<string>());
 
-                var items = controller.Get().ToList();
+            MonitoringController controller = new MonitoringController(mock.Object);
 
-                Assert.Equal(3, items.Count);
-                Assert.Equal("ItemOne", items[0].Name);
-            }
-        }
-*/
-        [Fact]
-        public void Can_add_Cpu()
-        {
+            // Act
+            ViewResult result = controller.Index() as ViewResult;
 
-        }
+            // Assert
+            Assert.NotNull(result.Model);
+        }      
     }
 }
