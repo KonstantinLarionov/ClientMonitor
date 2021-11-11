@@ -13,25 +13,7 @@ namespace ClientMonitor.Test.ModulesTests
 
         public CloudTests(ApplicationStanding factory)
         {
-           // var a = new YandexAdaptor(,);
             _factory = factory;
-            //_factory.Services.GetService(YandexAdaptor.ReferenceEquals);
-            //Пример получения сервиса для теста (нужно сделать глобальным и писать тесты с ним)
-            //var service = _factory.Services.GetRequiredService<ICloudFactory>() as CloudsFactory;
-        }
-
-        [Fact]
-        public void NameTest_Success()
-        {
-            
-
-
-           // var res = GetFilesAndFoldersAsync();
-        }
-        [Fact]
-        public void NameTest_Error()
-        {
-
         }
     }
 }

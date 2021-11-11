@@ -29,6 +29,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             };
 
             db.EProcs.Add(log);
+            DateTime threeday = DateTime.Now.AddDays(-3);
+            db.EProcs.RemoveRange(db.EProcs.Where(x => x.DateTime < threeday));
             db.SaveChanges();
         }
 

@@ -31,6 +31,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             };
 
             db.ERams.Add(log);
+            DateTime threeday = DateTime.Now.AddDays(-3);
+            db.ERams.RemoveRange(db.ERams.Where(x => x.DateTime < threeday));
             db.SaveChanges();
         }
 
@@ -42,23 +44,23 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             if (dateTime.Hour == 6)
             {
                 List<string> rams = new();
-                rams.Add((Math.Round(db.ERams.Where(p => p.DateTime > end && p.DateTime < start).Min(u => u.BusyRam)), 3).ToString());
+                rams.Add(Math.Round(db.ERams.Where(p => p.DateTime > end && p.DateTime < start).Min(u => u.BusyRam), 3).ToString());
                 double maxram = db.ERams.Where(p => p.DateTime > end && p.DateTime < start).Max(u => u.BusyRam);
                 var dtram = db.ERams.FirstOrDefault(p => p.BusyRam == maxram);
                 string ram = $"{Math.Round(maxram, 3)}(Время: {dtram.DateTime})";
                 rams.Add(ram);
-                rams.Add((Math.Round(db.ERams.Where(p => p.DateTime > end && p.DateTime < start).Average(u => u.BusyRam)), 3).ToString());
+                rams.Add(Math.Round(db.ERams.Where(p => p.DateTime > end && p.DateTime < start).Average(u => u.BusyRam), 3).ToString());
                 return rams;
             }
             else
             {
                 List<string> rams = new();
-                rams.Add((Math.Round(db.ERams.Where(p => p.DateTime > start && p.DateTime < average).Min(u => u.BusyRam)), 3).ToString());
+                rams.Add(Math.Round(db.ERams.Where(p => p.DateTime > start && p.DateTime < average).Min(u => u.BusyRam), 3).ToString());
                 double maxram = db.ERams.Where(p => p.DateTime > start && p.DateTime < average).Max(u => u.BusyRam);
                 var dtram = db.ERams.FirstOrDefault(p => p.BusyRam == maxram);
                 string ram = $"{Math.Round(maxram, 3)}(Время: {dtram.DateTime})";
                 rams.Add(ram);
-                rams.Add((Math.Round(db.ERams.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyRam)), 3).ToString());
+                rams.Add(Math.Round(db.ERams.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyRam), 3).ToString());
                 return rams;
             }
         }

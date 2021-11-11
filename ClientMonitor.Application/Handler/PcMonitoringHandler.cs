@@ -159,7 +159,7 @@ namespace ClientMonitor.Application.Handler
                 else { proverkaOnNull = proverkaOnNull + "\r\n" + "Ошибка проверки RAM"; }
                 if (resHttp.Count != 0)
                 {
-                    test = test + "\r\n" + $"Сумма пакетов http в байтах: {resHttp[0]}";
+                    test = test + "\r\n" + $"Сумма пакетов http в mB: {resHttp[0]}";
                 }
                 else { proverkaOnNull = proverkaOnNull + "\r\n" + "Ошибка проверки HTTP"; }
                 if (proverkaOnNull != "")
