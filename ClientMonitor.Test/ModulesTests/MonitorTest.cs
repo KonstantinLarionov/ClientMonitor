@@ -21,7 +21,7 @@ namespace ClientMonitor.Test.ModulesTests
             service = _factory.Services.GetRequiredService<IMonitorFactory>() as MonitorsFactory;
         }
 
-        #region [TestData]
+        #region [Success]
         [Fact]
         public void Cpu_Success()
         {
@@ -81,6 +81,7 @@ namespace ClientMonitor.Test.ModulesTests
 
         #endregion
 
+        #region [Error]
         [Fact]
         public void Cpu_Error()
         {
@@ -138,4 +139,5 @@ namespace ClientMonitor.Test.ModulesTests
             Assert.False(Convert.ToDouble(resultMonitoringHttp[0].Message)<0);
         }
     }
+    #endregion
 }

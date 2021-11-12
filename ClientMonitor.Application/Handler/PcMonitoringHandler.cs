@@ -30,6 +30,7 @@ namespace ClientMonitor.Application.Handler
             dbHttp = repositoryHttp;
             NotificationFactory = notificationFactory;
         }
+
         public void HandleCpu()
         {
             try
@@ -39,7 +40,7 @@ namespace ClientMonitor.Application.Handler
                 if (resultMonitoringcpu.Count == 0)
                 {
                     AddInLog("Ошибка получения CPU");
-                    return;
+                    //return;
                 }
                 var t = Convert.ToDouble(resultMonitoringcpu[0].Message);
                 var t1 = Convert.ToDouble(resultMonitoringcpu[1].Message);
@@ -65,7 +66,7 @@ namespace ClientMonitor.Application.Handler
                 if (resultMonitoringram.Count == 0)
                 {
                     AddInLog("Ошибка получения RAM");
-                    return;
+                    //return;
                 }
                 var r = Convert.ToDouble(resultMonitoringram[0].Message);
                 var r1 = Convert.ToDouble(resultMonitoringram[1].Message);
@@ -92,7 +93,7 @@ namespace ClientMonitor.Application.Handler
                 if (resultMonitoringproc.Count == 0)
                 {
                     AddInLog("Ошибка проверки Процессов");
-                    return;
+                    //return;
                 }
                 ProcInfo proc = new ProcInfo
                 {
@@ -116,7 +117,7 @@ namespace ClientMonitor.Application.Handler
                 if (resultMonitoringhttp.Count == 0)
                 {
                     AddInLog("Ошибка проверки пакетов Http");
-                    return;
+                    //return;
                 }
                 HttpInfo http = new HttpInfo
                 {
@@ -137,7 +138,7 @@ namespace ClientMonitor.Application.Handler
             if (notifyer == null)
             {
                 AddInLog("Ошибка соединения");
-                return;
+                //return;
             }
             try
             {
@@ -158,7 +159,7 @@ namespace ClientMonitor.Application.Handler
                 else { proverkaOnNull = proverkaOnNull + "\r\n" + "Ошибка проверки RAM"; }
                 if (resHttp.Count != 0)
                 {
-                    test = test + "\r\n" + $"Сумма пакетов http в байтах: {resHttp[0]}";
+                    test = test + "\r\n" + $"Сумма пакетов http в mB: {resHttp[0]}";
                 }
                 else { proverkaOnNull = proverkaOnNull + "\r\n" + "Ошибка проверки HTTP"; }
                 if (proverkaOnNull != "")
@@ -185,6 +186,5 @@ namespace ClientMonitor.Application.Handler
             };
             dbLog.AddInDb(log);
         }
-    } 
+    }
 }
-

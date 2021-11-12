@@ -68,11 +68,11 @@ namespace ClientMonitor
 
             #region [WorkBehind]
 
-            app.UseCloudUploading(cloudHandler => 
+            app.UseCloudUploading(cloudHandler =>
             {
-                cloudHandler.Handle(); 
+                cloudHandler.Handle();
             });
-            
+
             app.UseExternalMonitor(externalMonitorHandler =>
             {
                 externalMonitorHandler.Handle();

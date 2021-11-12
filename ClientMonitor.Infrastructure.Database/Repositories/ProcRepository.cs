@@ -6,12 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Database.Repositories
 {
-   public class ProcRepository : IRepository<ProcInfo>
+    public class ProcRepository : IRepository<ProcInfo>
     {
         private LoggerContext db;
         public ProcRepository()
@@ -21,7 +20,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public void AddInDb(ProcInfo info)
         {
-            db.Database.EnsureCreated();
+            //db.Database.EnsureCreated();
             db.Database.Migrate();
             var log = new EntitiesProc
             {
@@ -30,6 +29,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             };
 
             db.EProcs.Add(log);
+            DateTime threeday = DateTime.Now.AddDays(-3);
+            db.EProcs.RemoveRange(db.EProcs.Where(x => x.DateTime < threeday));
             db.SaveChanges();
         }
 

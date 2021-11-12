@@ -1,9 +1,11 @@
-﻿using ClientMonitor.Application.Abstractions;
+﻿using ClientMonitor.Application;
+using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Controllers;
 using ClientMonitor.Infrastructure.Database.Entities;
 using ClientMonitor.Infrastructure.Monitor;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,31 +19,63 @@ namespace ClientMonitor.Test.IntegratedTests
     public class MonitorTests : IClassFixture<ApplicationStanding>
     {
         private readonly WebApplicationFactory<Startup> _factory;
-
+        private readonly IApplicationBuilder _app;
         public MonitorTests(ApplicationStanding factory)
         {
             _factory = factory;
+            _app = _factory.Services.GetRequiredService<IApplicationBuilder>();
             //Тут отладка внутри проекта
         }
 
-        //интеграц выше мод
-        //интеграц вызывать хендлер 
-        //
+        ////интеграц выше мод
+        ////интеграц вызывать хендлер 
+        ////
+        //[Fact]
+        //public void Test()
+        //{
+        //    // Arrange
+        //    var mock = new Moq.Mock<IRepository<CpuInfo>>();
+        //    DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 10, 0, 0);
+        //    mock.Setup(a => a.StatDb(now)).Returns(new List<string>());
+
+        //    MonitoringController controller = new MonitoringController(mock.Object);
+
+        //    // Act
+        //    ViewResult result = controller.Index() as ViewResult;
+
+        //    // Assert
+        //    Assert.NotNull(result.Model);
+        //}      
+
         [Fact]
-        public void Test()
+        public void TestHandler()
         {
-            // Arrange
-            var mock = new Moq.Mock<IRepository<CpuInfo>>();
-            DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 10, 0, 0);
-            mock.Setup(a => a.StatDb(now)).Returns(new List<string>());
-
-            MonitoringController controller = new MonitoringController(mock.Object);
-
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
-
-            // Assert
-            Assert.NotNull(result.Model);
-        }      
+            try
+            {
+                _app.UsePcMonitoring(
+          cpuHandler =>
+          {
+              cpuHandler.HandleCpu();
+          },
+          ramHandler =>
+          {
+              ramHandler.HandleRam();
+          },
+          procHandler =>
+          {
+              procHandler.HandleProc();
+          }
+           //httpHandler =>
+           //{
+           //    httpHandler.HandleHttp();
+           //}
+          );
+                Assert.True(true);
+            }
+            catch
+            {
+                Assert.True(false);
+            }
+        }
     }
 }

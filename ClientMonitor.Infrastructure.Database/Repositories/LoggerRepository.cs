@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Objects;
@@ -22,21 +21,19 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public void AddInDb(LogInfo info)
         {
-            try
+            db.Database.EnsureCreated();
+            db.Database.Migrate();
+            var log = new Log
             {
-                db.Database.EnsureCreated();
-                //db.Database.Migrate();
-                var log = new Log
-                {
-                    DateTime = info.DateTime,
-                    TypeLog = info.TypeLog,
-                    Text = info.Text
-                };
+                DateTime = info.DateTime,
+                TypeLog = info.TypeLog,
+                Text = info.Text
+            };
 
-                db.Logs.Add(log);
-                db.SaveChanges();
-            }
-            catch { }
+            db.Logs.Add(log);
+            DateTime threeday = DateTime.Now.AddDays(-3);
+            db.Logs.RemoveRange(db.Logs.Where(x => x.DateTime < threeday));
+            db.SaveChanges();
         }
 
         public List<string> StatDb(DateTime dateTime)

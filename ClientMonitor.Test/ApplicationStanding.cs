@@ -4,6 +4,9 @@ using ClientMonitor.Application.Handler;
 using ClientMonitor.Infrastructure.CloudManager;
 using ClientMonitor.Infrastructure.Database;
 using ClientMonitor.Infrastructure.Monitor;
+using ClientMonitor.Infrastructure.Notifications;
+using ClientMonitor.Infrastructure.ScreenRecording;
+using ClientMonitor.Infrastructure.StreamingRecording;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,9 +40,14 @@ namespace ClientMonitor.Test
             return WebHost.CreateDefaultBuilder()
                  .ConfigureTestServices(services =>
                  {
-                     services.AddSingleton<ICludUploadHendler, CloudUploadHendler>();
-                     services.AddSingleton<IExternalMonitorHandler, ExternalMonitorHandler>();
-                     services.AddSingleton<IPcMonitoringHandler, PcMonitoringHandler>();
+                     services.AddInfrastructureCloudManager();
+                     services.AddInfrastructureNotifications();
+                     //services.AddInfrastructureScreenRecording();
+                     services.AddInfrastructureHandler();
+                     services.AddInfrastructureMonitor();
+                     services.AddInfrastructureDatabase();
+                     //services.AddInfrastructureStreamingRecording();
+
                  })
                 .UseStartup<Startup>();
         }

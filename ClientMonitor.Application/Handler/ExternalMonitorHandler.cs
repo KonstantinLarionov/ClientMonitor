@@ -7,13 +7,13 @@ using System.Collections.Generic;
 
 namespace ClientMonitor.Application.Handler
 {
-    public class ExternalMonitorHandler: IExternalMonitorHandler
+    public class ExternalMonitorHandler : IExternalMonitorHandler
     {
         IMonitorFactory MonitorFactory;
         INotificationFactory NotificationFactory;
         IRepository<LogInfo> db;
         public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory, IRepository<LogInfo> repository)
-        { 
+        {
             MonitorFactory = monitorFactory;
             NotificationFactory = notificationFactory;
             db = repository;
@@ -25,7 +25,7 @@ namespace ClientMonitor.Application.Handler
             if (notifyer == null)
             {
                 AddInLog("Ошибка соединения!");
-                return;
+                //return;
             }
             try
             {
@@ -51,12 +51,12 @@ namespace ClientMonitor.Application.Handler
                         AddInLog(result.Message);
                     }
                 }
-                //notifyer.SendMessage("-742266994", test1);
+                notifyer.SendMessage("-742266994", test1);
             }
             catch
             {
                 AddInLog("Ошибка выполнения метода проверки сайтов и серверов");
-                //notifyer.SendMessage("-742266994", "Ошибка выполнения проверки сайтов и серверов");
+                notifyer.SendMessage("-742266994", "Ошибка выполнения проверки сайтов и серверов");
             }
         }
 

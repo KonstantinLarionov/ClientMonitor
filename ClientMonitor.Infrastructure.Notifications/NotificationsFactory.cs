@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Notifications
 {
-    class NotificationsFactory : INotificationFactory
+   public class NotificationsFactory : INotificationFactory
     {
         private readonly Dictionary<NotificationTypes, INotification> _adaptors;
 

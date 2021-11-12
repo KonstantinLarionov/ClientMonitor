@@ -42,8 +42,6 @@ namespace ClientMonitor.Test.ModulesTests
             //    fileInf.Delete();
             //}
 
-
-
             // var res = GetFilesAndFoldersAsync();
         }
         [Fact]
