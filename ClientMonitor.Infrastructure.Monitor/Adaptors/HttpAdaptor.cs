@@ -41,10 +41,11 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 
         public static void GetHttp()
         {
-            mainSocket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP);
-            string myip= GetMyIP();
+            
             try
             {
+                mainSocket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP);
+                string myip = GetMyIP();
                 IPAddress Ip = IPAddress.Parse(myip);
                 IPEndPoint Ip_point = new IPEndPoint(Ip, 0);
                 mainSocket.Bind(Ip_point);
