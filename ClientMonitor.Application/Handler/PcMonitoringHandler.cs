@@ -167,12 +167,12 @@ namespace ClientMonitor.Application.Handler
                     AddInLog($"Ошибка получения информации о ПК: {proverkaOnNull}");
                 }
 
-                notifyer.SendMessage("-693501604", test);
+                //notifyer.SendMessage("-693501604", test);
             }
             catch
             {
                 AddInLog("Ошибка выполнения статистики RAM|CPU|HTTP");
-                notifyer.SendMessage("-693501604", "Ошибка выполнения статистики RAM|CPU|HTTP");
+                //notifyer.SendMessage("-693501604", "Ошибка выполнения статистики RAM|CPU|HTTP");
             }
         }
 
