@@ -1,4 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes;
 using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.Database.Contexts;
 using ClientMonitor.Infrastructure.Database.Entities;
@@ -18,6 +19,7 @@ namespace ClientMonitor.Infrastructure.Database
             services.AddSingleton<IRepository<RamInfo>, RamRepository>();
             services.AddSingleton<IRepository<ProcInfo>, ProcRepository>();
             services.AddSingleton<IRepository<HttpInfo>, HttpRepository>();
+            services.AddSingleton<IRepository<DataForEditInfo>, AddInDataForEdit>();
             //TODO : Регистрация репозитория на интерфейс IRepositories
         }
     }
