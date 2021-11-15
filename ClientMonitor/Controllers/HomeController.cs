@@ -22,7 +22,10 @@ namespace ClientMonitor.Controllers
         private readonly ILogger<HomeController> _logger;
         
         private readonly IMonitorFactory MonitorFactory;
-        private LoggerContext db = new LoggerContext();
+        //private LoggerContext db = new LoggerContext();
+        IRepository<DataForEdit> db;
+
+        public List<DataForEdit> Data { get; set; }
         public HomeController(ILogger<HomeController> logger, IMonitorFactory monitorFactory)
         {
             _logger = logger;
@@ -32,43 +35,32 @@ namespace ClientMonitor.Controllers
         public IActionResult Home()
         {
             var entities = new LoggerContext();
-
-            //return View(entities.EDataForEdit.ToList());
-
             ViewBag.DataForEdit = entities.EDataForEdit.ToList();
+            //List<DataForEdit> listdata = new List<DataForEdit>();
             return View();
-
-            //var course = db.EDataForEdit.FirstOrDefault(d => d.Id == id);
-            //if (course == null)
-            //{
-            //    return View("NotFound");
-            //}
-            //return View(course);
-
-            //return View(db.EDataForEdit.ToList());
         }
 
 
-        //public ActionResult Edit(int id = 0)
-        //{
-        //    //DataForEditInfo book = db.EDataForEdit.Find(id);
-        //   // return View(book);
-        //}
-
-        //
-        // POST: /Book/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(DataForEditInfo book)
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Home");
-            }
-            return View(book);
+            ViewBag.DataId = id;
+            return View();
         }
+        [HttpPost]
+        public string Buy(Purchase purchase)
+        {
+            purchase.Date = DateTime.Now;
+            // добавляем информацию о покупке в базу данных
+            db.Purchases.Add(purchase);
+            // сохраняем в бд все изменения
+            db.SaveChanges();
+            return "Спасибо," + purchase.Person + ", за покупку!";
+        }
+
+
+
+
 
 
 

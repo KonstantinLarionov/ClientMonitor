@@ -1,30 +1,31 @@
-﻿@using ClientMonitor
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-
+﻿
 
 @{
-    ViewBag.Title = "Параметры ClientMonitor";
-}
+        ViewBag.Title = "Параметры ClientMonitor";
+    }
+
+
 
 
 <table>
-    <tr>
-        <th>Id</th>
-        <th>Note</th>
-        <th>Date</th>
-    </tr>
+        <tr>
+            <th>Id</th>
+            <th>Note</th>
+            <th>Date</th>
+            <th>Нажать для изменения</th>
+        </tr>
 
-    @foreach(var country in ViewBag.DataForEdit)
-    {
-    <tr>
-        <td>@country.Id</td>
-        <td>@country.Date</td>
-        <td>@country.Note</td>
-    </tr>
-    }
-</table>
+        @foreach(var country in ViewBag.DataForEdit)
+        {
+        <tr>
+            <td>@country.Id</td>
+            <td>@country.Date</td>
+            <td>@country.Note</td>
+            <td>
+                <p><a href="/Home/Edit/@country.Id">Редактировать</a></p>
+            </td>
+        </tr>
+        }
+    </table>
+
+
