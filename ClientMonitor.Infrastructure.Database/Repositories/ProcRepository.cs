@@ -34,9 +34,18 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.SaveChanges();
         }
 
+        public string GetData(string old)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<string> StatDb(DateTime start)
         {
             throw new System.NotImplementedException();
+        }
+        public void Update(string key, string news)
+        {
+            throw new NotImplementedException();
         }
 
     }

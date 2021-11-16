@@ -22,14 +22,31 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         }
         public void AddInDb(DataForEditInfo info)
         {
-            var proverka = db.EDataForEdit.FirstOrDefault(p => p.Id == 12);
-
-            if (proverka == null)
+            try
             {
+                var proverka = db.EDataForEdit.FirstOrDefault(p => p.Id == 13);
+
+                if (proverka == null)
+                {
+                    db.Database.EnsureCreated();
+                    db.Database.Migrate();
+                    var mon = new DataForEdit
+                    {
+                        Name=info.Name,
+                        Note = info.Note,
+                        Date = info.Date,
+                    };
+                    db.EDataForEdit.Add(mon);
+                    db.SaveChanges();
+                }
+            }
+
+            catch {
                 db.Database.EnsureCreated();
                 db.Database.Migrate();
                 var mon = new DataForEdit
                 {
+                    Name = info.Name,
                     Note = info.Note,
                     Date = info.Date,
                 };
@@ -80,13 +97,26 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             //    db.EDataForEdit.Add(a8);
             //    #endregion
             //}
-           // db.SaveChanges();
+            // db.SaveChanges();
 
+        }
+
+        public string GetData(string old)
+        {
+            var editdata = db.EDataForEdit.Where(c => c.Name == old).FirstOrDefault();
+            return editdata.ToString();
         }
 
         public List<string> StatDb(DateTime dateTime)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void Update(string key, string news)
+        {
+            var editdata = db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
+            editdata.Note = news;
+            db.SaveChanges();
         }
     }
 }
