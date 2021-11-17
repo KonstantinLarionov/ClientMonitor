@@ -229,12 +229,12 @@ namespace ClientMonitor.Application.Handler
             DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
             DateTime date2 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 20, 0, 0);
 
-            var timecloud = new DataForEditInfo { Name = "TimeCloud", Date = "Время начала загрузки в облако", Note = date2.ToString() };
+            var timecloud = new DataForEditInfo { Name = "TimeCloud", Date = "Время начала загрузки в облако~~Обновляется со следующей проверки!!!", Note = date2.ToString() };
             dbData.AddInDb(timecloud);
 
-            var timestart = new DataForEditInfo { Name = "TimeFirst", Date = "Время первой проверки мониторинга характеристик ПК", Note = date.ToString() };
+            var timestart = new DataForEditInfo { Name = "TimeFirst", Date = "Время первой проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", Note = date.ToString() };
             dbData.AddInDb(timestart);
-            var timeend = new DataForEditInfo { Name = "TimeSecond", Date = "Время второй проверки мониторинга характеристик ПК", Note = date1.ToString() };
+            var timeend = new DataForEditInfo { Name = "TimeSecond", Date = "Время второй проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", Note = date1.ToString() };
             dbData.AddInDb(timeend);
 
             var a5 = new DataForEditInfo { Name = "PeriodMonitoring", Date = "Периодичность мониторинга сайтов/серверов", Note = "3600000" };
