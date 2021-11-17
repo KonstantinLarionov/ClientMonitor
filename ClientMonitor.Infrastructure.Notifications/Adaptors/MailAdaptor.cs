@@ -1,5 +1,8 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using MimeKit;
 using System;
 using System.Collections.Generic;
@@ -9,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Notifications.Adaptors
 {
-    private readonly LoggerContext db;
     public class MailAdaptor : INotification
     {
         readonly string Subject = "Уведомление от ClientMonitor";
@@ -29,6 +31,8 @@ namespace ClientMonitor.Infrastructure.Notifications.Adaptors
             EmailMessage = new MimeMessage();
         }
 
+        IApplicationBuilder application;
+
         public async Task SendMessage(string to, string massage)
         {
             EmailMessage.From.Add(new MailboxAddress(Name, Mail));
@@ -44,8 +48,9 @@ namespace ClientMonitor.Infrastructure.Notifications.Adaptors
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                 try
                 {
-                    Mail = dbData.GetData("afc.studio@yandex.ru");
-                    Password = dbData.GetData("afc.studio@yandex.ru");
+                    var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
+                    Mail = repository.GetData("Mail");
+                    Password = repository.GetData("Pas");
                 }
                 catch { }
                 client.Connect(MailType, 587, false);

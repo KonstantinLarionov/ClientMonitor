@@ -56,11 +56,11 @@ namespace ClientMonitor.Application.Handler
                 }
                 try { 
                     string k = dbData.GetData("IdChatServer");
-                    //notifyer.SendMessage(k, test1);
+                    notifyer.SendMessage(k, test1);
                 }
                 catch
                 {
-                    //notifyer.SendMessage("-742266994", test1);
+                    notifyer.SendMessage("-742266994", test1);
                 }
             }
             catch
@@ -68,11 +68,11 @@ namespace ClientMonitor.Application.Handler
                 AddInLog("Ошибка выполнения метода проверки сайтов и серверов");
                 try { 
                     string k = dbData.GetData("IdChatServer");
-                    //notifyer.SendMessage(k, "Ошибка выполнения проверки сайтов и серверов");
+                    notifyer.SendMessage(k, "Ошибка выполнения проверки сайтов и серверов");
                 }
                 catch
                 {
-                    //notifyer.SendMessage("-742266994", "Ошибка выполнения проверки сайтов и серверов");}
+                    notifyer.SendMessage("-742266994", "Ошибка выполнения проверки сайтов и серверов");
                 }
             }
         }

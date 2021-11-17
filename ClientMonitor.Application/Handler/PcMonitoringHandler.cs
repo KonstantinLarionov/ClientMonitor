@@ -144,9 +144,13 @@ namespace ClientMonitor.Application.Handler
             }
             try
             {
-                var resCpu = dbCpu.StatDb(DateTime.Now);
-                var resRam = dbRam.StatDb(DateTime.Now);
-                var resHttp = dbHttp.StatDb(DateTime.Now);
+                List<string> resCpu = null;
+                List<string> resRam = null;
+                List<string> resHttp=null;
+                try {resCpu = dbCpu.StatDb(DateTime.Now);}catch { }
+                try {resRam = dbRam.StatDb(DateTime.Now);} catch { }
+                try {resHttp = dbHttp.StatDb(DateTime.Now);}catch { }
+
                 string test = $"Статистика CPU, RAM и HTTP на {DateTime.Now}";
                 string proverkaOnNull = "";
                 if (resCpu.Count != 0)
@@ -172,10 +176,10 @@ namespace ClientMonitor.Application.Handler
                 try
                 {
                     string k = dbData.GetData("IdChatMonitoring");
-                    //notifyer.SendMessage(k, test);
+                    notifyer.SendMessage(k, test);
                 }
                 catch {
-                    //notifyer.SendMessage("-693501604", test);
+                    notifyer.SendMessage("-693501604", test);
                     }
             }
             catch
@@ -184,11 +188,11 @@ namespace ClientMonitor.Application.Handler
                 try
                 {
                     string k = dbData.GetData("IdChatMonitoring");
-                    //notifyer.SendMessage(k, "Ошибка выполнения статистики RAM|CPU|HTTP");
+                    notifyer.SendMessage(k, "Ошибка выполнения статистики RAM|CPU|HTTP");
                 }
                 catch
                 {
-                    //notifyer.SendMessage("-693501604", "Ошибка выполнения статистики RAM|CPU|HTTP");
+                    notifyer.SendMessage("-693501604", "Ошибка выполнения статистики RAM|CPU|HTTP");
                 }
             }
         }
@@ -241,7 +245,7 @@ namespace ClientMonitor.Application.Handler
             var a8 = new DataForEditInfo { Name = "IdChatMonitoring", Date = "Id чата в телеграме для отправки сообщений по мониторингу характеристик ПК", Note = "-693501604" };
             dbData.AddInDb(a8);
 
-            var proverka = new DataForEditInfo { Name = "onOff", Date = "Проверка для остановки/запуска приложения", Note = "false" };
+            var proverka = new DataForEditInfo { Name = "onOff", Date = "Проверка для остановки/запуска приложения", Note = "False" };
             dbData.AddInDb(proverka);
 
         }

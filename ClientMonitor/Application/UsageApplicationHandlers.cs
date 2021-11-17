@@ -9,10 +9,15 @@ namespace ClientMonitor.Application
 {
     public static class UsageApplicationHandlers
     {
+
         public static void UseDataEdit(this IApplicationBuilder application, Action<IPcMonitoringHandler> handle)
         {
-            var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
             handle.Invoke(service);
+            });
+            thread.Start();
         }
         public static void UseCloudUploading(this IApplicationBuilder application, Action<ICludUploadHendler> handle)
         {
@@ -20,16 +25,21 @@ namespace ClientMonitor.Application
             {
 
                 var service = application.ApplicationServices.GetRequiredService<ICludUploadHendler>();
-                var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
+                
 
                 while (true)
                 {
-                    var onOffData = repository.GetData("onOff");
-                    bool isEnable = Convert.ToBoolean(onOffData);
-                    if (isEnable)
+                    var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
+                    string isEnable = "False";
+                    try { isEnable = repository.GetData("onOff"); Thread.Sleep(10000); } catch { }
+                    if (isEnable== "False")
                     {
-                        DateTime dateTime = DateTime.Now;
-                        if (dateTime.Hour == 20 && dateTime.Minute <= 2)
+                        int hour=0;
+                    try
+                    {
+                            hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
+                    }catch { }
+                    if (DateTime.Now.Hour == hour && DateTime.Now.Minute <= 2)
                         {
                             handle.Invoke(service);
                             Thread.Sleep(85800000);
@@ -50,11 +60,21 @@ namespace ClientMonitor.Application
             Thread thread = new Thread(() =>
             {
                 var service = application.ApplicationServices.GetRequiredService<IExternalMonitorHandler>();
-
+                
                 while (true)
                 {
-                    handle.Invoke(service);
-                    Thread.Sleep(3600000);
+                    var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
+                    string isEnable = "False";
+                    int time = 10000;
+                    try { isEnable = repository.GetData("onOff"); 
+                        time = Convert.ToInt32(repository.GetData("PeriodMonitoring")); Thread.Sleep(10000);
+                    } catch { }
+                    if (isEnable == "False")
+                    {
+                        handle.Invoke(service);
+                    Thread.Sleep(time);
+                    }
+                    else { Thread.Sleep(1000); }
                 }
             });
             thread.Start();
@@ -67,10 +87,19 @@ namespace ClientMonitor.Application
                 Thread thread = new Thread(() =>
                 {
                     var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
+                    
                     while (true)
                     {
-                        i.Invoke(service);
-                        Thread.Sleep(1000);
+                        var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
+                        string isEnable = "False";
+                        try { isEnable = repository.GetData("onOff"); Thread.Sleep(10000); } catch { }
+                        if (isEnable == "False")
+                        {
+                            i.Invoke(service);
+                            Thread.Sleep(1000);
+                        }
+                        else { Thread.Sleep(1000); }
+
                     }
                 });
                 thread.Start();
@@ -81,15 +110,26 @@ namespace ClientMonitor.Application
         {
             Thread thread = new Thread(() =>
             {
-                var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
-                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
-
-                while (true)
-                {
+                
+                    var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
+                    DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+                    DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+                    string isEnable = "False";
+                    while (true)
+                    {
+                    var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
+                    try
+                    {
+                        date = Convert.ToDateTime(repository.GetData("TimeFirst"));
+                        date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
+                        isEnable = repository.GetData("onOff"); Thread.Sleep(10000);
+                    }
+                    catch { }
+                    if (isEnable == "False")
+                    {
                         DateTime dateTime = DateTime.Now;
 
-                        if (date.Hour== dateTime.Hour && date.Minute == dateTime.Minute)
+                        if (date.Hour == dateTime.Hour && date.Minute == dateTime.Minute)
                         {
                             handle.Invoke(service);
                             Thread.Sleep(32400000);
@@ -99,8 +139,9 @@ namespace ClientMonitor.Application
                             handle.Invoke(service);
                             Thread.Sleep(32400000);
                         }
-                    Thread.Sleep(10000);
-                }
+                        Thread.Sleep(10000);
+                    }
+                    }
             });
             thread.Start();
         }

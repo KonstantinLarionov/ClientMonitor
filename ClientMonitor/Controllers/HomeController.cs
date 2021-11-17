@@ -72,6 +72,20 @@ namespace ClientMonitor.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult Stop()
+        {
+            dbData.Update("onOff", "True");
+            return RedirectToAction("Home");
+        }
+
+        [HttpPost]
+        public ActionResult Start()
+        {
+            dbData.Update("onOff", "False");
+            return RedirectToAction("Home");
+        }
+
 
 
         //[HttpGet]

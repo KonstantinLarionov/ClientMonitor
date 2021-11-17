@@ -24,7 +24,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         {
             try
             {
-                var proverka = db.EDataForEdit.FirstOrDefault(p => p.Id == 13);
+                var proverka = db.EDataForEdit.FirstOrDefault(p => p.Id == 14);
 
                 if (proverka == null)
                 {
@@ -58,7 +58,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         //получить по Name параметр Date
         public string GetData(string old)
         {
-            var editdata = db.EDataForEdit.Where(c => c.Name == old).Select(x=>x.Date).FirstOrDefault();
+            var editdata = db.EDataForEdit.Where(c => c.Name == old).Select(x=>x.Note).FirstOrDefault();
             return editdata;
         }
 
@@ -69,6 +69,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         //обновление записи в бд
         public void Update(string key, string news)
         {
+            
             var editdata = db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
             editdata.Note = news;
             db.SaveChanges();
