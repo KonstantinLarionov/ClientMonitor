@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Notifications.Adaptors
 {
+    private readonly LoggerContext db;
     public class MailAdaptor : INotification
     {
         readonly string Subject = "Уведомление от ClientMonitor";
 
         readonly string Name = "AFCStudio";
 
-        readonly string Mail = "afc.studio@yandex.ru";
+         string Mail = "afc.studio@yandex.ru";
 
-        readonly string Password = "lollipop321123";
+         string Password = "lollipop321123";
 
         readonly string MailType = "smtp.yandex.ru";
 
@@ -41,6 +42,12 @@ namespace ClientMonitor.Infrastructure.Notifications.Adaptors
             using (var client = new SmtpClient())
             {
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                try
+                {
+                    Mail = dbData.GetData("afc.studio@yandex.ru");
+                    Password = dbData.GetData("afc.studio@yandex.ru");
+                }
+                catch { }
                 client.Connect(MailType, 587, false);
                 client.Authenticate(Mail, Password);
                 client.Send(EmailMessage);

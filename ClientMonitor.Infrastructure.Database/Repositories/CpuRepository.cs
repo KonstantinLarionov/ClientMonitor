@@ -34,6 +34,11 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.SaveChanges();
         }
 
+        public string GetData(string old)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<string> StatDb(DateTime dateTime)
         {
             DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
@@ -61,6 +66,11 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
                 cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyCpu), 3).ToString());
                 return cpus;
             }
+        }
+
+        public void Update(string key, string news)
+        {
+            throw new NotImplementedException();
         }
     }
 }

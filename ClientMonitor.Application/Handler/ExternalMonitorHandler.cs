@@ -1,4 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes;
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
@@ -12,11 +13,13 @@ namespace ClientMonitor.Application.Handler
         IMonitorFactory MonitorFactory;
         INotificationFactory NotificationFactory;
         IRepository<LogInfo> db;
-        public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory, IRepository<LogInfo> repository)
+        IRepository<DataForEditInfo> dbData;
+        public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory, IRepository<LogInfo> repository, IRepository<DataForEditInfo> repositoryData)
         {
             MonitorFactory = monitorFactory;
             NotificationFactory = notificationFactory;
             db = repository;
+            dbData = repositoryData;
         }
 
         public void Handle()
@@ -51,12 +54,26 @@ namespace ClientMonitor.Application.Handler
                         AddInLog(result.Message);
                     }
                 }
-                notifyer.SendMessage("-742266994", test1);
+                try { 
+                    string k = dbData.GetData("IdChatServer");
+                    //notifyer.SendMessage(k, test1);
+                }
+                catch
+                {
+                    //notifyer.SendMessage("-742266994", test1);
+                }
             }
             catch
             {
                 AddInLog("Ошибка выполнения метода проверки сайтов и серверов");
-                notifyer.SendMessage("-742266994", "Ошибка выполнения проверки сайтов и серверов");
+                try { 
+                    string k = dbData.GetData("IdChatServer");
+                    //notifyer.SendMessage(k, "Ошибка выполнения проверки сайтов и серверов");
+                }
+                catch
+                {
+                    //notifyer.SendMessage("-742266994", "Ошибка выполнения проверки сайтов и серверов");}
+                }
             }
         }
 

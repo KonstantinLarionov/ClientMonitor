@@ -1,4 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes;
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.Database.Entities;
@@ -19,8 +20,8 @@ namespace ClientMonitor.Application.Handler
         IRepository<HttpInfo> dbHttp;
         INotificationFactory NotificationFactory;
         IRepository<LogInfo> dbLog;
-
-        public PcMonitoringHandler(IMonitorFactory monitorFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory, IRepository<CpuInfo> repositoryCpu, IRepository<RamInfo> repositoryRam, IRepository<ProcInfo> repositoryProc, IRepository<HttpInfo> repositoryHttp)
+        IRepository<DataForEditInfo> dbData;
+        public PcMonitoringHandler(IMonitorFactory monitorFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory, IRepository<CpuInfo> repositoryCpu, IRepository<RamInfo> repositoryRam, IRepository<ProcInfo> repositoryProc, IRepository<HttpInfo> repositoryHttp, IRepository<DataForEditInfo> repositoryData)
         {
             MonitorFactory = monitorFactory;
             dbLog = repositoryLog;
@@ -28,6 +29,7 @@ namespace ClientMonitor.Application.Handler
             dbRam = repositoryRam;
             dbProc = repositoryProc;
             dbHttp = repositoryHttp;
+            dbData = repositoryData;
             NotificationFactory = notificationFactory;
         }
 
@@ -167,12 +169,27 @@ namespace ClientMonitor.Application.Handler
                     AddInLog($"Ошибка получения информации о ПК: {proverkaOnNull}");
                 }
 
-                notifyer.SendMessage("-693501604", test);
+                try
+                {
+                    string k = dbData.GetData("IdChatMonitoring");
+                    //notifyer.SendMessage(k, test);
+                }
+                catch {
+                    //notifyer.SendMessage("-693501604", test);
+                    }
             }
             catch
             {
                 AddInLog("Ошибка выполнения статистики RAM|CPU|HTTP");
-                notifyer.SendMessage("-693501604", "Ошибка выполнения статистики RAM|CPU|HTTP");
+                try
+                {
+                    string k = dbData.GetData("IdChatMonitoring");
+                    //notifyer.SendMessage(k, "Ошибка выполнения статистики RAM|CPU|HTTP");
+                }
+                catch
+                {
+                    //notifyer.SendMessage("-693501604", "Ошибка выполнения статистики RAM|CPU|HTTP");
+                }
             }
         }
 
@@ -185,6 +202,45 @@ namespace ClientMonitor.Application.Handler
                 DateTime = DateTime.Now
             };
             dbLog.AddInDb(log);
+        }
+
+        public void HandleSettings()
+        {
+            var a = new DataForEditInfo { Name ="PathClaim", Date = "Путь выгрузки файлов ~Выдача", Note = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE" };
+            dbData.AddInDb(a);
+            var asklad = new DataForEditInfo { Name = "PathStorage", Date = "Путь выгрузки файлов ~Склад", Note = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM" };
+            dbData.AddInDb(asklad);
+            var a1 = new DataForEditInfo { Name = "FormatFile", Date = "Формат выгрузки файлов", Note = "*mp4" };
+            dbData.AddInDb(a1);
+            var a2 = new DataForEditInfo { Name = "PathDownloadClaim", Date = "Путь хранения файлов в облаке ~Выдача", Note = "Записи/Выдача" };
+            dbData.AddInDb(a2);
+            var a3 = new DataForEditInfo { Name = "PathDownloadStorage", Date = "Путь хранения файлов в облаке ~Склад", Note = "Записи/Склад" };
+            dbData.AddInDb(a3);
+            var amail = new DataForEditInfo { Name = "Mail", Date = "Почта для входа в облако", Note = "afc.studio@yandex.ru" };
+            dbData.AddInDb(amail);
+            var apas = new DataForEditInfo { Name = "Pas", Date = "Пароль для входа в облако", Note = "lollipop321123" };
+            dbData.AddInDb(apas);
+
+            DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+            DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+            DateTime date2 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 20, 0, 0);
+
+            var timecloud = new DataForEditInfo { Name = "TimeCloud", Date = "Время начала загрузки в облако", Note = date2.ToString() };
+            dbData.AddInDb(timecloud);
+
+            var timestart = new DataForEditInfo { Name = "TimeFirst", Date = "Время первой проверки мониторинга характеристик ПК", Note = date.ToString() };
+            dbData.AddInDb(timestart);
+            var timeend = new DataForEditInfo { Name = "TimeSecond", Date = "Время второй проверки мониторинга характеристик ПК", Note = date1.ToString() };
+            dbData.AddInDb(timeend);
+
+            var a5 = new DataForEditInfo { Name = "PeriodMonitoring", Date = "Периодичность мониторинга сайтов/серверов", Note = "3600000" };
+            dbData.AddInDb(a5);
+
+            var a7 = new DataForEditInfo { Name = "IdChatServer", Date = "Id чата в телеграме для отправки сообщений по мониторингу сайтов и серверов ", Note = "-742266994" };
+            dbData.AddInDb(a7);
+            var a8 = new DataForEditInfo { Name = "IdChatMonitoring", Date = "Id чата в телеграме для отправки сообщений по мониторингу характеристик ПК", Note = "-693501604" };
+            dbData.AddInDb(a8);
+
         }
     }
 }

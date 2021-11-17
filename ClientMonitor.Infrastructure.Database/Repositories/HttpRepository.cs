@@ -33,6 +33,11 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.SaveChanges();
         }
 
+        public string GetData(string old)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<string> StatDb(DateTime dateTime)
         {
             DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
@@ -57,6 +62,10 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
                 https.Add((sum).ToString());
                 return https;
             }
+        }
+        public void Update(string key, string news)
+        {
+            throw new NotImplementedException();
         }
     }
 }

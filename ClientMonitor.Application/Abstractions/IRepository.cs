@@ -10,6 +10,8 @@ namespace ClientMonitor.Application.Abstractions
     public interface IRepository<T>
     {
         void AddInDb(T info);
+        void Update(string key,string news);
         List<string> StatDb(DateTime dateTime);
+        string GetData(string old);
     }
 }

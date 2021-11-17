@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ClientMonitor.Infrastructure.Database.Entities.DataForEdit>
+
+@{
+    ViewBag.Title = "Параметры ClientMonitor";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Note</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ClientMonitor.Infrastructure.Database.Entities.DataForEdit b in Model)
+        {
+            <tr>
+                <td>@b.Id</td>
+                <td>@b.Name</td>
+                <td>@b.Date</td>
+                <td>@b.Note</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<p> Редактирование параметров</p>
+
+
+@using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+{
+    <p>
+        <label>Название</label><br />
+    <p>
+        <select name="hero">
+            @foreach (ClientMonitor.Infrastructure.Database.Entities.DataForEdit b in Model)
+            {
+                <option value="@b.Name">@b.Name</option>
+            }
+        </select>
+    </p>
+    </p>
+    <p>
+        <label>Параметр</label><br />
+        <input type="text" name="data" />
+    </p>
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+}
