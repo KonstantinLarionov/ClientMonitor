@@ -144,9 +144,10 @@ namespace ClientMonitor.Application.Handler
             }
             try
             {
-                List<string> resCpu = null;
-                List<string> resRam = null;
-                List<string> resHttp=null;
+                var resCpu = new List<string>();
+                var resRam = new List<string>();
+                var resHttp = new List<string>();
+
                 try {resCpu = dbCpu.StatDb(DateTime.Now);}catch { }
                 try {resRam = dbRam.StatDb(DateTime.Now);} catch { }
                 try {resHttp = dbHttp.StatDb(DateTime.Now);}catch { }
@@ -207,48 +208,50 @@ namespace ClientMonitor.Application.Handler
             };
             dbLog.AddInDb(log);
         }
-
+/*
         public void HandleSettings()
         {
-            var a = new DataForEditInfo { Name ="PathClaim", Date = "Путь выгрузки файлов ~Выдача", Note = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE" };
+            var a = new DataForEditInfo { Name ="PathClaim", Date = "Путь выгрузки файлов ~Выдача", Value = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE" };
             dbData.AddInDb(a);
-            var asklad = new DataForEditInfo { Name = "PathStorage", Date = "Путь выгрузки файлов ~Склад", Note = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM" };
+            var asklad = new DataForEditInfo { Name = "PathStorage", Date = "Путь выгрузки файлов ~Склад", Value = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM" };
             dbData.AddInDb(asklad);
-            var a1 = new DataForEditInfo { Name = "FormatFile", Date = "Формат выгрузки файлов", Note = "*mp4" };
+            var a1 = new DataForEditInfo { Name = "FormatFile", Date = "Формат выгрузки файлов", Value = "*mp4" };
             dbData.AddInDb(a1);
-            var a2 = new DataForEditInfo { Name = "PathDownloadClaim", Date = "Путь хранения файлов в облаке ~Выдача", Note = "Записи/Выдача" };
+            var a2 = new DataForEditInfo { Name = "PathDownloadClaim", Date = "Путь хранения файлов в облаке ~Выдача", Value = "Записи/Выдача" };
             dbData.AddInDb(a2);
-            var a3 = new DataForEditInfo { Name = "PathDownloadStorage", Date = "Путь хранения файлов в облаке ~Склад", Note = "Записи/Склад" };
+            var a3 = new DataForEditInfo { Name = "PathDownloadStorage", Date = "Путь хранения файлов в облаке ~Склад", Value = "Записи/Склад" };
             dbData.AddInDb(a3);
-            var amail = new DataForEditInfo { Name = "Mail", Date = "Почта для входа в облако", Note = "afc.studio@yandex.ru" };
+            var amail = new DataForEditInfo { Name = "Mail", Date = "Почта для входа в облако", Value = "afc.studio@yandex.ru" };
             dbData.AddInDb(amail);
-            var apas = new DataForEditInfo { Name = "Pas", Date = "Пароль для входа в облако", Note = "lollipop321123" };
+            var apas = new DataForEditInfo { Name = "Pas", Date = "Пароль для входа в облако", Value = "lollipop321123" };
             dbData.AddInDb(apas);
 
             DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
             DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
             DateTime date2 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 20, 0, 0);
 
-            var timecloud = new DataForEditInfo { Name = "TimeCloud", Date = "Время начала загрузки в облако~~Обновляется со следующей проверки!!!", Note = date2.ToString() };
+            var timecloud = new DataForEditInfo { Name = "TimeCloud", Date = "Время начала загрузки в облако~~Обновляется со следующей проверки!!!", Value = date2.ToString() };
             dbData.AddInDb(timecloud);
 
-            var timestart = new DataForEditInfo { Name = "TimeFirst", Date = "Время первой проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", Note = date.ToString() };
+            var timestart = new DataForEditInfo { Name = "TimeFirst", Date = "Время первой проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", Value = date.ToString() };
             dbData.AddInDb(timestart);
-            var timeend = new DataForEditInfo { Name = "TimeSecond", Date = "Время второй проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", Note = date1.ToString() };
+            var timeend = new DataForEditInfo { Name = "TimeSecond", Date = "Время второй проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", Value = date1.ToString() };
             dbData.AddInDb(timeend);
 
-            var a5 = new DataForEditInfo { Name = "PeriodMonitoring", Date = "Периодичность мониторинга сайтов/серверов", Note = "3600000" };
+            var a5 = new DataForEditInfo { Name = "PeriodMonitoring", Date = "Периодичность мониторинга сайтов/серверов", Value = "3600000" };
             dbData.AddInDb(a5);
 
-            var a7 = new DataForEditInfo { Name = "IdChatServer", Date = "Id чата в телеграме для отправки сообщений по мониторингу сайтов и серверов ", Note = "-742266994" };
+            var a7 = new DataForEditInfo { Name = "IdChatServer", Date = "Id чата в телеграме для отправки сообщений по мониторингу сайтов и серверов ", Value = "-742266994" };
             dbData.AddInDb(a7);
-            var a8 = new DataForEditInfo { Name = "IdChatMonitoring", Date = "Id чата в телеграме для отправки сообщений по мониторингу характеристик ПК", Note = "-693501604" };
+            var a8 = new DataForEditInfo { Name = "IdChatMonitoring", Date = "Id чата в телеграме для отправки сообщений по мониторингу характеристик ПК", Value = "-693501604" };
             dbData.AddInDb(a8);
 
-            var proverka = new DataForEditInfo { Name = "onOff", Date = "Проверка для остановки/запуска приложения", Note = "False" };
+            var proverka = new DataForEditInfo { Name = "onOff", Date = "Проверка для остановки/запуска приложения", Value = "False" };
             dbData.AddInDb(proverka);
 
         }
+
+        */
     }
 }
 

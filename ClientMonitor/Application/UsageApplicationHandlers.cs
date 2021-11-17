@@ -10,15 +10,15 @@ namespace ClientMonitor.Application
     public static class UsageApplicationHandlers
     {
 
-        public static void UseDataEdit(this IApplicationBuilder application, Action<IPcMonitoringHandler> handle)
-        {
-            Thread thread = new Thread(() =>
-            {
-                var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-            handle.Invoke(service);
-            });
-            thread.Start();
-        }
+        //public static void UseDataEdit(this IApplicationBuilder application, Action<IPcMonitoringHandler> handle)
+        //{
+        //    Thread thread = new Thread(() =>
+        //    {
+        //        var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
+        //    handle.Invoke(service);
+        //    });
+        //    thread.Start();
+        //}
         public static void UseCloudUploading(this IApplicationBuilder application, Action<ICludUploadHendler> handle)
         {
             Thread thread = new Thread(() =>

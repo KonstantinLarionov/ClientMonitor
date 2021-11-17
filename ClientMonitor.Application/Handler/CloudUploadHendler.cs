@@ -62,14 +62,14 @@ namespace ClientMonitor.Application.Handler
                     FileInfo fileInf = new FileInfo(file);
                     var uploadFile = GetUploadFile(fileInf, k2);
                     await Cloud.UploadFiles(uploadFile);
-                    await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
+                    //await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                     fileInf.Delete();
                 }
-                await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Выдача\" завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
+                //await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Выдача\" завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
             }
             else
             {
-                await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправлены из папки: \"Выдача\" так как она пуста.~~~!");
+                //await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправлены из папки: \"Выдача\" так как она пуста.~~~!");
                 AddInBd($"!~~~Файлы не были отправлены из папки: \"Выдача\" так как она пуста.~~~!");
             }
 
@@ -96,26 +96,28 @@ namespace ClientMonitor.Application.Handler
                     //var uploadFile = GetUploadFile(fileInf, "Записи/Склад");
                     var uploadFile = GetUploadFile(fileInf, k4);
                     await Cloud.UploadFiles(uploadFile);
-                    await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
+                    //await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                     fileInf.Delete();
                 }
                 try {
                     k4 = dbData.GetData("IdChatServer");
-                    await TelegramNotification.SendMessage(k4, $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length - 1} Время: {DateTime.Now}~~~");
+                    //await TelegramNotification.SendMessage(k4, $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length - 1} Время: {DateTime.Now}~~~");
                 }
                 catch
                 {
-                    await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length - 1} Время: {DateTime.Now}~~~");
+                    //await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length - 1} Время: {DateTime.Now}~~~");
                 } }
             else
             {
                 try
                 {
                     k4 = dbData.GetData("IdChatServer");
-                    await TelegramNotification.SendMessage(k4, $"!~~~Файлы не были отправлены из папки: \"Склад\" так как она пуста.~~~!");
+                    //await TelegramNotification.SendMessage(k4, $"!~~~Файлы не были отправлены из папки: \"Склад\" так как она пуста.~~~!");
 
                 }
-                catch { await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправлены из папки: \"Склад\" так как она пуста.~~~!");}
+                catch { 
+                    //await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправлены из папки: \"Склад\" так как она пуста.~~~!");
+                }
                 AddInBd($"!~~~Файлы не были отправленны из папки: \"Склад\" так как она пуста.~~~!");
             }
         }

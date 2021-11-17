@@ -20,6 +20,7 @@ namespace ClientMonitor.Infrastructure.Database.Contexts
             var connection = new SqliteConnection(connectionString);
 
             optionsBuilder.UseSqlite(connection);
+             
         }
     }
 }

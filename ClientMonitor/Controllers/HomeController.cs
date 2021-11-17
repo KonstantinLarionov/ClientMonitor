@@ -40,7 +40,12 @@ namespace ClientMonitor.Controllers
 
         public IActionResult Home()
         {
-            return View(db.EDataForEdit.ToList());
+            try
+            {
+                return View(db.EDataForEdit.ToList());
+            }
+            catch { }
+            return View();
         }
 
         

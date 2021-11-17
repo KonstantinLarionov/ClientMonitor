@@ -30,7 +30,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.ECpus.Add(mon);
 
             DateTime threeday = DateTime.Now.AddDays(-3);
-            db.ECpus.RemoveRange(db.ECpus.Where(x => x.DateTime < threeday));
+            //db.ECpus.RemoveRange(db.ECpus.Where(x => x.DateTime < threeday));
             db.SaveChanges();
         }
 
@@ -41,8 +41,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public List<string> StatDb(DateTime dateTime)
         {
-            var start = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeFirst").Select(x => x.Note).FirstOrDefault());
-            var average = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeSecond").Select(x => x.Note).FirstOrDefault());
+            var start = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeFirst").Select(x => x.Value).FirstOrDefault());
+            var average = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeSecond").Select(x => x.Value).FirstOrDefault());
             //DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
             //DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
             DateTime end = average.AddDays(-1);

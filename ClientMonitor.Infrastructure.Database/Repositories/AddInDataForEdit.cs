@@ -33,7 +33,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
                     var mon = new DataForEdit
                     {
                         Name=info.Name,
-                        Note = info.Note,
+                        Value = info.Value,
                         Date = info.Date,
                     };
                     db.EDataForEdit.Add(mon);
@@ -47,7 +47,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
                 var mon = new DataForEdit
                 {
                     Name = info.Name,
-                    Note = info.Note,
+                    Value = info.Value,
                     Date = info.Date,
                 };
                 db.EDataForEdit.Add(mon);
@@ -58,7 +58,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         //получить по Name параметр Date
         public string GetData(string old)
         {
-            var editdata = db.EDataForEdit.Where(c => c.Name == old).Select(x=>x.Note).FirstOrDefault();
+            var editdata = db.EDataForEdit.Where(c => c.Name == old).Select(x=>x.Value).FirstOrDefault();
             return editdata;
         }
 
@@ -67,11 +67,11 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             throw new System.NotImplementedException();
         }
         //обновление записи в бд
-        public void Update(string key, string news)
+        public void Update(string key, string value)
         {
             
             var editdata = db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
-            editdata.Note = news;
+            editdata.Value = value;
             db.SaveChanges();
         }
     }

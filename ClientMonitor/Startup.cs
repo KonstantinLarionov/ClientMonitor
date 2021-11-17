@@ -85,10 +85,10 @@ namespace ClientMonitor
             //});
 
             #region [WorkBehind]
-            app.UseDataEdit(dataHandler =>
-            {
-                dataHandler.HandleSettings();
-            });
+            //app.UseDataEdit(dataHandler =>
+            //{
+            //    dataHandler.HandleSettings();
+            //});
 
             app.UseCloudUploading(cloudHandler => 
             {

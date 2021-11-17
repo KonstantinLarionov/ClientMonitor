@@ -29,7 +29,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.EHttps.Add(mon);
 
             DateTime threeday = DateTime.Now.AddDays(-3);
-            db.EHttps.RemoveRange(db.EHttps.Where(x => x.DateTime < threeday));
+            //db.EHttps.RemoveRange(db.EHttps.Where(x => x.DateTime < threeday));
             db.SaveChanges();
         }
 
