@@ -1,4 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -19,19 +20,26 @@ namespace ClientMonitor.Application
             {
 
                 var service = application.ApplicationServices.GetRequiredService<ICludUploadHendler>();
+                var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
 
                 while (true)
                 {
-                    DateTime dateTime = DateTime.Now;
-                    if (dateTime.Hour == 20 && dateTime.Minute <= 2)
+                    var onOffData = repository.GetData("onOff");
+                    bool isEnable = Convert.ToBoolean(onOffData);
+                    if (isEnable)
                     {
-                        handle.Invoke(service);
-                        Thread.Sleep(85800000);
+                        DateTime dateTime = DateTime.Now;
+                        if (dateTime.Hour == 20 && dateTime.Minute <= 2)
+                        {
+                            handle.Invoke(service);
+                            Thread.Sleep(85800000);
+                        }
+                        else
+                        {
+                            Thread.Sleep(10000);
+                        }
                     }
-                    else
-                    {
-                        Thread.Sleep(10000);
-                    }
+                    else { Thread.Sleep(10000); }
                 }
             });
             thread.Start();

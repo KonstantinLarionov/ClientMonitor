@@ -241,6 +241,9 @@ namespace ClientMonitor.Application.Handler
             var a8 = new DataForEditInfo { Name = "IdChatMonitoring", Date = "Id чата в телеграме для отправки сообщений по мониторингу характеристик ПК", Note = "-693501604" };
             dbData.AddInDb(a8);
 
+            var proverka = new DataForEditInfo { Name = "onOff", Date = "Проверка для остановки/запуска приложения", Note = "false" };
+            dbData.AddInDb(proverka);
+
         }
     }
 }

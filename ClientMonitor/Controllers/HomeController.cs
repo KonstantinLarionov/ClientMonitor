@@ -40,14 +40,7 @@ namespace ClientMonitor.Controllers
 
         public IActionResult Home()
         {
-            //var entities = new LoggerContext();
-            //ViewBag.DataForEdit = entities.EDataForEdit.ToList();
-            //List<DataForEdit> listdata = new List<DataForEdit>();
-
-
-            IEnumerable<DataForEdit> listdata = db.EDataForEdit;
-            //return View(db.EDataForEdit);
-            return View(listdata);
+            return View(db.EDataForEdit.ToList());
         }
 
         
@@ -78,11 +71,6 @@ namespace ClientMonitor.Controllers
             return RedirectToAction("Home");
 
         }
-
-
-
-
-
 
 
 
