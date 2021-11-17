@@ -93,7 +93,9 @@ namespace ClientMonitor.Application.Handler
                 foreach (var file in files2)
                 {
                     FileInfo fileInf = new FileInfo(file);
+
                     var uploadFile = GetUploadFile(fileInf, k4);
+
                     await Cloud.UploadFiles(uploadFile);
                     await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                     fileInf.Delete();
