@@ -4,23 +4,26 @@
     ViewBag.Title = "Параметры ClientMonitor";
 }
 
-<table border="1">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Note</th>
-        <th>Date</th>
-    </tr>
-
-    @foreach (ClientMonitor.Infrastructure.Database.Entities.DataForEdit b in Model)
-    {
+<table class="table">
+    <thead>
         <tr>
-            <td>@b.Id</td>
-            <td>@b.Name</td>
-            <td>@b.Date</td>
-            <td>@b.Note</td>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Note</th>
+            <th>Date</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (ClientMonitor.Infrastructure.Database.Entities.DataForEdit b in Model)
+        {
+            <tr>
+                <td>@b.Id</td>
+                <td>@b.Name</td>
+                <td>@b.Date</td>
+                <td>@b.Note</td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 

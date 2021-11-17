@@ -67,7 +67,7 @@ namespace ClientMonitor
             streamingRecording.StartStreamingRecording();
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthorization();

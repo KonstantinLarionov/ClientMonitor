@@ -1,8 +1,10 @@
-﻿using ClientMonitor.Application.Abstractions;
+﻿using ClientMonitor.Application;
+using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes;
 using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.Database.Contexts;
 using ClientMonitor.Infrastructure.Database.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +26,7 @@ namespace ClientMonitor.Controllers
         IRepository<DataForEditInfo> dbData;
         private readonly IMonitorFactory MonitorFactory;
         private readonly LoggerContext db;
+
         //IRepository<DataForEdit> db;
 
         //public List<DataForEdit> Data { get; set; }
@@ -75,7 +78,6 @@ namespace ClientMonitor.Controllers
             return RedirectToAction("Home");
 
         }
-
 
 
 
