@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Database.Repositories
 {
-   public class ProcRepository : IRepository<ProcInfo>
+    public class ProcRepository : IRepository<ProcInfo>
     {
         private LoggerContext db;
         public ProcRepository()
@@ -30,7 +30,10 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
             db.EProcs.Add(log);
             DateTime threeday = DateTime.Now.AddDays(-3);
-           // db.EProcs.RemoveRange(db.EProcs.Where(x => x.DateTime < threeday));
+            if (db.EProcs.Any())
+            {
+                db.EProcs.RemoveRange(db.EProcs.Where(x => x.DateTime < threeday));
+            }
             db.SaveChanges();
         }
 

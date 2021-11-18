@@ -46,13 +46,12 @@ namespace ClientMonitor.Infrastructure.Notifications.Adaptors
             using (var client = new SmtpClient())
             {
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                try
+                var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
+                if (repository.GetData("Mail")!="0" && repository.GetData("Pas")!="0")
                 {
-                    var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
                     Mail = repository.GetData("Mail");
                     Password = repository.GetData("Pas");
                 }
-                catch { }
                 client.Connect(MailType, 587, false);
                 client.Authenticate(Mail, Password);
                 client.Send(EmailMessage);

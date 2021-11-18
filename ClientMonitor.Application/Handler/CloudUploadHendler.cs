@@ -3,10 +3,7 @@ using ClientMonitor.Application.Domanes;
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
@@ -33,27 +30,24 @@ namespace ClientMonitor.Application.Handler
             if (TelegramNotification == null)
             {
                 AddInBd("Ошибка соединения с телеграмом");
-                //return;
             }
-
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
-
-            string k0;
-            string k1;
-            string k2;
-            try {
+            string k0 = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE";
+            string k1 = "*.mp4";
+            string k2 = "Записи/Выдача";
+            if (dbData.GetData("PathClaim") != "0")
+            {
                 k0 = dbData.GetData("PathClaim");
+            }
+            if (dbData.GetData("FormatFile") != "0")
+            {
                 k1 = dbData.GetData("FormatFile");
+            }
+            if (dbData.GetData("PathDownloadClaim") != "0")
+            {
                 k2 = dbData.GetData("PathDownloadClaim");
             }
-            catch {
-                k0 = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE";
-                k1 = "*.mp4";
-                k2 = "Записи/Выдача";
-            }
-
             string[] getFilesFromHall = Directory.GetFiles(k0, k1);
-
             if (getFilesFromHall.Length != 0)
             {
                 string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
@@ -72,19 +66,20 @@ namespace ClientMonitor.Application.Handler
                 //await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправлены из папки: \"Выдача\" так как она пуста.~~~!");
                 AddInBd($"!~~~Файлы не были отправлены из папки: \"Выдача\" так как она пуста.~~~!");
             }
-
-
-            string k3;
-            string k4;
-            try
+            string k3 = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM";
+            string k4 = "Записи/Склад";
+            if (dbData.GetData("PathStorage") != "0")
             {
                 k3 = dbData.GetData("PathStorage");
+            }
+            if (dbData.GetData("PathDownloadStorage") != "0")
+            {
                 k4 = dbData.GetData("PathDownloadStorage");
             }
-            catch
+            string idtelegram = "-742266994";
+            if (dbData.GetData("IdChatServer") != "0")
             {
-                k3 = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM";
-                k4 = "Записи/Склад";
+                idtelegram = dbData.GetData("IdChatServer");
             }
             string[] getFilesFromtorage = Directory.GetFiles(@k3, k1);
             if (getFilesFromtorage.Length != 0)
@@ -96,28 +91,14 @@ namespace ClientMonitor.Application.Handler
                     //var uploadFile = GetUploadFile(fileInf, "Записи/Склад");
                     var uploadFile = GetUploadFile(fileInf, k4);
                     await Cloud.UploadFiles(uploadFile);
-                    //await TelegramNotification.SendMessage("-742266994", $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
+                    //await TelegramNotification.SendMessage(idtelegram, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                     fileInf.Delete();
                 }
-                try {
-                    k4 = dbData.GetData("IdChatServer");
-                    //await TelegramNotification.SendMessage(k4, $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length - 1} Время: {DateTime.Now}~~~");
-                }
-                catch
-                {
-                    //await TelegramNotification.SendMessage("-742266994", $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length - 1} Время: {DateTime.Now}~~~");
-                } }
+                //await TelegramNotification.SendMessage(idtelegram, $"~~~Отправка файлов из папки: \"Склад\" завершена. Файлов отправлено: {getFilesFromtorage.Length - 1} Время: {DateTime.Now}~~~");
+            }
             else
             {
-                try
-                {
-                    k4 = dbData.GetData("IdChatServer");
-                    //await TelegramNotification.SendMessage(k4, $"!~~~Файлы не были отправлены из папки: \"Склад\" так как она пуста.~~~!");
-
-                }
-                catch { 
-                    //await TelegramNotification.SendMessage("-742266994", $"!~~~Файлы не были отправлены из папки: \"Склад\" так как она пуста.~~~!");
-                }
+                //await TelegramNotification.SendMessage(idtelegram, $"!~~~Файлы не были отправлены из папки: \"Склад\" так как она пуста.~~~!");
                 AddInBd($"!~~~Файлы не были отправленны из папки: \"Склад\" так как она пуста.~~~!");
             }
         }
@@ -125,7 +106,6 @@ namespace ClientMonitor.Application.Handler
         private UploadedFilesInfo GetUploadFile(FileInfo fileInf, string pathToLoad)
         {
             UploadedFilesInfo uploadedFiles = new UploadedFilesInfo();
-
             uploadedFiles.Name = fileInf.Name;
             uploadedFiles.Extension = fileInf.Extension;
             uploadedFiles.Create = fileInf.CreationTime;

@@ -13,11 +13,11 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
         {
             List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
             var cpuload = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            double s=0;
+            double s = 0;
             int i = 2;
-            while (i>0)
+            while (i > 0)
             {
-                s=cpuload.NextValue();
+                s = cpuload.NextValue();
                 i--;
                 Thread.Sleep(1000);
             }

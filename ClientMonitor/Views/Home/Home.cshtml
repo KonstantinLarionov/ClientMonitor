@@ -4,26 +4,21 @@
     ViewBag.Title = "Параметры ClientMonitor";
 }
 
-<table class="table">
-    <tr>
-        <td>
-            @using (Html.BeginForm("Stop", "Home", FormMethod.Post))
-            {
-                <p>
-                    <input type="submit" value="Остановить выполнение приложения" />
-                </p>
-            }
-        </td>
-        <td>
-            @using (Html.BeginForm("Start", "Home", FormMethod.Post))
-            {
-                <p>
-                    <input type="submit" value="Запустить выполнение приложения" />
-                </p>
-            }
-        </td>
-    </tr>
-</table>
+
+@using (Html.BeginForm("Stop", "Home", FormMethod.Post))
+{
+    <p>
+        <input type="submit" value="Остановить приложение" />
+    </p>
+}
+
+@using (Html.BeginForm("Start", "Home", FormMethod.Post))
+{
+    <p>
+        <input type="submit" value="Запустить приложение" />
+    </p>
+}
+
 
 <table class="table">
     <thead>
@@ -52,25 +47,25 @@
 <p> Редактирование параметров</p>
 
 
-    @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
-    {
-        <p>
-            <label>Название</label><br />
-        <p>
-            <select name="hero">
-                @foreach (ClientMonitor.Infrastructure.Database.Entities.DataForEdit b in Model)
-                {
-                    <option value="@b.Name">@b.Name</option>
-                }
-            </select>
-        </p>
-        </p>
-        <p>
-            <label>Параметр</label><br />
-            <input type="text" name="data" />
-        </p>
-        <p>
-            <input type="submit" value="Отправить" />
-        </p>
-    }
+@using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+{
+    <p>
+        <label>Название</label><br />
+    <p>
+        <select name="hero">
+            @foreach (ClientMonitor.Infrastructure.Database.Entities.DataForEdit b in Model)
+            {
+                <option value="@b.Name">@b.Name</option>
+            }
+        </select>
+    </p>
+    </p>
+    <p>
+        <label>Параметр</label><br />
+        <input type="text" name="data" />
+    </p>
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+}
 

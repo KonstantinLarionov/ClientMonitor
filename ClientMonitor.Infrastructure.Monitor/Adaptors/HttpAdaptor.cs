@@ -10,17 +10,17 @@ using System.Threading;
 
 namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
-	public class HttpAdaptor : IMonitor
-	{
+    public class HttpAdaptor : IMonitor
+    {
         private static string p;
 
-		public object ReceiveInfoMonitor()
-		{
+        public object ReceiveInfoMonitor()
+        {
             GetHttp();
             List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
-			resultMonitoring.Add(new ResultMonitoring(true, p));
-			return resultMonitoring;
-		}
+            resultMonitoring.Add(new ResultMonitoring(true, p));
+            return resultMonitoring;
+        }
 
         public MonitorType Type { get; set; }
 
@@ -41,7 +41,7 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 
         public static void GetHttp()
         {
-            
+
             try
             {
                 mainSocket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP);

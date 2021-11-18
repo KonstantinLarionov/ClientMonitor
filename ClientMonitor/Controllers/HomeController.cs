@@ -40,15 +40,10 @@ namespace ClientMonitor.Controllers
 
         public IActionResult Home()
         {
-            try
-            {
-                return View(db.EDataForEdit.ToList());
-            }
-            catch { }
-            return View();
+            return View(db.EDataForEdit.ToList());
         }
 
-        
+
         [HttpGet]
 
         public ActionResult Edit(string key)
@@ -69,7 +64,7 @@ namespace ClientMonitor.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(string key,string data)
+        public ActionResult Edit(string key, string data)
         {
             key = Request.Form["hero"];
             dbData.Update(key, data);

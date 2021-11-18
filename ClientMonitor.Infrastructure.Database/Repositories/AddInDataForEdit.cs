@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Database.Repositories
@@ -20,46 +21,23 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         {
             db = new LoggerContext();
         }
+
         public void AddInDb(DataForEditInfo info)
         {
-            try
-            {
-                var proverka = db.EDataForEdit.FirstOrDefault(p => p.Id == 14);
-
-                if (proverka == null)
-                {
-                    db.Database.EnsureCreated();
-                    db.Database.Migrate();
-                    var mon = new DataForEdit
-                    {
-                        Name=info.Name,
-                        Value = info.Value,
-                        Date = info.Date,
-                    };
-                    db.EDataForEdit.Add(mon);
-                    db.SaveChanges();
-                }
-            }
-
-            catch {
-                db.Database.EnsureCreated();
-                db.Database.Migrate();
-                var mon = new DataForEdit
-                {
-                    Name = info.Name,
-                    Value = info.Value,
-                    Date = info.Date,
-                };
-                db.EDataForEdit.Add(mon);
-                db.SaveChanges();
-            }
+            throw new System.NotImplementedException();
         }
 
         //получить по Name параметр Date
         public string GetData(string old)
         {
-            var editdata = db.EDataForEdit.Where(c => c.Name == old).Select(x=>x.Value).FirstOrDefault();
-            return editdata;
+            try {
+                var editdata = db.EDataForEdit.Where(c => c.Name == old).Select(x => x.Value).FirstOrDefault();
+                return editdata;
+            }
+            catch
+            {
+                return "0";
+            }
         }
 
         public List<string> StatDb(DateTime dateTime)
@@ -69,7 +47,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         //обновление записи в бд
         public void Update(string key, string value)
         {
-            
+            db.Database.EnsureCreated();
+            db.Database.Migrate();
             var editdata = db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
             editdata.Value = value;
             db.SaveChanges();

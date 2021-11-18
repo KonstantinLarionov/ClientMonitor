@@ -6,10 +6,10 @@ using System.Management;
 
 namespace ClientMonitor.Infrastructure.Monitor.Adaptors
 {
-	public class RamAdaptor : IMonitor
-	{
-		public object ReceiveInfoMonitor()
-		{
+    public class RamAdaptor : IMonitor
+    {
+        public object ReceiveInfoMonitor()
+        {
             List<ResultMonitoring> resultMonitoring = new List<ResultMonitoring>();
 
             string bsrm = "";
@@ -27,5 +27,5 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
             resultMonitoring.Add(new ResultMonitoring(true, bsrm));
             return resultMonitoring;
         }
-	}
+    }
 }
