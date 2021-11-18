@@ -144,7 +144,7 @@ namespace ClientMonitor.Application.Handler
             {
                 AddInLog($"Ошибка получения информации о ПК: {proverkaOnNull}");
             }
-            if (dbData.GetData("IdChatMonitoring") != "0")
+            if (dbData.GetData("IdChatMonitoring") != "")
             {
                 k = dbData.GetData("IdChatMonitoring");
             }

@@ -132,7 +132,7 @@ namespace ClientMonitor.Infrastructure.Database.Migrations
                             Id = 14,
                             Date = "Проверка для остановки/запуска приложения",
                             Name = "onOff",
-                            Value = "False"
+                            Value = "0"
                         });
                 });
 

@@ -36,7 +36,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             }
             catch
             {
-                return "0";
+                return "";
             }
         }
 

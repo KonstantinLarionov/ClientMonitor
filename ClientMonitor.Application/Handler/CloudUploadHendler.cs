@@ -35,15 +35,15 @@ namespace ClientMonitor.Application.Handler
             string k0 = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE";
             string k1 = "*.mp4";
             string k2 = "Записи/Выдача";
-            if (dbData.GetData("PathClaim") != "0")
+            if (dbData.GetData("PathClaim") != "")
             {
                 k0 = dbData.GetData("PathClaim");
             }
-            if (dbData.GetData("FormatFile") != "0")
+            if (dbData.GetData("FormatFile") != "")
             {
                 k1 = dbData.GetData("FormatFile");
             }
-            if (dbData.GetData("PathDownloadClaim") != "0")
+            if (dbData.GetData("PathDownloadClaim") != "")
             {
                 k2 = dbData.GetData("PathDownloadClaim");
             }
@@ -68,16 +68,16 @@ namespace ClientMonitor.Application.Handler
             }
             string k3 = @"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM";
             string k4 = "Записи/Склад";
-            if (dbData.GetData("PathStorage") != "0")
+            if (dbData.GetData("PathStorage") != "")
             {
                 k3 = dbData.GetData("PathStorage");
             }
-            if (dbData.GetData("PathDownloadStorage") != "0")
+            if (dbData.GetData("PathDownloadStorage") != "")
             {
                 k4 = dbData.GetData("PathDownloadStorage");
             }
             string idtelegram = "-742266994";
-            if (dbData.GetData("IdChatServer") != "0")
+            if (dbData.GetData("IdChatServer") != "")
             {
                 idtelegram = dbData.GetData("IdChatServer");
             }
