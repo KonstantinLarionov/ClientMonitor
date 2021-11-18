@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Objects;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using YandexDisk.Client.Clients;
 using YandexDisk.Client.Http;

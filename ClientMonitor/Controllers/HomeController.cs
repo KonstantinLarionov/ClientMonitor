@@ -40,17 +40,10 @@ namespace ClientMonitor.Controllers
 
         public IActionResult Home()
         {
-            //var entities = new LoggerContext();
-            //ViewBag.DataForEdit = entities.EDataForEdit.ToList();
-            //List<DataForEdit> listdata = new List<DataForEdit>();
-
-
-            IEnumerable<DataForEdit> listdata = db.EDataForEdit;
-            //return View(db.EDataForEdit);
-            return View(listdata);
+            return View(db.EDataForEdit.ToList());
         }
 
-        
+
         [HttpGet]
 
         public ActionResult Edit(string key)
@@ -71,7 +64,7 @@ namespace ClientMonitor.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(string key,string data)
+        public ActionResult Edit(string key, string data)
         {
             key = Request.Form["hero"];
             dbData.Update(key, data);
@@ -79,10 +72,19 @@ namespace ClientMonitor.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult Stop()
+        {
+            dbData.Update("onOff", "True");
+            return RedirectToAction("Home");
+        }
 
-
-
-
+        [HttpPost]
+        public ActionResult Start()
+        {
+            dbData.Update("onOff", "False");
+            return RedirectToAction("Home");
+        }
 
 
 

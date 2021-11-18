@@ -29,7 +29,10 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.EHttps.Add(mon);
 
             DateTime threeday = DateTime.Now.AddDays(-3);
-            db.EHttps.RemoveRange(db.EHttps.Where(x => x.DateTime < threeday));
+            if (db.EHttps.Any())
+            {
+                db.EHttps.RemoveRange(db.EHttps.Where(x => x.DateTime < threeday));
+            }
             db.SaveChanges();
         }
 
@@ -43,25 +46,28 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
             DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
             DateTime end = average.AddDays(-1);
+            List<string> https = new();
+            if (db.EHttps.Any())
+            {
+                if (dateTime.Hour == 6)
+                {
 
-            if (dateTime.Hour == 6)
-            {
-                List<string> https = new();
-                double sum = db.EHttps.Where(p => p.DateTime > end && p.DateTime < start).Sum(u => u.Length);
-                sum = sum / 1024 / 1024;
-                sum = Math.Round(sum, 3);
-                https.Add((sum).ToString());
-                return https;
+                    double sum = db.EHttps.Where(p => p.DateTime > end && p.DateTime < start).Sum(u => u.Length);
+                    sum = sum / 1024 / 1024;
+                    sum = Math.Round(sum, 3);
+                    https.Add((sum).ToString());
+                    return https;
+                }
+                else
+                {
+                    double sum = db.EHttps.Where(p => p.DateTime > start && p.DateTime < average).Sum(u => u.Length);
+                    sum = sum / 1024 / 1024;
+                    sum = Math.Round(sum, 3);
+                    https.Add((sum).ToString());
+                    return https;
+                }
             }
-            else
-            {
-                List<string> https = new();
-                double sum = db.EHttps.Where(p => p.DateTime > start && p.DateTime < average).Sum(u => u.Length);
-                sum = sum / 1024 / 1024;
-                sum = Math.Round(sum, 3);
-                https.Add((sum).ToString());
-                return https;
-            }
+            else { return https; }
         }
         public void Update(string key, string news)
         {

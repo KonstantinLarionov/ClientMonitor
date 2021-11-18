@@ -12,11 +12,17 @@ using Microsoft.OpenApi.Models;
 using ClientMonitor.Infrastructure.Database;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Infrastructure.StreamingRecording;
+using ClientMonitor.Infrastructure.Database.Contexts;
+using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace ClientMonitor
 {
     public class Startup
     {
+        private LoggerContext db;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,11 +43,6 @@ namespace ClientMonitor
             services.AddInfrastructureMonitor();
             services.AddInfrastructureDatabase();
             services.AddInfrastructureStreamingRecording();
-
-
-
-
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientMonitor", Version = "v1" });
@@ -58,7 +59,6 @@ namespace ClientMonitor
             //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClientMonitor v1"));
             //}
 
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -68,6 +68,7 @@ namespace ClientMonitor
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -85,16 +86,12 @@ namespace ClientMonitor
             //});
 
             #region [WorkBehind]
-            app.UseDataEdit(dataHandler =>
+
+            app.UseCloudUploading(cloudHandler =>
             {
-                dataHandler.HandleSettings();
+                cloudHandler.Handle();
             });
 
-            app.UseCloudUploading(cloudHandler => 
-            {
-                cloudHandler.Handle(); 
-            });
-            
             app.UseExternalMonitor(externalMonitorHandler =>
             {
                 externalMonitorHandler.Handle();

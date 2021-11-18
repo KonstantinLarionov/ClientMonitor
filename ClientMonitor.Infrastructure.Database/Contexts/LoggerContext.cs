@@ -1,7 +1,6 @@
 ﻿using ClientMonitor.Infrastructure.Database.Entities;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace ClientMonitor.Infrastructure.Database.Contexts
 {
@@ -13,12 +12,17 @@ namespace ClientMonitor.Infrastructure.Database.Contexts
         public DbSet<EntitiesProc> EProcs { get; set; }
         public DbSet<EntitiesHttp> EHttps { get; set; }
         public DbSet<DataForEdit> EDataForEdit { get; set; }
+
+        public LoggerContext()
+        {
+            Database.Migrate();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = $"MonitorDB.db" };
             var connectionString = connectionStringBuilder.ToString();
             var connection = new SqliteConnection(connectionString);
-
             optionsBuilder.UseSqlite(connection);
         }
     }

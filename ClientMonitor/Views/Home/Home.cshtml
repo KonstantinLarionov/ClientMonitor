@@ -4,6 +4,22 @@
     ViewBag.Title = "Параметры ClientMonitor";
 }
 
+
+@using (Html.BeginForm("Stop", "Home", FormMethod.Post))
+{
+    <p>
+        <input type="submit" value="Остановить приложение" />
+    </p>
+}
+
+@using (Html.BeginForm("Start", "Home", FormMethod.Post))
+{
+    <p>
+        <input type="submit" value="Запустить приложение" />
+    </p>
+}
+
+
 <table class="table">
     <thead>
         <tr>
@@ -20,7 +36,7 @@
                 <td>@b.Id</td>
                 <td>@b.Name</td>
                 <td>@b.Date</td>
-                <td>@b.Note</td>
+                <td>@b.Value</td>
             </tr>
         }
     </tbody>
@@ -52,3 +68,4 @@
         <input type="submit" value="Отправить" />
     </p>
 }
+

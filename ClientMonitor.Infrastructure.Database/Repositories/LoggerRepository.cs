@@ -22,7 +22,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         public void AddInDb(LogInfo info)
         {
             db.Database.EnsureCreated();
-            db.Database.Migrate();
+            //db.Database.Migrate();
             var log = new Log
             {
                 DateTime = info.DateTime,
@@ -32,7 +32,10 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
             db.Logs.Add(log);
             DateTime threeday = DateTime.Now.AddDays(-3);
-            db.Logs.RemoveRange(db.Logs.Where(x => x.DateTime < threeday));
+            if (db.Logs.Any())
+            {
+                db.Logs.RemoveRange(db.Logs.Where(x => x.DateTime < threeday));
+            }
             db.SaveChanges();
         }
 

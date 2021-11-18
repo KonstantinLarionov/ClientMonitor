@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace ClientMonitor.Infrastructure.Database.Entities
 {
     public class EntitiesRam
