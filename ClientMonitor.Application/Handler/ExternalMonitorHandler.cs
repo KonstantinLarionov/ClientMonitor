@@ -58,12 +58,12 @@ namespace ClientMonitor.Application.Handler
                         AddInLog(result.Message);
                     }
                 }
-                //notifyer.SendMessage(idChatServer, test1);
+                notifyer.SendMessage(idChatServer, test1);
             }
             catch
             {
                 AddInLog("Ошибка выполнения метода проверки сайтов и серверов");
-                //notifyer.SendMessage(idChatServer, "Ошибка выполнения проверки сайтов и серверов");
+                notifyer.SendMessage(idChatServer, "Ошибка выполнения проверки сайтов и серверов");
             }
         }
 
