@@ -30,7 +30,7 @@ namespace ClientMonitor.Application.Handler
                 //return;
             }
             string idChatServer = "-742266994";
-            if (dbData.GetData("IdChatServer") != "0")
+            if (dbData.GetData("IdChatServer") != "")
             {
                 idChatServer = dbData.GetData("IdChatServer");
             }

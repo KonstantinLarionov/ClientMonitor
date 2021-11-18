@@ -19,14 +19,14 @@ namespace ClientMonitor.Application
                 while (true)
                 {
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                    string isEnable = "False";
-                    if (repository.GetData("onOff") != "0")
-                    { isEnable = repository.GetData("onOff"); }
+                    bool isEnable = false;
+                    if (repository.GetData("onOff") != "")
+                    { isEnable = Convert.ToBoolean(Convert.ToInt32(repository.GetData("onOff"))); }
 
-                    if (isEnable == "False")
+                    if (isEnable == false)
                     {
                         int hour = 0;
-                        if (repository.GetData("TimeCloud") != "0")
+                        if (repository.GetData("TimeCloud") != "")
                         {
                             hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
                         }
@@ -55,15 +55,15 @@ namespace ClientMonitor.Application
                 while (true)
                 {
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                    string isEnable = "False";
+                    bool isEnable = false;
                     int time = 10000;
-                    if (repository.GetData("onOff") != "0" && repository.GetData("PeriodMonitoring") != "0")
+                    if (repository.GetData("onOff") != "" && repository.GetData("PeriodMonitoring") != "")
                     {
-                        isEnable = repository.GetData("onOff");
+                        isEnable = Convert.ToBoolean(Convert.ToInt32(repository.GetData("onOff")));
                         time = Convert.ToInt32(repository.GetData("PeriodMonitoring"));
                         Thread.Sleep(10000);
                     }
-                    if (isEnable == "False")
+                    if (isEnable == false)
                     {
                         handle.Invoke(service);
                         Thread.Sleep(time);
@@ -85,10 +85,10 @@ namespace ClientMonitor.Application
                     while (true)
                     {
                         var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                        string isEnable = "False";
-                        if (repository.GetData("onOff") != "0")
-                        { isEnable = repository.GetData("onOff"); Thread.Sleep(10000); }
-                        if (isEnable == "False")
+                        bool isEnable = false;
+                        if (repository.GetData("onOff") != "")
+                        { isEnable = Convert.ToBoolean(Convert.ToInt32(repository.GetData("onOff"))); Thread.Sleep(10000); }
+                        if (isEnable == false)
                         {
                             i.Invoke(service);
                             Thread.Sleep(1000);
@@ -109,18 +109,18 @@ namespace ClientMonitor.Application
                 var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
                 DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
                 DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
-                string isEnable = "False";
+                bool isEnable = false;
                 while (true)
                 {
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                    if (repository.GetData("TimeFirst") != "0" && repository.GetData("TimeSecond") != "0" && repository.GetData("onOff") != "0")
+                    if (repository.GetData("TimeFirst") != "" && repository.GetData("TimeSecond") != "" && repository.GetData("onOff") != "")
                     {
                         date = Convert.ToDateTime(repository.GetData("TimeFirst"));
                         date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
-                        isEnable = repository.GetData("onOff");
+                        isEnable = Convert.ToBoolean(Convert.ToInt32(repository.GetData("onOff")));
                         Thread.Sleep(10000);
                     }
-                    if (isEnable == "False")
+                    if (isEnable == false)
                     {
                         DateTime dateTime = DateTime.Now;
 

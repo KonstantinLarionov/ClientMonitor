@@ -47,7 +47,7 @@ namespace ClientMonitor.Infrastructure.Notifications.Adaptors
             {
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                 var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                if (repository.GetData("Mail")!="0" && repository.GetData("Pas")!="0")
+                if (repository.GetData("Mail")!="" && repository.GetData("Pas")!="")
                 {
                     Mail = repository.GetData("Mail");
                     Password = repository.GetData("Pas");

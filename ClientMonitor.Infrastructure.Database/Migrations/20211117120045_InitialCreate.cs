@@ -163,7 +163,7 @@ namespace ClientMonitor.Infrastructure.Database.Migrations
             migrationBuilder.InsertData(
                 table: "EDataForEdit",
                 columns: new[] { "Id", "Date", "Name", "Value" },
-                values: new object[] { 14, "Проверка для остановки/запуска приложения", "onOff", "False" });
+                values: new object[] { 14, "Проверка для остановки/запуска приложения", "onOff", "0" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
