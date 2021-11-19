@@ -133,17 +133,17 @@ namespace ClientMonitor.Infrastructure.Database.Migrations
             migrationBuilder.InsertData(
                 table: "EDataForEdit",
                 columns: new[] { "Id", "Date", "Name", "Value" },
-                values: new object[] { 8, "Время начала загрузки в облако~~Обновляется со следующей проверки!!!", "TimeCloud", "17.11.2021 20:00:00" });
+                values: new object[] { 8, "Время начала загрузки в облако~~Обновляется со следующей проверки!!!", "TimeCloud", "2021-11-18 20:00:00" });
 
             migrationBuilder.InsertData(
                 table: "EDataForEdit",
                 columns: new[] { "Id", "Date", "Name", "Value" },
-                values: new object[] { 9, "Время первой проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", "TimeFirst", "17.11.2021 6:00:00" });
+                values: new object[] { 9, "Время первой проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", "TimeFirst", "2021-11-18 6:00:00" });
 
             migrationBuilder.InsertData(
                 table: "EDataForEdit",
                 columns: new[] { "Id", "Date", "Name", "Value" },
-                values: new object[] { 10, "Время второй проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", "TimeSecond", "17.11.2021 15:30:00" });
+                values: new object[] { 10, "Время второй проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!", "TimeSecond", "2021-11-18 15:30:00" });
 
             migrationBuilder.InsertData(
                 table: "EDataForEdit",
@@ -163,7 +163,7 @@ namespace ClientMonitor.Infrastructure.Database.Migrations
             migrationBuilder.InsertData(
                 table: "EDataForEdit",
                 columns: new[] { "Id", "Date", "Name", "Value" },
-                values: new object[] { 14, "Проверка для остановки/запуска приложения", "onOff", "0" });
+                values: new object[] { 14, "Проверка для остановки/запуска приложения", "onOff", "False" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

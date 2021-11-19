@@ -32,9 +32,6 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         {
             try {
                 var editdata = db.EDataForEdit.Where(c => c.Name == old).Select(x => x.Value).FirstOrDefault();
-                if (old == "onOff")
-                    if (editdata != "0" || editdata != "1")
-                        return "";
                 return editdata;
             }
             catch
@@ -51,7 +48,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         public void Update(string key, string value)
         {
             db.Database.EnsureCreated();
-            db.Database.Migrate();
+            //db.Database.Migrate();
             var editdata = db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
             editdata.Value = value;
             db.SaveChanges();

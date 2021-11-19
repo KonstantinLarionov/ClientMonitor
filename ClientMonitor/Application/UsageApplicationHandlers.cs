@@ -3,6 +3,7 @@ using ClientMonitor.Application.Domanes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Globalization;
 using System.Threading;
 
 namespace ClientMonitor.Application
@@ -21,14 +22,22 @@ namespace ClientMonitor.Application
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
                     bool isEnable = false;
                     if (repository.GetData("onOff") != "")
-                    { isEnable = Convert.ToBoolean(Convert.ToInt32(repository.GetData("onOff"))); }
+                    {
+                        //isEnable = Convert.ToBoolean(repository.GetData("onOff"));
+                        isEnable = ParseBool(repository.GetData("onOff"));
+                        }
 
                     if (isEnable == false)
                     {
                         int hour = 0;
                         if (repository.GetData("TimeCloud") != "")
                         {
-                            hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
+                            try
+                            {
+                                hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
+                            }
+                            catch { }
+                            //hour = DateTime.ParseExact(repository.GetData("TimeCloud"), "yyyy-M-d H:mm:ss", CultureInfo.InvariantCulture).Hour;
                         }
                         if (DateTime.Now.Hour == hour && DateTime.Now.Minute <= 2)
                         {
@@ -56,10 +65,11 @@ namespace ClientMonitor.Application
                 {
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
                     bool isEnable = false;
-                    int time = 10000;
+                    int time = 3600000;
                     if (repository.GetData("onOff") != "" && repository.GetData("PeriodMonitoring") != "")
                     {
-                        isEnable = Convert.ToBoolean(Convert.ToInt32(repository.GetData("onOff")));
+                        //isEnable = Convert.ToBoolean(repository.GetData("onOff"));
+                        isEnable = ParseBool(repository.GetData("onOff"));
                         time = Convert.ToInt32(repository.GetData("PeriodMonitoring"));
                         Thread.Sleep(10000);
                     }
@@ -87,7 +97,10 @@ namespace ClientMonitor.Application
                         var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
                         bool isEnable = false;
                         if (repository.GetData("onOff") != "")
-                        { isEnable = Convert.ToBoolean(Convert.ToInt32(repository.GetData("onOff"))); Thread.Sleep(10000); }
+                        {
+                            //isEnable = Convert.ToBoolean(repository.GetData("onOff")); 
+                            isEnable = ParseBool(repository.GetData("onOff"));
+                            Thread.Sleep(10000); }
                         if (isEnable == false)
                         {
                             i.Invoke(service);
@@ -117,7 +130,8 @@ namespace ClientMonitor.Application
                     {
                         date = Convert.ToDateTime(repository.GetData("TimeFirst"));
                         date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
-                        isEnable = Convert.ToBoolean(Convert.ToInt32(repository.GetData("onOff")));
+                        //isEnable = Convert.ToBoolean(repository.GetData("onOff"));
+                        isEnable = ParseBool(repository.GetData("onOff"));
                         Thread.Sleep(10000);
                     }
                     if (isEnable == false)
@@ -139,6 +153,16 @@ namespace ClientMonitor.Application
                 }
             });
             thread.Start();
+        }
+
+
+        public static bool ParseBool(string input)
+        {
+            if (input == "True")
+                return true;
+            if (input == "False")
+                return false;
+            else return false;
         }
     }
 }
