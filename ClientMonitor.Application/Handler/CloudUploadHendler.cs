@@ -32,12 +32,14 @@ namespace ClientMonitor.Application.Handler
                 Name="ОзонПГ выдача",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE",
                 LocDownloadCloud="Записи/Выдача",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="ОзонПГ склад",
                 LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM",
                 LocDownloadVideo="Записи/Склад",
+                FormatFiles="*.mp4",
             },
         };
         public async Task Handle()
@@ -48,18 +50,16 @@ namespace ClientMonitor.Application.Handler
                 idChatTg = dbData.GetData("IdChatServer");
             }
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
-            foreach(var listClouds in ListClouds)
+            foreach (var listClouds in ListClouds)
             {
-                string locDownloadVideo = listClouds.LocDownloadVideo;
-                string locDownloadCloud = listClouds.LocDownloadCloud;
-                string[] getFilesFromHall = Directory.GetFiles(locDownloadVideo, "*.mp4");
+                string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo, listClouds.FormatFiles);
                 if (getFilesFromHall.Length != 0)
                 {
                     string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
                     foreach (var file in files)
                     {
                         FileInfo fileInf = new FileInfo(file);
-                        var uploadFile = GetUploadFile(fileInf, locDownloadCloud);
+                        var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
                         await Cloud.UploadFiles(uploadFile);
                         await TelegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                         fileInf.Delete();
