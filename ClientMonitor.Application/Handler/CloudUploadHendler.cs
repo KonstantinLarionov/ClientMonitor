@@ -37,8 +37,8 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="ОзонПГ склад",
-                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM",
-                LocDownloadVideo="Записи/Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM",
+                LocDownloadCloud="Записи/Склад",
                 FormatFiles="*.mp4",
             },
         };
@@ -52,24 +52,27 @@ namespace ClientMonitor.Application.Handler
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in ListClouds)
             {
-                string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo, listClouds.FormatFiles);
-                if (getFilesFromHall.Length != 0)
+                if (Directory.Exists(listClouds.LocDownloadVideo))
                 {
-                    string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
-                    foreach (var file in files)
+                    string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo, listClouds.FormatFiles);
+                    if (getFilesFromHall.Length != 0)
                     {
-                        FileInfo fileInf = new FileInfo(file);
-                        var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
-                        await Cloud.UploadFiles(uploadFile);
-                        await TelegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
-                        fileInf.Delete();
+                        string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
+                        foreach (var file in files)
+                        {
+                            FileInfo fileInf = new FileInfo(file);
+                            var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
+                            await Cloud.UploadFiles(uploadFile);
+                            await TelegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
+                            fileInf.Delete();
+                        }
+                        await TelegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
                     }
-                    await TelegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
-                }
-                else
-                {
-                    await TelegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
-                    AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
+                    else
+                    {
+                        await TelegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
+                        AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
+                    }
                 }
             }
         }

@@ -35,7 +35,8 @@ namespace ClientMonitor.Application
                             hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
                             //hour = DateTime.ParseExact(repository.GetData("TimeCloud"), "yyyy-M-d H:mm:ss", CultureInfo.InvariantCulture).Hour;
                         }
-                        if (DateTime.Now.Hour == hour && DateTime.Now.Minute <= 2)
+                        //if (DateTime.Now.Hour == hour && DateTime.Now.Minute <= 2)
+                        if (DateTime.Now.Hour == 17 && DateTime.Now.Minute <= 17)
                         {
                             handle.Invoke(service);
                             Thread.Sleep(85800000);
