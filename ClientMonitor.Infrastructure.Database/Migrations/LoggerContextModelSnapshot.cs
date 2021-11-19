@@ -90,21 +90,21 @@ namespace ClientMonitor.Infrastructure.Database.Migrations
                             Id = 8,
                             Date = "Время начала загрузки в облако~~Обновляется со следующей проверки!!!",
                             Name = "TimeCloud",
-                            Value = "17.11.2021 20:00:00"
+                            Value = "2021-11-18 20:00:00"
                         },
                         new
                         {
                             Id = 9,
                             Date = "Время первой проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!",
                             Name = "TimeFirst",
-                            Value = "17.11.2021 6:00:00"
+                            Value = "2021-11-18 6:00:00"
                         },
                         new
                         {
                             Id = 10,
                             Date = "Время второй проверки мониторинга характеристик ПК~~Обновляется со следующей проверки!!!",
                             Name = "TimeSecond",
-                            Value = "17.11.2021 15:30:00"
+                            Value = "2021-11-18 15:30:00"
                         },
                         new
                         {
@@ -132,7 +132,7 @@ namespace ClientMonitor.Infrastructure.Database.Migrations
                             Id = 14,
                             Date = "Проверка для остановки/запуска приложения",
                             Name = "onOff",
-                            Value = "0"
+                            Value = "False"
                         });
                 });
 

@@ -29,8 +29,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
                 BusyRam = info.BusyRam,
                 FreeRam = info.FreeRam,
             };
-
             db.ERams.Add(log);
+            //удаление каждые 3 дня
             DateTime threeday = DateTime.Now.AddDays(-3);
             if (db.ERams.Any())
             {
@@ -43,12 +43,19 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Возвращает статистику мониторинга Ram в разное время
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
         public List<string> StatDb(DateTime dateTime)
         {
             List<string> rams = new();
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
-            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+            //DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+            //DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+            DateTime start = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeFirst").FirstOrDefault());
+            DateTime average = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeSecond").FirstOrDefault());
+            
             DateTime end = average.AddDays(-1);
             if (db.ERams.Any())
             {

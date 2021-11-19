@@ -78,14 +78,14 @@ namespace ClientMonitor.Controllers
         [HttpPost]
         public ActionResult Stop()
         {
-            dbData.Update("onOff", "1");
+            dbData.Update("onOff", "True");
             return RedirectToAction("Home");
         }
 
         [HttpPost]
         public ActionResult Start()
         {
-            dbData.Update("onOff", "0");
+            dbData.Update("onOff", "False");
             return RedirectToAction("Home");
         }
 

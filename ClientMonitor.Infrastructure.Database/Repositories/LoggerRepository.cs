@@ -29,8 +29,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
                 TypeLog = info.TypeLog,
                 Text = info.Text
             };
-
             db.Logs.Add(log);
+            //удаление каждые 3 дня
             DateTime threeday = DateTime.Now.AddDays(-3);
             if (db.Logs.Any())
             {

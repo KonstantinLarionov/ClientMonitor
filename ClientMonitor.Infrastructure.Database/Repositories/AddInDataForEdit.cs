@@ -26,15 +26,15 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         {
             throw new System.NotImplementedException();
         }
-
-        //получить по Name параметр Date
-        public string GetData(string old)
+        /// <summary>
+        /// получить по Name параметру значение Value
+        /// </summary>
+        /// <param name="old"></param>
+        /// <returns></returns>
+        public string GetData(string name)
         {
             try {
-                var editdata = db.EDataForEdit.Where(c => c.Name == old).Select(x => x.Value).FirstOrDefault();
-                if (old == "onOff")
-                    if (editdata != "0" || editdata != "1")
-                        return "";
+                var editdata = db.EDataForEdit.Where(c => c.Name == name).Select(x => x.Value).FirstOrDefault();
                 return editdata;
             }
             catch
@@ -47,11 +47,15 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         {
             throw new System.NotImplementedException();
         }
-        //обновление записи в бд
+        /// <summary>
+        /// Редактирование параметров в бд(чтоб пользователь мог изменять начальные значения параметров). Key - ключ по названию параметра
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         public void Update(string key, string value)
         {
             db.Database.EnsureCreated();
-            db.Database.Migrate();
+            //db.Database.Migrate();
             var editdata = db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
             editdata.Value = value;
             db.SaveChanges();

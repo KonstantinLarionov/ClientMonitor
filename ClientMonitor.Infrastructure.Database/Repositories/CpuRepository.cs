@@ -26,9 +26,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
                 BusyCpu = info.BusyCpu,
                 FreeCpu = info.FreeCpu,
             };
-
             db.ECpus.Add(mon);
-
+            //удаление каждые 3 дня
             DateTime threeday = DateTime.Now.AddDays(-3);
             if (db.ECpus.Any())
             {
@@ -44,8 +43,10 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public List<string> StatDb(DateTime dateTime)
         {
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
-            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+            //DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+            //DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+            DateTime start = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeFirst").FirstOrDefault());
+            DateTime average = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeSecond").FirstOrDefault());
             DateTime end = average.AddDays(-1);
             List<string> cpus = new();
             if (db.EDataForEdit.Any())
