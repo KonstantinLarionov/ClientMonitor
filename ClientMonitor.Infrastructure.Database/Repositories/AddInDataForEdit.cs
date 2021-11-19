@@ -32,6 +32,9 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         {
             try {
                 var editdata = db.EDataForEdit.Where(c => c.Name == old).Select(x => x.Value).FirstOrDefault();
+                if (old == "onOff")
+                    if (editdata != "0" || editdata != "1")
+                        return "";
                 return editdata;
             }
             catch
