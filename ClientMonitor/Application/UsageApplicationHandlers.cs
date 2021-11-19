@@ -23,20 +23,16 @@ namespace ClientMonitor.Application
                     bool isEnable = false;
                     if (repository.GetData("onOff") != "")
                     {
-                        //isEnable = Convert.ToBoolean(repository.GetData("onOff"));
                         isEnable = ParseBool(repository.GetData("onOff"));
-                        }
+                    }
 
                     if (isEnable == false)
                     {
                         int hour = 0;
                         if (repository.GetData("TimeCloud") != "")
                         {
-                            try
-                            {
-                                hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
-                            }
-                            catch { }
+                            //тут try catch было может вылететь
+                            hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
                             //hour = DateTime.ParseExact(repository.GetData("TimeCloud"), "yyyy-M-d H:mm:ss", CultureInfo.InvariantCulture).Hour;
                         }
                         if (DateTime.Now.Hour == hour && DateTime.Now.Minute <= 2)
@@ -100,7 +96,8 @@ namespace ClientMonitor.Application
                         {
                             //isEnable = Convert.ToBoolean(repository.GetData("onOff")); 
                             isEnable = ParseBool(repository.GetData("onOff"));
-                            Thread.Sleep(10000); }
+                            Thread.Sleep(10000);
+                        }
                         if (isEnable == false)
                         {
                             i.Invoke(service);

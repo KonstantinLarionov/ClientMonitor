@@ -27,7 +27,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             };
 
             db.EHttps.Add(mon);
-
+            //удаление каждые 3 дня
             DateTime threeday = DateTime.Now.AddDays(-3);
             if (db.EHttps.Any())
             {
@@ -43,15 +43,16 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
         public List<string> StatDb(DateTime dateTime)
         {
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
-            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+            //DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+            //DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+            DateTime start = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeFirst").FirstOrDefault());
+            DateTime average = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeSecond").FirstOrDefault());
             DateTime end = average.AddDays(-1);
             List<string> https = new();
             if (db.EHttps.Any())
             {
-                if (dateTime.Hour == 6)
+                if (dateTime.Hour == start.Hour)
                 {
-
                     double sum = db.EHttps.Where(p => p.DateTime > end && p.DateTime < start).Sum(u => u.Length);
                     sum = sum / 1024 / 1024;
                     sum = Math.Round(sum, 3);

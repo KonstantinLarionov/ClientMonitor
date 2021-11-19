@@ -27,8 +27,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
                 DateTime = info.DateTime,
                 Process = info.Process,
             };
-
             db.EProcs.Add(log);
+            //удаление каждые 3 дня
             DateTime threeday = DateTime.Now.AddDays(-3);
             if (db.EProcs.Any())
             {
