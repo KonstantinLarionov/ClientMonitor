@@ -1,19 +1,13 @@
-﻿using ClientMonitor.Application;
-using ClientMonitor.Application.Abstractions;
+﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes;
 using ClientMonitor.Application.Domanes.Objects;
 using ClientMonitor.Infrastructure.Database.Contexts;
 using ClientMonitor.Infrastructure.Database.Entities;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ClientMonitor.Controllers
 {
@@ -53,47 +47,47 @@ namespace ClientMonitor.Controllers
         }
 
 
-        //[HttpGet]
+        [HttpGet]
 
-        //public ActionResult Edit(string key)
-        //{
-        //    if (key == null)
-        //    {
-        //        return View();
-        //    }
+        public ActionResult Edit(string key)
+        {
+            if (key == null)
+            {
+                return View();
+            }
 
-        //    DataForEdit data1 = db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
+            DataForEdit data1 = db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
 
-        //    if (data1 != null)
-        //    {
-        //        return View(data1);
-        //    }
-        //    return RedirectToAction("Home");
-        //}
+            if (data1 != null)
+            {
+                return View(data1);
+            }
+            return RedirectToAction("Home");
+        }
 
 
-        //[HttpPost]
-        //public ActionResult Edit(string key, string data)
-        //{
-        //    key = Request.Form["hero"];
-        //    dbData.Update(key, data);
-        //    return RedirectToAction("Home");
+        [HttpPost]
+        public ActionResult Edit(string key, string data)
+        {
+            key = Request.Form["hero"];
+            dbData.Update(key, data);
+            return RedirectToAction("Home");
 
-        //}
+        }
 
-        //[HttpPost]
-        //public ActionResult Stop()
-        //{
-        //    dbData.Update("onOff", "1");
-        //    return RedirectToAction("Home");
-        //}
+        [HttpPost]
+        public ActionResult Stop()
+        {
+            dbData.Update("onOff", "1");
+            return RedirectToAction("Home");
+        }
 
-        //[HttpPost]
-        //public ActionResult Start()
-        //{
-        //    dbData.Update("onOff", "0");
-        //    return RedirectToAction("Home");
-        //}
+        [HttpPost]
+        public ActionResult Start()
+        {
+            dbData.Update("onOff", "0");
+            return RedirectToAction("Home");
+        }
 
 
         #region [Swagger]

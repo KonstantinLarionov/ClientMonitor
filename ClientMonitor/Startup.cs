@@ -59,7 +59,6 @@ namespace ClientMonitor
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClientMonitor v1"));
             }
 
-
             streamingRecording.StartStreamingRecording();
 
             app.UseHttpsRedirection();
@@ -69,17 +68,17 @@ namespace ClientMonitor
 
             app.UseAuthorization();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller=Home}/{action=Home}/{id?}");
-            //});
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Home}/{id?}");
             });
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
 
             #region [WorkBehind]
 
