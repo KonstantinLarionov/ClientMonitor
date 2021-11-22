@@ -48,10 +48,8 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
         public List<string> StatDb(DateTime dateTime)
         {
             List<string> rams = new();
-            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
-            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
-            //DateTime start = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeFirst").FirstOrDefault());
-            //DateTime average = Convert.ToDateTime(db.EDataForEdit.Where(c => c.Name == "TimeSecond").FirstOrDefault());
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
+            DateTime average = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0);
             
             DateTime end = average.AddDays(-1);
             if (db.ERams.Any())

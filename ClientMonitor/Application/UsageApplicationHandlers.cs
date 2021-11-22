@@ -28,14 +28,6 @@ namespace ClientMonitor.Application
 
                     if (isEnable == false)
                     {
-                        int hour = 0;
-                        if (repository.GetData("TimeCloud") != "")
-                        {
-                            //тут try catch было может вылететь
-                           // hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
-                            //hour = DateTime.ParseExact(repository.GetData("TimeCloud"), "yyyy-M-d H:mm:ss", CultureInfo.InvariantCulture).Hour;
-                        }
-                        //if (DateTime.Now.Hour == hour && DateTime.Now.Minute <= 2)
                         if (DateTime.Now.Hour == 20 && DateTime.Now.Minute <= 2)
                         {
                             handle.Invoke(service);
@@ -65,7 +57,6 @@ namespace ClientMonitor.Application
                     int time = 3600000;
                     if (repository.GetData("onOff") != "" && repository.GetData("PeriodMonitoring") != "")
                     {
-                        //isEnable = Convert.ToBoolean(repository.GetData("onOff"));
                         isEnable = ParseBool(repository.GetData("onOff"));
                         time = Convert.ToInt32(repository.GetData("PeriodMonitoring"));
                         Thread.Sleep(10000);
@@ -95,7 +86,6 @@ namespace ClientMonitor.Application
                         bool isEnable = false;
                         if (repository.GetData("onOff") != "")
                         {
-                            //isEnable = Convert.ToBoolean(repository.GetData("onOff")); 
                             isEnable = ParseBool(repository.GetData("onOff"));
                             Thread.Sleep(10000);
                         }
@@ -118,17 +108,14 @@ namespace ClientMonitor.Application
             {
 
                 var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 7, 0);
-                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
+                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0);
                 bool isEnable = false;
                 while (true)
                 {
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
                     if (repository.GetData("TimeFirst") != "" && repository.GetData("TimeSecond") != "" && repository.GetData("onOff") != "")
                     {
-                      //  date = Convert.ToDateTime(repository.GetData("TimeFirst"));
-                      //  date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
-                        //isEnable = Convert.ToBoolean(repository.GetData("onOff"));
                         isEnable = ParseBool(repository.GetData("onOff"));
                         Thread.Sleep(10000);
                     }
