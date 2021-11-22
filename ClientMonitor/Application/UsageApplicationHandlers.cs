@@ -32,11 +32,11 @@ namespace ClientMonitor.Application
                         if (repository.GetData("TimeCloud") != "")
                         {
                             //тут try catch было может вылететь
-                            hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
+                           // hour = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
                             //hour = DateTime.ParseExact(repository.GetData("TimeCloud"), "yyyy-M-d H:mm:ss", CultureInfo.InvariantCulture).Hour;
                         }
                         //if (DateTime.Now.Hour == hour && DateTime.Now.Minute <= 2)
-                        if (DateTime.Now.Hour == 17 && DateTime.Now.Minute <= 17)
+                        if (DateTime.Now.Hour == 20 && DateTime.Now.Minute <= 2)
                         {
                             handle.Invoke(service);
                             Thread.Sleep(85800000);
@@ -126,8 +126,8 @@ namespace ClientMonitor.Application
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
                     if (repository.GetData("TimeFirst") != "" && repository.GetData("TimeSecond") != "" && repository.GetData("onOff") != "")
                     {
-                        date = Convert.ToDateTime(repository.GetData("TimeFirst"));
-                        date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
+                      //  date = Convert.ToDateTime(repository.GetData("TimeFirst"));
+                      //  date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
                         //isEnable = Convert.ToBoolean(repository.GetData("onOff"));
                         isEnable = ParseBool(repository.GetData("onOff"));
                         Thread.Sleep(10000);
