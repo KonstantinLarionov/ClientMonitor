@@ -29,10 +29,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.ECpus.Add(mon);
             //удаление каждые 3 дня
             DateTime threeday = DateTime.Now.AddDays(-3);
-            if (db.ECpus.Any())
-            {
-                db.ECpus.RemoveRange(db.ECpus.Where(x => x.DateTime < threeday));
-            }
+            db.ECpus.RemoveRange(db.ECpus.Where(x => x.DateTime < threeday));
             db.SaveChanges();
         }
 
@@ -57,22 +54,40 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
 
             if (dateTime.Hour == start.Hour)
             {
-                cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Min(u => u.BusyCpu), 3).ToString());
-                double maxcpu = db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Max(u => u.BusyCpu);
-                var dtcpu = db.ECpus.FirstOrDefault(p => p.BusyCpu == maxcpu);
-                string cpu = $"{Math.Round(maxcpu, 3)}(Время: {dtcpu.DateTime})";
-                cpus.Add(cpu);
-                cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Average(u => u.BusyCpu), 3).ToString());
+                if (db.ECpus.Any(p => p.DateTime > end && p.DateTime < start))
+                {
+                    cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Min(u => u.BusyCpu), 3).ToString());
+                    double maxcpu = db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Max(u => u.BusyCpu);
+                    var dtcpu = db.ECpus.FirstOrDefault(p => p.BusyCpu == maxcpu);
+                    string cpu = $"{Math.Round(maxcpu, 3)}(Время: {dtcpu.DateTime})";
+                    cpus.Add(cpu);
+                    cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > end && p.DateTime < start).Average(u => u.BusyCpu), 3).ToString());
+                }
+                else
+                {
+                    cpus.Add("0");
+                    cpus.Add("0");
+                    cpus.Add("0");
+                }
                 return cpus;
             }
             else
             {
-                cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Min(u => u.BusyCpu), 3).ToString());
-                double maxcpu = db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Max(u => u.BusyCpu);
-                var dtcpu = db.ECpus.FirstOrDefault(p => p.BusyCpu == maxcpu);
-                string cpu = $"{Math.Round(maxcpu, 3)}(Время: {dtcpu.DateTime})";
-                cpus.Add(cpu);
-                cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyCpu), 3).ToString());
+                if (db.ECpus.Any(p => p.DateTime > start && p.DateTime < average))
+                {
+                    cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Min(u => u.BusyCpu), 3).ToString());
+                    double maxcpu = db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Max(u => u.BusyCpu);
+                    var dtcpu = db.ECpus.FirstOrDefault(p => p.BusyCpu == maxcpu);
+                    string cpu = $"{Math.Round(maxcpu, 3)}(Время: {dtcpu.DateTime})";
+                    cpus.Add(cpu);
+                    cpus.Add(Math.Round(db.ECpus.Where(p => p.DateTime > start && p.DateTime < average).Average(u => u.BusyCpu), 3).ToString());
+                }
+                else 
+                {
+                    cpus.Add("0");
+                    cpus.Add("0");
+                    cpus.Add("0");
+                }
                 return cpus;
             }
         }

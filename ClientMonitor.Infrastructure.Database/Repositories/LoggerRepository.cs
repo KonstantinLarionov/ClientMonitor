@@ -32,10 +32,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.Logs.Add(log);
             //удаление каждые 3 дня
             DateTime threeday = DateTime.Now.AddDays(-3);
-            if (db.Logs.Any())
-            {
-                db.Logs.RemoveRange(db.Logs.Where(x => x.DateTime < threeday));
-            }
+            db.Logs.RemoveRange(db.Logs.Where(x => x.DateTime < threeday));
             db.SaveChanges();
         }
 

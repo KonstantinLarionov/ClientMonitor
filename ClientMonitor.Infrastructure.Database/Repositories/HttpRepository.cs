@@ -29,10 +29,7 @@ namespace ClientMonitor.Infrastructure.Database.Repositories
             db.EHttps.Add(mon);
             //удаление каждые 3 дня
             DateTime threeday = DateTime.Now.AddDays(-3);
-            if (db.EHttps.Any())
-            {
-                db.EHttps.RemoveRange(db.EHttps.Where(x => x.DateTime < threeday));
-            }
+            db.EHttps.RemoveRange(db.EHttps.Where(x => x.DateTime < threeday));
             db.SaveChanges();
         }
 
