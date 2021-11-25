@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Domanes.Objects
 {
-    class VideoFilesInfo
+    public class ResultVideoControl
     {
+        public DateTime DateTime { get; set; }
+        public bool Success { get; set; }
     }
 }

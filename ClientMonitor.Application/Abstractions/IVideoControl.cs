@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Abstractions
 {
-    class IVideoControl
+    public interface IVideoControl
     {
+        object StartMonitoring();
+        object StopMonitoring();
     }
 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Domanes.Enums
 {
-    class VideoMonitoringTypes
+    public enum VideoMonitoringTypes
     {
+        TestCam
     }
 }

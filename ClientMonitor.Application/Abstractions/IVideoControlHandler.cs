@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Abstractions
 {
-    class IVideoControlHandler
+    public interface IVideoControlHandler
     {
+        void HandleTestCam();
     }
 }

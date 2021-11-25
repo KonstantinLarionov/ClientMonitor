@@ -141,6 +141,19 @@ namespace ClientMonitor.Application
         }
 
 
+        public static void UseVideoControl(this IApplicationBuilder application, Action<IVideoControlHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<IVideoControlHandler>();
+                while (true)
+                {
+                    handle.Invoke(service);
+                }
+            });
+            thread.Start();
+        }
+
         public static bool ParseBool(string input)
         {
             if (input == "True")
