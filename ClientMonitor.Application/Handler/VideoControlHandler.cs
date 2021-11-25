@@ -24,7 +24,7 @@ namespace ClientMonitor.Application.Handler
             var monitor = videoControlFactory.GetVideoMonitoring(VideoMonitoringTypes.TestCam);
             var resultMonitoring = monitor.StartMonitoring() as List<ResultVideoControl>;
             results.AddRange(resultMonitoring);
-            string test1 = "";
+            string test1;
 
             foreach (var result in results)
             {
