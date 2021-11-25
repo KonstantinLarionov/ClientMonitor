@@ -45,10 +45,10 @@ namespace ClientMonitor.Application.Handler
         public async Task Handle()
         {
             string idChatTg = "-742266994";
-            if (dbData.GetData("IdChatServer") != "")
-            {
-                idChatTg = dbData.GetData("IdChatServer");
-            }
+            //if (dbData.GetData("IdChatServer") != "")
+            //{
+            //    idChatTg = dbData.GetData("IdChatServer");
+            //}
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in ListClouds)
             {
