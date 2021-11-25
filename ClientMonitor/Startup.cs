@@ -13,7 +13,7 @@ using ClientMonitor.Infrastructure.Database;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Infrastructure.StreamingRecording;
 using ClientMonitor.Infrastructure.Database.Contexts;
-//using ClientMonitor.Infrastructure.VideoControl;
+using ClientMonitor.Infrastructure.VideoControl;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.IO;
@@ -42,7 +42,7 @@ namespace ClientMonitor
             services.AddInfrastructureScreenRecording();
             services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
-            //services.AddInfrastructureVideoMonitor();
+            services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
             services.AddInfrastructureStreamingRecording();
             services.AddSwaggerGen(c =>
