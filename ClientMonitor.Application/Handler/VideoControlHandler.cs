@@ -26,13 +26,15 @@ namespace ClientMonitor.Application.Handler
             {
                 Name="Озон-ПГ-Выдача",
                 PathStream=new Uri("rtsp://GoldenCat1:123456@192.168.1.7:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE"
+                //PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE"
+                PathDownload=@"C:\Test\Test1"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад",
                 PathStream=new Uri("rtsp://GoldenCat:123456@192.168.1.5:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM"
+                //PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM"
+                PathDownload=@"C:\Test\Test2"
             }
         };
         public VideoControlHandler(IVideoControlFactory videoFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory)

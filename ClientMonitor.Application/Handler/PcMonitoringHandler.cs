@@ -112,7 +112,6 @@ namespace ClientMonitor.Application.Handler
             if (notifyer == null)
             {
                 AddInLog("Ошибка соединения");
-                return;
             }
             List<string> resCpu;
             List<string> resRam;
@@ -144,10 +143,7 @@ namespace ClientMonitor.Application.Handler
             {
                 AddInLog($"Ошибка получения информации о ПК: {proverkaOnNull}");
             }
-            //if (dbData.GetData("IdChatMonitoring") != "")
-            //{
-            //    k = dbData.GetData("IdChatMonitoring");
-            //}
+
             notifyer.SendMessage(k, test);
         }
 
