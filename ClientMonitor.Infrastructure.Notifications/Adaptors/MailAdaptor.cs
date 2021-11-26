@@ -47,11 +47,11 @@ namespace ClientMonitor.Infrastructure.Notifications.Adaptors
             {
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                 var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                if (repository.GetData("Mail")!="" && repository.GetData("Pas")!="")
-                {
-                    Mail = repository.GetData("Mail");
-                    Password = repository.GetData("Pas");
-                }
+                //if (repository.GetData("Mail")!="" && repository.GetData("Pas")!="")
+                //{
+                //    Mail = repository.GetData("Mail");
+                //    Password = repository.GetData("Pas");
+                //}
                 client.Connect(MailType, 587, false);
                 client.Authenticate(Mail, Password);
                 client.Send(EmailMessage);
