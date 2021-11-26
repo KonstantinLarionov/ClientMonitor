@@ -8,6 +8,6 @@ namespace ClientMonitor.Application.Domanes.Enums
 {
     public enum VideoMonitoringTypes
     {
-        TestCam
+        IpCamera
     }
 }

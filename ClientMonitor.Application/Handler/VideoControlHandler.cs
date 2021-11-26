@@ -3,7 +3,7 @@ using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
-
+using System.Threading;
 
 namespace ClientMonitor.Application.Handler
 {
@@ -18,38 +18,34 @@ namespace ClientMonitor.Application.Handler
             dbLog = repositoryLog;
         }
 
-        public void HandleTestCam()
+        private readonly static List<ControlVideoInfo> listReceiveVideoInfo = new List<ControlVideoInfo>()
         {
-            List<ResultVideoControl> results = new List<ResultVideoControl>();
-            var monitor = videoControlFactory.GetVideoMonitoring(VideoMonitoringTypes.TestCam);
-            var resultMonitoring = monitor.StartMonitoring() as List<ResultVideoControl>;
-            results.AddRange(resultMonitoring);
-            string test1;
-
-            foreach (var result in results)
+            new ControlVideoInfo
             {
-                if (!result.Success)
+                Name="Stream1",
+                PathStream=new Uri("rtsp://TestCam:123456@192.168.89.30:554/stream1"),
+                PathDownload=@"C:\Test\Test1"
+            },
+            //new ReceiveVideoInfo
+            //{
+            //    Name="Stream2",
+            //    PathStream=new Uri("http://158.58.130.148/mjpg/video.mjpg"),
+            //    PathDownload=@"C:\Test\Test2"
+            //}
+        };
+
+        public void Handle()
+        {
+            foreach (var i in listReceiveVideoInfo)
+            {
+                Thread thread = new Thread(() =>
                 {
-                    test1 = "!Ошибка проверки!\r\n" + result.DateTime + "\r\n";
-                    AddInLog(test1);
-                }
-                else
-                {
-                    test1 = "!Проверка успешна!\r\n" + result.DateTime + "\r\n";
-                    AddInLog(test1);
-                }
+                List<ResultVideoControl> results = new List<ResultVideoControl>();
+                var monitor = videoControlFactory.GetVideoMonitoring(VideoMonitoringTypes.IpCamera);
+                monitor.StartMonitoring(i);
+                });
+                thread.Start();
             }
-        }
-
-        private void AddInLog(string k)
-        {
-            LogInfo log = new LogInfo
-            {
-                TypeLog = LogTypes.Information,
-                Text = k,
-                DateTime = DateTime.Now
-            };
-            dbLog.AddInDb(log);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ClientMonitor.Infrastructure.VideoControl
         {
             _adaptors = new Dictionary<VideoMonitoringTypes, IVideoControl>()
             {
-                {VideoMonitoringTypes.TestCam, new CamTestAdaptor() },
+                {VideoMonitoringTypes.IpCamera, new IpCamAdaptor() },
             };
         }
         public IVideoControl GetVideoMonitoring(VideoMonitoringTypes type) => _adaptors.FirstOrDefault(x => x.Key == type).Value;

@@ -121,7 +121,7 @@ namespace ClientMonitor
 
             app.UseVideoControl(testCamHandler =>
             {
-                testCamHandler.HandleTestCam();
+                testCamHandler.Handle();
             }
             );
             #endregion

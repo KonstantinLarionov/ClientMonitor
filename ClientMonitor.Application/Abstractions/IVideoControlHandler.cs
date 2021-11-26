@@ -8,6 +8,6 @@ namespace ClientMonitor.Application.Abstractions
 {
     public interface IVideoControlHandler
     {
-        void HandleTestCam();
+        void Handle();
     }
 }

@@ -149,6 +149,7 @@ namespace ClientMonitor.Application
                 while (true)
                 {
                     handle.Invoke(service);
+                    Thread.Sleep(600000);
                 }
             });
             thread.Start();

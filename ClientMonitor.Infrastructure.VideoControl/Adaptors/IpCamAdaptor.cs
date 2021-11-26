@@ -1,4 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
 {
-    public class CamTestAdaptor : IVideoControl
+    public class IpCamAdaptor : IVideoControl
     {
         /// <summary>
         /// Запуск бесконечного стрима, для примера на 10 сек.
         /// </summary>
         /// <returns></returns>
-        public object StartMonitoring()
+        public object StartMonitoring(ControlVideoInfo info)
         {
             while (true)
             {
@@ -26,17 +27,16 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
                     new DirectoryInfo(Path.Combine(currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
 
                 DateTime dt = DateTime.Now;
-                var destination = Path.Combine(@"C:\Test\Test1", $"Stream1_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.ts");
+                var destination = Path.Combine(info.PathDownload, $"{info.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.ts");
                 var mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(libDirectory);
                 var mediaOptions = new[]
                 {
                     ":sout=#file{dst=" + destination + "}",
                     ":sout-keep"
                 };
-                mediaPlayer.SetMedia("rtsp://TestCam:123456@192.168.89.29:554/stream1",
-                    mediaOptions);
+                mediaPlayer.SetMedia(info.PathStream, mediaOptions);
                 mediaPlayer.Play();
-                Thread.Sleep(10000);
+                Thread.Sleep(60000);
                 mediaPlayer.Stop();
             }
         }
