@@ -41,7 +41,7 @@ namespace ClientMonitor.Infrastructure.VideoControl
         }
 
         /// <summary>
-        /// 
+        /// Выбор адаптора в соответсвии с типом
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>

@@ -3,6 +3,7 @@ using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -17,28 +18,30 @@ namespace ClientMonitor.Application.Handler
         private readonly IRepository<LogInfo> dbLog;
         private readonly List<Thread> _threads;
         private List<IVideoControl> _listCam;
+        INotificationFactory NotificationFactory;
 
         private readonly List<ControlVideoInfo> listReceiveVideoInfoIp = new List<ControlVideoInfo>()
         {
             new ControlVideoInfo
             {
-                Name="Stream1",
-                PathStream=new Uri("rtsp://TestCam:123456@192.168.89.30:554/stream1"),
-                PathDownload=@"C:\Test\Test1"
+                Name="Озон-ПГ-Выдача",
+                PathStream=new Uri("rtsp://GoldenCat1:123456@192.168.1.7:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE"
             },
             new ControlVideoInfo
             {
-                Name="Stream2",
-                PathStream=new Uri("http://158.58.130.148/mjpg/video.mjpg"),
-                PathDownload=@"C:\Test\Test2"
+                Name="Озон-ПГ-Склад",
+                PathStream=new Uri("rtsp://GoldenCat:123456@192.168.1.5:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM"
             }
         };
-        public VideoControlHandler(IVideoControlFactory videoFactory, IRepository<LogInfo> repositoryLog)
+        public VideoControlHandler(IVideoControlFactory videoFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory)
         {
             videoControlFactory = videoFactory;
             dbLog = repositoryLog;
             _threads = new List<Thread>();
             _listCam = new List<IVideoControl>();
+            NotificationFactory = notificationFactory;
         }
 
 
@@ -50,18 +53,19 @@ namespace ClientMonitor.Application.Handler
                     .GetAdaptors(VideoMonitoringTypes.IpCamera)
                     .ToList();
             }
-
+            var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
             foreach (var item in _listCam)
             {
                 Thread thread = new Thread(() =>
                 {
-                    try
-                    { item.StartMonitoring(); }
-                    catch 
-                    { 
-                        //TODO : Telegram
-                        //TODO : item.name
-                    }
+                    string myMessage="";
+                    item.ConnectionErrorEvent += (obj, error) =>
+                    {
+                        var errorArgs = (ErrorEventArgs)error;
+                        myMessage = errorArgs.GetException().Message;
+                        notifyer.SendMessage("-742266994", myMessage);
+                    };
+                    item.StartMonitoring();
                 });
                 _threads.Add(thread);
             }

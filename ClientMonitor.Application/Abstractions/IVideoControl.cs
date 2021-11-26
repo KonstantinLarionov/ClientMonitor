@@ -17,5 +17,6 @@ namespace ClientMonitor.Application.Abstractions
         /// 
         /// </summary>
         string Name { get; }
+        public event EventHandler ConnectionErrorEvent;
     }
 }
