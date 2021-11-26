@@ -13,11 +13,18 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
 {
     public class IpCamAdaptor : IVideoControl
     {
+        private readonly ControlVideoInfo _videoInfo;
+        public string Name { get { return _videoInfo.Name; } }
+        public IpCamAdaptor(ControlVideoInfo info)
+        {
+            _videoInfo = info;
+        }
+
         /// <summary>
-        /// Запуск бесконечного стрима, для примера на 10 сек.
+        /// Запуск бесконечного стрима, для примера на 1 мин.
         /// </summary>
         /// <returns></returns>
-        public object StartMonitoring(ControlVideoInfo info)
+        public void StartMonitoring()
         {
             while (true)
             {
@@ -27,23 +34,18 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
                     new DirectoryInfo(Path.Combine(currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
 
                 DateTime dt = DateTime.Now;
-                var destination = Path.Combine(info.PathDownload, $"{info.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.ts");
+                var destination = Path.Combine(_videoInfo.PathDownload, $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.ts");
                 var mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(libDirectory);
                 var mediaOptions = new[]
                 {
                     ":sout=#file{dst=" + destination + "}",
                     ":sout-keep"
                 };
-                mediaPlayer.SetMedia(info.PathStream, mediaOptions);
+                mediaPlayer.SetMedia(_videoInfo.PathStream, mediaOptions);
                 mediaPlayer.Play();
                 Thread.Sleep(60000);
                 mediaPlayer.Stop();
             }
-        }
-
-        public object StopMonitoring()
-        {
-            throw new NotImplementedException();
         }
     }
 }

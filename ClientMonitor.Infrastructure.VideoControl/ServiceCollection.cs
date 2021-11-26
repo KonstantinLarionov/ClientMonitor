@@ -9,7 +9,6 @@ namespace ClientMonitor.Infrastructure.VideoControl
     {
         public static void AddInfrastructureVideoMonitor(this IServiceCollection services)
         {
-            var assembly = typeof(ServiceCollection).GetTypeInfo().Assembly;
             services.AddSingleton<IVideoControlFactory, VideoControlFactory>();
         }
     }

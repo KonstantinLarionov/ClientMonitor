@@ -45,6 +45,7 @@ namespace ClientMonitor
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
             services.AddInfrastructureStreamingRecording();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientMonitor", Version = "v1" });

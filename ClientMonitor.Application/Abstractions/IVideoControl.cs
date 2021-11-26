@@ -9,7 +9,13 @@ namespace ClientMonitor.Application.Abstractions
 {
     public interface IVideoControl
     {
-        object StartMonitoring(ControlVideoInfo info);
-        object StopMonitoring();
+        /// <summary>
+        /// Начало записи видо файла по потоку из камеры
+        /// </summary>
+        void StartMonitoring();
+        /// <summary>
+        /// 
+        /// </summary>
+        string Name { get; }
     }
 }
