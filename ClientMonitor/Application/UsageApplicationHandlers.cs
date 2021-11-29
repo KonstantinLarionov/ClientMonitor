@@ -125,7 +125,7 @@ namespace ClientMonitor.Application
             Thread thread = new Thread(() =>
             {
                 var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 10, 0, 0);
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 30, 0);
                 DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
                 while (true)
                 {

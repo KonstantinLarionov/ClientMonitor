@@ -34,14 +34,14 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="ОзонПГ выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE",
                 LocDownloadCloud="Записи/Выдача",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="ОзонПГ склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM",
                 LocDownloadCloud="Записи/Склад",
                 FormatFiles="*.mp4",
             },

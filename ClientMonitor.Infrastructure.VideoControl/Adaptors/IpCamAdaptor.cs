@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class IpCamAdaptor : IVideoControl
     {
         public string Name
@@ -45,7 +48,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         }
 
         /// <summary>
-        /// 
+        /// запуск плеера
         /// </summary>
         public void StartMonitoring()
         {
@@ -56,7 +59,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         }
 
         /// <summary>
-        /// 
+        /// остановка плеера
         /// </summary>
         public void StopMonitoring()
         {   

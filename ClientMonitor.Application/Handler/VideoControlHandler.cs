@@ -26,16 +26,13 @@ namespace ClientMonitor.Application.Handler
             {
                 Name="Озон-ПГ-Выдача",
                 PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.7:554/stream1"),
-                //PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE"
-                PathDownload=@"C:\Test\Test1"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад",
-                //PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.5:554/stream1"),
-                PathStream=new Uri("http://158.58.130.148/mjpg/video.mjpg"),
-                //PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM"
-                PathDownload=@"C:\Test\Test2"
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.5:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM"
             }
         };
         public VideoControlHandler(IVideoControlFactory videoFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory)
@@ -68,7 +65,7 @@ namespace ClientMonitor.Application.Handler
                     while (true)
                     {
                         item.StartMonitoring();
-                        Thread.Sleep(20000);
+                        Thread.Sleep(900000);
                         item.StopMonitoring();
                     }
                 });
@@ -76,6 +73,5 @@ namespace ClientMonitor.Application.Handler
             }
             _threads.ForEach(x => x.Start());
         }
-
     }
 }
