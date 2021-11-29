@@ -14,6 +14,7 @@ namespace ClientMonitor.Application.Abstractions
         /// </summary>
         void StartMonitoring();
         void StopMonitoring();
+        bool Connection();
         /// <summary>
         /// 
         /// </summary>
