@@ -3,24 +3,27 @@ using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 
 namespace ClientMonitor.Application.Handler
 {
+    /// <summary>
+    /// Бизнес-логика?
+    /// </summary>
     public class VideoControlHandler : IVideoControlHandler
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly IVideoControlFactory videoControlFactory;
-        private readonly IRepository<LogInfo> dbLog;
+
+        private readonly IVideoControlFactory _videoControlFactory;
+        private readonly IRepository<LogInfo> _dbLog;
         private readonly List<Thread> _threads;
         private List<IVideoControl> _listCam;
         INotificationFactory NotificationFactory;
 
-        private readonly List<ControlVideoInfo> listReceiveVideoInfoIp = new List<ControlVideoInfo>()
+        /// <summary>
+        /// Лист с параметрами камер
+        /// </summary>
+        private readonly List<ControlVideoInfo> _listReceiveVideoInfoIp = new List<ControlVideoInfo>()
         {
             new ControlVideoInfo
             {
@@ -35,21 +38,30 @@ namespace ClientMonitor.Application.Handler
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM"
             }
         };
+
+        /// <summary>
+        /// Подключение библиотек
+        /// </summary>
+        /// <param name="videoFactory">Видео</param>
+        /// <param name="repositoryLog">Репозиторий логов</param>
+        /// <param name="notificationFactory">Уведомления</param>
         public VideoControlHandler(IVideoControlFactory videoFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory)
         {
-            videoControlFactory = videoFactory;
-            dbLog = repositoryLog;
+            _videoControlFactory = videoFactory;
+            _dbLog = repositoryLog;
             _threads = new List<Thread>();
             _listCam = new List<IVideoControl>();
             NotificationFactory = notificationFactory;
         }
 
-
+        /// <summary>
+        /// Бизнес-логика? 
+        /// </summary>
         public void Handle()
         {
-            if (videoControlFactory.CreateAdaptors(listReceiveVideoInfoIp, VideoMonitoringTypes.IpCamera))
+            if (_videoControlFactory.CreateAdaptors(_listReceiveVideoInfoIp, VideoMonitoringTypes.IpCamera))
             {
-                _listCam = videoControlFactory
+                _listCam = _videoControlFactory
                     .GetAdaptors(VideoMonitoringTypes.IpCamera)
                     .ToList();
             }

@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 using YandexDisk.Client.Clients;
 using YandexDisk.Client.Http;
 using YandexDisk.Client.Protocol;
+using RestSharp;
+
+using Refit;
+using System;
 
 namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
 {
     public class YandexAdaptor : ICloud
     {
+        private CloudManagerClient _client;
+
         readonly CloudOptions CloudOptions;
         readonly IMapper Mapper;
 
@@ -20,6 +26,14 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             CloudOptions = cloudOptions;
             Mapper = mapper;
         }
+
+        private IRestResponse SendRequest(string baseUrl, RestRequest request)
+        {
+            RestClient restClient = new RestClient(new Uri(baseUrl));
+            var res = restClient.Execute(request);
+            return res;
+        }
+
 
         public async Task<List<CloudFilesInfo>> GetFilesAndFoldersAsync()
         {
@@ -48,6 +62,7 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             var rootFolderData = await GetFilesAndFoldersAsync();
             var conect = new DiskHttpApi(CloudOptions.Token);
             var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
+            var myTest = link.HttpStatusCode;
             using (var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
             {
                 await conect.Files.UploadAsync(link, fs);

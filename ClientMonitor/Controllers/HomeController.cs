@@ -17,8 +17,8 @@ namespace ClientMonitor.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IMonitorFactory MonitorFactory;
-        private readonly LoggerContext db;
+        private readonly IMonitorFactory _monitorFactory;
+        private readonly LoggerContext _db;
         IRepository<DataForEditInfo> dbData;
         IRepository<CpuInfo> dbCpu;
         IRepository<RamInfo> dbRam;
@@ -27,11 +27,11 @@ namespace ClientMonitor.Controllers
         IRepository<LogInfo> dbLog;
 
         //public List<DataForEdit> Data { get; set; }
-        public HomeController(ILogger<HomeController> logger, IMonitorFactory monitorFactory, LoggerContext _db, IRepository<DataForEditInfo> repositoryData, IRepository<LogInfo> repositoryLog, IRepository<CpuInfo> repositoryCpu, IRepository<RamInfo> repositoryRam, IRepository<ProcInfo> repositoryProc, IRepository<HttpInfo> repositoryHttp)
+        public HomeController(ILogger<HomeController> logger, IMonitorFactory monitorFactory, LoggerContext db, IRepository<DataForEditInfo> repositoryData, IRepository<LogInfo> repositoryLog, IRepository<CpuInfo> repositoryCpu, IRepository<RamInfo> repositoryRam, IRepository<ProcInfo> repositoryProc, IRepository<HttpInfo> repositoryHttp)
         {
             _logger = logger;
-            MonitorFactory = monitorFactory;
-            db = _db;
+            _monitorFactory = monitorFactory;
+            _db = db;
             dbData = repositoryData;
 
             dbLog = repositoryLog;
@@ -43,7 +43,7 @@ namespace ClientMonitor.Controllers
 
         public IActionResult Home()
         {
-            return View(db.EDataForEdit.ToList());
+            return View(_db.EDataForEdit.ToList());
         }
 
 
@@ -56,7 +56,7 @@ namespace ClientMonitor.Controllers
                 return View();
             }
 
-            DataForEdit data1 = db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
+            DataForEdit data1 = _db.EDataForEdit.Where(c => c.Name == key).FirstOrDefault();
 
             if (data1 != null)
             {
@@ -95,7 +95,7 @@ namespace ClientMonitor.Controllers
         [Route("GetCpu")]
         public CpuInfo GetCpu()
         {
-            var infocpu = MonitorFactory.GetMonitor(Application.Domanes.Enums.MonitoringTypes.CPU);
+            var infocpu = _monitorFactory.GetMonitor(Application.Domanes.Enums.MonitoringTypes.CPU);
             var resultMonitoringcpu = infocpu.ReceiveInfoMonitor() as List<ResultMonitoring>;
             var t = Convert.ToDouble(resultMonitoringcpu[0].Message);
             var t1 = Convert.ToDouble(resultMonitoringcpu[1].Message);
@@ -126,7 +126,7 @@ namespace ClientMonitor.Controllers
         [Route("GetRam")]
         public RamInfo GetRam()
         {
-            var inforam = MonitorFactory.GetMonitor(Application.Domanes.Enums.MonitoringTypes.RAM);
+            var inforam = _monitorFactory.GetMonitor(Application.Domanes.Enums.MonitoringTypes.RAM);
             var resultMonitoringram = inforam.ReceiveInfoMonitor() as List<ResultMonitoring>;
             var r = Convert.ToDouble(resultMonitoringram[0].Message);
             var r1 = Convert.ToDouble(resultMonitoringram[1].Message);
@@ -156,7 +156,7 @@ namespace ClientMonitor.Controllers
         [Route("GetProc")]
         public ProcInfo GetProc()
         {
-            var infoproc = MonitorFactory.GetMonitor(Application.Domanes.Enums.MonitoringTypes.Proc);
+            var infoproc = _monitorFactory.GetMonitor(Application.Domanes.Enums.MonitoringTypes.Proc);
             var resultMonitoringproc = infoproc.ReceiveInfoMonitor() as List<ResultMonitoring>;
             ProcInfo proc = new ProcInfo
             {
@@ -182,7 +182,7 @@ namespace ClientMonitor.Controllers
         [Route("GetHttp")]
         public HttpInfo GetHttp()
         {
-            var infohttp = MonitorFactory.GetMonitor(Application.Domanes.Enums.MonitoringTypes.HTTP);
+            var infohttp = _monitorFactory.GetMonitor(Application.Domanes.Enums.MonitoringTypes.HTTP);
             var resultMonitoringhttp = infohttp.ReceiveInfoMonitor() as List<ResultMonitoring>;
             HttpInfo http = new HttpInfo
             {

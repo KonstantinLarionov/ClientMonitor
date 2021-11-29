@@ -90,41 +90,41 @@ namespace ClientMonitor
                 cloudHandler.Handle();
             });
 
-            app.UseExternalMonitor(externalMonitorHandler =>
-            {
-                externalMonitorHandler.Handle();
-            });
+            //app.UseExternalMonitor(externalMonitorHandler =>
+            //{
+            //    externalMonitorHandler.Handle();
+            //});
 
-            app.UsePcMonitoring(
-            cpuHandler =>
-            {
-                cpuHandler.HandleCpu();
-            },
-            ramHandler =>
-            {
-                ramHandler.HandleRam();
-            },
-            procHandler =>
-            {
-                procHandler.HandleProc();
-            },
-             httpHandler =>
-             {
-                 httpHandler.HandleHttp();
-             }
-            );
+            //app.UsePcMonitoring(
+            //cpuHandler =>
+            //{
+            //    cpuHandler.HandleCpu();
+            //},
+            //ramHandler =>
+            //{
+            //    ramHandler.HandleRam();
+            //},
+            //procHandler =>
+            //{
+            //    procHandler.HandleProc();
+            //},
+            // httpHandler =>
+            // {
+            //     httpHandler.HandleHttp();
+            // }
+            //);
 
-            app.UsePcMonitoringMessage(messageHandler =>
-            {
-                messageHandler.HandleMessageMonitoringPc();
-            }
-            );
+            //app.UsePcMonitoringMessage(messageHandler =>
+            //{
+            //    messageHandler.HandleMessageMonitoringPc();
+            //}
+            //);
 
-            app.UseVideoControl(testCamHandler =>
-            {
-                testCamHandler.Handle();
-            }
-            );
+            //app.UseVideoControl(testCamHandler =>
+            //{
+            //    testCamHandler.Handle();
+            //}
+            //);
             #endregion
         }
     }

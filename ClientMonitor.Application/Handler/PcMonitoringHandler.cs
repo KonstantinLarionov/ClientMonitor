@@ -18,6 +18,18 @@ namespace ClientMonitor.Application.Handler
         INotificationFactory NotificationFactory;
         IRepository<LogInfo> dbLog;
         IRepository<DataForEditInfo> dbData;
+
+        /// <summary>
+        /// Подключение библиотек
+        /// </summary>
+        /// <param name="monitorFactory">Ежесекундный мониторинг</param>
+        /// <param name="repositoryLog">Репоз логов</param>
+        /// <param name="notificationFactory">Уведомления</param>
+        /// <param name="repositoryCpu">Репоз цп</param>
+        /// <param name="repositoryRam">Репоз рам</param>
+        /// <param name="repositoryProc">Репоз процессов</param>
+        /// <param name="repositoryHttp">Репоз пакетов http</param>
+        /// <param name="repositoryData">Репоз получения параметров настройки приложения с БД</param>
         public PcMonitoringHandler(IMonitorFactory monitorFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory, IRepository<CpuInfo> repositoryCpu, IRepository<RamInfo> repositoryRam, IRepository<ProcInfo> repositoryProc, IRepository<HttpInfo> repositoryHttp, IRepository<DataForEditInfo> repositoryData)
         {
             MonitorFactory = monitorFactory;
@@ -30,6 +42,9 @@ namespace ClientMonitor.Application.Handler
             NotificationFactory = notificationFactory;
         }
 
+        /// <summary>
+        /// Логика цп
+        /// </summary>
         public void HandleCpu()
         {
 
@@ -51,6 +66,9 @@ namespace ClientMonitor.Application.Handler
             dbCpu.AddInDb(cp);
         }
 
+        /// <summary>
+        /// Логика рам
+        /// </summary>
         public void HandleRam()
         {
             var inforam = MonitorFactory.GetMonitor(MonitoringTypes.RAM);
@@ -71,6 +89,9 @@ namespace ClientMonitor.Application.Handler
             dbRam.AddInDb(ram);
         }
 
+        /// <summary>
+        /// Логика процессов
+        /// </summary>
         public void HandleProc()
         {
             var infoproc = MonitorFactory.GetMonitor(MonitoringTypes.Proc);
@@ -88,6 +109,9 @@ namespace ClientMonitor.Application.Handler
             dbProc.AddInDb(proc);
         }
 
+        /// <summary>
+        /// Логика трафика
+        /// </summary>
         public void HandleHttp()
         {
             var infohttp = MonitorFactory.GetMonitor(MonitoringTypes.HTTP);
@@ -105,6 +129,9 @@ namespace ClientMonitor.Application.Handler
             dbHttp.AddInDb(http);
         }
 
+        /// <summary>
+        /// Логика отчёта по мониторингу
+        /// </summary>
         public void HandleMessageMonitoringPc()
         {
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
@@ -153,12 +180,16 @@ namespace ClientMonitor.Application.Handler
             notifyer.SendMessage(idChatMonitoring, test);
         }
 
-        private void AddInLog(string k)
+        /// <summary>
+        /// Метод добавления в бд
+        /// </summary>
+        /// <param name="message">Содержание лога</param>
+        private void AddInLog(string message)
         {
             LogInfo log = new LogInfo
             {
                 TypeLog = LogTypes.Error,
-                Text = k,
+                Text = message,
                 DateTime = DateTime.Now
             };
             dbLog.AddInDb(log);

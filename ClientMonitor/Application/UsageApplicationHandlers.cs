@@ -36,15 +36,15 @@ namespace ClientMonitor.Application
                         }
 
                         //if (dt.Hour == 18 && dt.Minute <= 2)
-                        if (dt.Hour == 18)
-                        {
+                        //if (dt.Hour == 18)
+                        //{
                             handle.Invoke(service);
                             Thread.Sleep(85800000);
-                        }
-                        else
-                        {
-                            Thread.Sleep(10000);
-                        }
+                        //}
+                        //else
+                        //{
+                        //    Thread.Sleep(10000);
+                        //}
                     }
                     else { Thread.Sleep(10000); }
                 }
@@ -52,6 +52,7 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
+        /*
         /// <summary>
         /// Ежечасовая проверка сайтов и серверов
         /// </summary>
@@ -183,6 +184,6 @@ namespace ClientMonitor.Application
             if (input == "False")
                 return false;
             else return false;
-        }
+        }*/
     }
 }

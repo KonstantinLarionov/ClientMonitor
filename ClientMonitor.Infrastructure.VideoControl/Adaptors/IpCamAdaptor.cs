@@ -1,21 +1,20 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
 {
     /// <summary>
-    /// 
+    /// Адаптор для подключения трансляции к плееру VLC и настройка
     /// </summary>
     public class IpCamAdaptor : IVideoControl
     {
+        /// <summary>
+        /// Получение имени параметров камеры
+        /// </summary>
         public string Name
         {
             get
@@ -23,6 +22,10 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
                 return _videoInfo.Name;
             }
         }
+
+        /// <summary>
+        /// Метод построения названия файла
+        /// </summary>
         private string NameFile
         {
             get
@@ -37,6 +40,11 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         private readonly string _currentDirectory;
         private readonly DirectoryInfo _libDirectory;
         private readonly Vlc.DotNet.Core.VlcMediaPlayer _mediaPlayer;
+
+        /// <summary>
+        /// Настройка плеера, подгрузка библиотек
+        /// </summary>
+        /// <param name="info"> Параметры камеры</param>
         public IpCamAdaptor(ControlVideoInfo info)
         {
             _videoInfo = info;
@@ -70,7 +78,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         }
 
         /// <summary>
-        /// 
+        /// Полчение настроек для запуска плеера
         /// </summary>
         private bool SetInfo()
         {
