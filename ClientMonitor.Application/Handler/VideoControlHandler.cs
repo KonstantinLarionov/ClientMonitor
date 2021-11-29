@@ -32,7 +32,8 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад",
-                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.5:554/stream1"),
+                //PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.5:554/stream1"),
+                PathStream=new Uri("http://158.58.130.148/mjpg/video.mjpg"),
                 //PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM"
                 PathDownload=@"C:\Test\Test2"
             }
@@ -61,24 +62,24 @@ namespace ClientMonitor.Application.Handler
             {
                 Thread thread = new Thread(() =>
                 {
-                    string myMessage = "";
-                    item.ConnectionErrorEvent += (obj, error) =>
+                    //item.ConnectionErrorEvent += (obj, error) =>
+                    //{
+                    //    notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                    //    Thread.Sleep(30000);
+                    //};
+                    if (item.Connection())
                     {
-                        var errorArgs = (ErrorEventArgs)error;
-                        myMessage = errorArgs.GetException().Message;
-                        notifyer.SendMessage("-742266994", myMessage);
-                    };
-                    while (true)
-                    {
-                        item.StartMonitoring();
-                        Thread.Sleep(10000);
-                        item.StopMonitoring();
+                        while (true)
+                        {
+                            item.StartMonitoring();
+                            Thread.Sleep(20000);
+                            item.StopMonitoring();
+                        }
                     }
                 });
                 _threads.Add(thread);
             }
             _threads.ForEach(x => x.Start());
-
         }
     }
 }
