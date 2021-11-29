@@ -108,11 +108,16 @@ namespace ClientMonitor.Application.Handler
         public void HandleMessageMonitoringPc()
         {
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
-            string k = "-693501604";
+            string idChatMonitoring = "-693501604";
+
+            if (dbData.GetData("IdChatMonitoring") != "")
+            {
+                idChatMonitoring = dbData.GetData("IdChatMonitoring");
+            }
+
             if (notifyer == null)
             {
                 AddInLog("Ошибка соединения");
-                return;
             }
             List<string> resCpu;
             List<string> resRam;
@@ -144,11 +149,8 @@ namespace ClientMonitor.Application.Handler
             {
                 AddInLog($"Ошибка получения информации о ПК: {proverkaOnNull}");
             }
-            //if (dbData.GetData("IdChatMonitoring") != "")
-            //{
-            //    k = dbData.GetData("IdChatMonitoring");
-            //}
-            notifyer.SendMessage(k, test);
+
+            notifyer.SendMessage(idChatMonitoring, test);
         }
 
         private void AddInLog(string k)

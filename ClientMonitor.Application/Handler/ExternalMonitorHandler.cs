@@ -27,13 +27,12 @@ namespace ClientMonitor.Application.Handler
             if (notifyer == null)
             {
                 AddInLog("Ошибка соединения!");
-                //return;
             }
             string idChatServer = "-742266994";
-            //if (dbData.GetData("IdChatServer") != "")
-            //{
-            //    idChatServer = dbData.GetData("IdChatServer");
-            //}
+            if (dbData.GetData("IdChatServer") != "")
+            {
+                idChatServer = dbData.GetData("IdChatServer");
+            }
             try
             {
                 List<ResultMonitoring> results = new List<ResultMonitoring>();
@@ -58,7 +57,7 @@ namespace ClientMonitor.Application.Handler
                         AddInLog(result.Message);
                     }
                 }
-                //notifyer.SendMessage(idChatServer, test1);
+                notifyer.SendMessage(idChatServer, test1);
             }
             catch
             {

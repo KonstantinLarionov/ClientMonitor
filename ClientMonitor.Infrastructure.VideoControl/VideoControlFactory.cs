@@ -49,7 +49,7 @@ namespace ClientMonitor.Infrastructure.VideoControl
         {
             if (_adaptors.Any(x => x.Item1 == type))
             {
-                return _adaptors.Where(x => x.Item1 == type).Select(x=>x.Item2);
+                return _adaptors.Where(x => x.Item1 == type).Select(x => x.Item2);
             }
             return null;
         }

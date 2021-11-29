@@ -25,30 +25,35 @@ namespace ClientMonitor.Application.Handler
             dbLog = repositoryLog;
             dbData = repositoryData;
         }
+
+        /// <summary>
+        /// Список параметров для выгрузки в облако
+        /// </summary>
         private readonly static List<ListDownloadCloud> ListClouds = new List<ListDownloadCloud>()
         {
             new ListDownloadCloud
             {
                 Name="ОзонПГ выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\ZLOSE",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE",
                 LocDownloadCloud="Записи/Выдача",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="ОзонПГ склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\Записи с камер\video\KMXLM",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM",
                 LocDownloadCloud="Записи/Склад",
                 FormatFiles="*.mp4",
             },
         };
+
         public async Task Handle()
         {
             string idChatTg = "-742266994";
-            //if (dbData.GetData("IdChatServer") != "")
-            //{
-            //    idChatTg = dbData.GetData("IdChatServer");
-            //}
+            if (dbData.GetData("IdChatServer") != "")
+            {
+                idChatTg = dbData.GetData("IdChatServer");
+            }
             await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in ListClouds)
             {

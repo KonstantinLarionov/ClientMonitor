@@ -25,13 +25,13 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Выдача",
-                PathStream=new Uri("rtsp://GoldenCat1:123456@192.168.1.7:554/stream1"),
+                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.7:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад",
-                PathStream=new Uri("rtsp://GoldenCat:123456@192.168.1.5:554/stream1"),
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.5:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM"
             }
         };
@@ -54,22 +54,23 @@ namespace ClientMonitor.Application.Handler
                     .ToList();
             }
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
+
             foreach (var item in _listCam)
             {
                 Thread thread = new Thread(() =>
                 {
-                    string myMessage="";
                     item.ConnectionErrorEvent += (obj, error) =>
+                        notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+
+                    while (true)
                     {
-                        var errorArgs = (ErrorEventArgs)error;
-                        myMessage = errorArgs.GetException().Message;
-                        notifyer.SendMessage("-742266994", myMessage);
-                    };
-                    item.StartMonitoring();
+                        item.StartMonitoring();
+                        Thread.Sleep(900000);
+                        item.StopMonitoring();
+                    }
                 });
                 _threads.Add(thread);
             }
-
             _threads.ForEach(x => x.Start());
         }
     }

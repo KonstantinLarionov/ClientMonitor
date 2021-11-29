@@ -11,59 +11,76 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class IpCamAdaptor : IVideoControl
     {
-        private readonly ControlVideoInfo _videoInfo;
-        //public delegate void ConnectionError(string message);
+        public string Name
+        {
+            get
+            {
+                return _videoInfo.Name;
+            }
+        }
+        private string NameFile
+        {
+            get
+            {
+                DateTime dt = DateTime.Now;
+                return Path.Combine(_videoInfo.PathDownload, $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.avi");
+            }
+        }
         public event EventHandler ConnectionErrorEvent;
-        public string Name { get { return _videoInfo.Name; } }
-        private bool IsError { get; set; } = false;
+
+        private readonly ControlVideoInfo _videoInfo;
+        private readonly string _currentDirectory;
+        private readonly DirectoryInfo _libDirectory;
+        private readonly Vlc.DotNet.Core.VlcMediaPlayer _mediaPlayer;
         public IpCamAdaptor(ControlVideoInfo info)
         {
             _videoInfo = info;
+            _currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            _libDirectory = new DirectoryInfo(Path.Combine(_currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
+            _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
+            _mediaPlayer.EncounteredError += (objec, message) =>
+                ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
         }
 
         /// <summary>
-        /// Запуск бесконечного стрима на 15 мин.
+        /// запуск плеера
         /// </summary>
-        /// <returns></returns>
         public void StartMonitoring()
         {
-            while (!IsError)
+            if (SetInfo())
             {
-                var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                //обязательно в папке должна быть эта библиотека libvlc, без неё не запустится стрим
-                var libDirectory =
-                    new DirectoryInfo(Path.Combine(currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
-
-                DateTime dt = DateTime.Now;
-                var destination = Path.Combine(_videoInfo.PathDownload, $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.avi");
-                var mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(libDirectory);
-                var mediaOptions = new[]
-                {
-                    ":sout=#file{dst=" + destination + "}",
-                    ":sout-keep"
-                };
-                mediaPlayer.SetMedia(_videoInfo.PathStream, mediaOptions);
-
-                //Если вылетает эта ошибка, то запись рип
-                mediaPlayer.Log += (sender, e) =>
-                {
-                    string error = "Failed to connect to RTSP server";
-                    if (e.Message.Contains(error))
-                    {
-                        IsError = true;
-                        var message = $"{DateTime.Now} : {_videoInfo.Name} : {e.Message}";
-                        ConnectionErrorEvent?.Invoke(this, new ErrorEventArgs(new Exception(message)));
-                    }
-                };
-                mediaPlayer.Play();
-                Thread.Sleep(900000);
-                mediaPlayer.Stop();
+                _mediaPlayer.Play();
             }
-            IsError = false;
-            Thread.Sleep(60000);
-            StartMonitoring();
+        }
+
+        /// <summary>
+        /// остановка плеера
+        /// </summary>
+        public void StopMonitoring()
+        {   
+            if (_mediaPlayer.CouldPlay == true)
+            {
+                _mediaPlayer.Stop();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool SetInfo()
+        {
+            var mediaOptions = new[]
+            {
+                ":sout=#file{dst=" + NameFile + "}",
+                ":sout-keep"
+            };
+            var result = _mediaPlayer.SetMedia(_videoInfo.PathStream, mediaOptions);
+            return result.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.NothingSpecial;
         }
     }
 }
