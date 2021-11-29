@@ -62,24 +62,20 @@ namespace ClientMonitor.Application.Handler
             {
                 Thread thread = new Thread(() =>
                 {
-                    //item.ConnectionErrorEvent += (obj, error) =>
-                    //{
-                    //    notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
-                    //    Thread.Sleep(30000);
-                    //};
-                    if (item.Connection())
+                    item.ConnectionErrorEvent += (obj, error) =>
+                        notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+
+                    while (true)
                     {
-                        while (true)
-                        {
-                            item.StartMonitoring();
-                            Thread.Sleep(20000);
-                            item.StopMonitoring();
-                        }
+                        item.StartMonitoring();
+                        Thread.Sleep(20000);
+                        item.StopMonitoring();
                     }
                 });
                 _threads.Add(thread);
             }
             _threads.ForEach(x => x.Start());
         }
+
     }
 }
