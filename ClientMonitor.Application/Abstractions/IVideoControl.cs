@@ -13,6 +13,7 @@ namespace ClientMonitor.Application.Abstractions
         /// Начало записи видо файла по потоку из камеры
         /// </summary>
         void StartMonitoring();
+        void StopMonitoring();
         /// <summary>
         /// 
         /// </summary>

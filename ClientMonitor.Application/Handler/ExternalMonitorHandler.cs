@@ -29,6 +29,10 @@ namespace ClientMonitor.Application.Handler
                 AddInLog("Ошибка соединения!");
             }
             string idChatServer = "-742266994";
+            if (dbData.GetData("IdChatServer") != "")
+            {
+                idChatServer = dbData.GetData("IdChatServer");
+            }
             try
             {
                 List<ResultMonitoring> results = new List<ResultMonitoring>();

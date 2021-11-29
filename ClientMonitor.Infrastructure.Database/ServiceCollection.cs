@@ -14,12 +14,12 @@ namespace ClientMonitor.Infrastructure.Database
         public static void AddInfrastructureDatabase(this IServiceCollection services)
         {
             services.AddEntityFrameworkSqlite().AddDbContext<LoggerContext>();
-            services.AddSingleton<IRepository<LogInfo>, LoggerRepository>();
-            services.AddSingleton<IRepository<CpuInfo>, CpuRepository>();
-            services.AddSingleton<IRepository<RamInfo>, RamRepository>();
-            services.AddSingleton<IRepository<ProcInfo>, ProcRepository>();
-            services.AddSingleton<IRepository<HttpInfo>, HttpRepository>();
-            services.AddSingleton<IRepository<DataForEditInfo>, AddInDataForEdit>();
+            services.AddTransient<IRepository<LogInfo>, LoggerRepository>();
+            services.AddTransient<IRepository<CpuInfo>, CpuRepository>();
+            services.AddTransient<IRepository<RamInfo>, RamRepository>();
+            services.AddTransient<IRepository<ProcInfo>, ProcRepository>();
+            services.AddTransient<IRepository<HttpInfo>, HttpRepository>();
+            services.AddTransient<IRepository<DataForEditInfo>, AddInDataForEdit>();
             //TODO : Регистрация репозитория на интерфейс IRepositories
         }
     }

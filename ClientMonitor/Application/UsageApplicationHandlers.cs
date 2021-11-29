@@ -11,6 +11,12 @@ namespace ClientMonitor.Application
     public static class UsageApplicationHandlers
     {
         private static bool isEnable = false;
+
+        /// <summary>
+        /// Загрузка в облако
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
         public static void UseCloudUploading(this IApplicationBuilder application, Action<ICludUploadHendler> handle)
         {
             Thread thread = new Thread(() =>
@@ -22,7 +28,15 @@ namespace ClientMonitor.Application
 
                     if (isEnable == false)
                     {
-                        if (DateTime.Now.Hour == 18 && DateTime.Now.Minute <= 2)
+                        DateTime dt = DateTime.Now;
+                        //получение времени с БД
+                        if (repository.GetData("TimeCloud") != "")
+                        {
+                            dt = Convert.ToDateTime(repository.GetData("TimeCloud"));
+                        }
+
+                        //if (dt.Hour == 18 && dt.Minute <= 2)
+                        if (dt.Hour == 18)
                         {
                             handle.Invoke(service);
                             Thread.Sleep(85800000);
@@ -38,6 +52,11 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
+        /// <summary>
+        /// Ежечасовая проверка сайтов и серверов
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
         public static void UseExternalMonitor(this IApplicationBuilder application, Action<IExternalMonitorHandler> handle)
         {
             Thread thread = new Thread(() =>
@@ -55,6 +74,11 @@ namespace ClientMonitor.Application
                     }
                     if (isEnable == false)
                     {
+                        //получение времени с БД
+                        if (repository.GetData("PeriodMonitoring") != "")
+                        {
+                            time = Convert.ToInt32(repository.GetData("PeriodMonitoring"));
+                        }
                         handle.Invoke(service);
                         Thread.Sleep(time);
                     }
@@ -64,6 +88,11 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
+        /// <summary>
+        /// Ежесекундная статистика ПК по ЦП, РАМ, ПАКЕТАМ HTTP, ПРОЦЕССАМ
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handlers"></param>
         public static void UsePcMonitoring(this IApplicationBuilder application, params Action<IPcMonitoringHandler>[] handlers)
         {
             foreach (var i in handlers)
@@ -86,21 +115,30 @@ namespace ClientMonitor.Application
             }
         }
 
+        /// <summary>
+        /// Ежедневная статистика утром и вечером за день
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
         public static void UsePcMonitoringMessage(this IApplicationBuilder application, Action<IPcMonitoringHandler> handle)
         {
             Thread thread = new Thread(() =>
             {
-
                 var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 30, 0);
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 10, 0, 0);
                 DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
                 while (true)
                 {
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
                     if (isEnable == false)
                     {
+                        //получение времени с БД
+                        if (repository.GetData("TimeFirst") != "" && repository.GetData("TimeSecond") != "")
+                        {
+                            date = Convert.ToDateTime(repository.GetData("TimeFirst"));
+                            date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
+                        }
                         DateTime dateTime = DateTime.Now;
-
                         if (date.Hour == dateTime.Hour && date.Minute == dateTime.Minute)
                         {
                             handle.Invoke(service);
@@ -118,7 +156,11 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
-
+        /// <summary>
+        /// Видеопоток
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
         public static void UseVideoControl(this IApplicationBuilder application, Action<IVideoControlHandler> handle)
         {
             Thread thread = new Thread(() =>
@@ -129,6 +171,11 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
+        /// <summary>
+        /// Конвертирование string в bool
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool ParseBool(string input)
         {
             if (input == "True")
