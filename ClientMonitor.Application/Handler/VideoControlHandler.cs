@@ -66,19 +66,24 @@ namespace ClientMonitor.Application.Handler
                     {
                         var errorArgs = (ErrorEventArgs)error;
                         myMessage = errorArgs.GetException().Message;
-                        notifyer.SendMessage("-742266994", myMessage);
+                        if (myMessage.Contains("Failed to connect to RTSP server"))
+                        {
+                            notifyer.SendMessage("-742266994", $"{item.Name} : {myMessage}");
+                            item.StopMonitoring();
+                            Thread.Sleep(60000);
+                            //item.StartMonitoring();
+                        }
                     };
                     while (true)
                     {
                         item.StartMonitoring();
-                        Thread.Sleep(10000);
+                        Thread.Sleep(900000);
                         item.StopMonitoring();
                     }
                 });
                 _threads.Add(thread);
             }
             _threads.ForEach(x => x.Start());
-
         }
     }
 }
