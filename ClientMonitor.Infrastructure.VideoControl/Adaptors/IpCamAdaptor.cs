@@ -28,7 +28,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             get
             {
                 DateTime dt = DateTime.Now;
-                return Path.Combine(_videoInfo.PathDownload, $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.avi");
+                return Path.Combine(_videoInfo.PathDownload, $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.mp4");
             }
         }
         public event EventHandler ConnectionErrorEvent;
