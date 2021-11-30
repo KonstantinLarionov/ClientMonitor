@@ -45,6 +45,7 @@ namespace ClientMonitor
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
             services.AddInfrastructureStreamingRecording();
+            //services.AddInfrastructureInternalConnector();
 
             services.AddSwaggerGen(c =>
             {
@@ -77,11 +78,6 @@ namespace ClientMonitor
                     name: "default",
                     pattern: "{controller=Home}/{action=Home}/{id?}");
             });
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
 
             #region [WorkBehind]
 

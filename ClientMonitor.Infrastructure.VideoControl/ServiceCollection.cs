@@ -1,7 +1,6 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Reflection;
+
 
 namespace ClientMonitor.Infrastructure.VideoControl
 {

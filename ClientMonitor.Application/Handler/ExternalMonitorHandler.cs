@@ -7,12 +7,23 @@ using System.Collections.Generic;
 
 namespace ClientMonitor.Application.Handler
 {
+    /// <summary>
+    /// Ежечасовой мониторинг сайтов и серверов, логика
+    /// </summary>
     public class ExternalMonitorHandler : IExternalMonitorHandler
     {
         IMonitorFactory MonitorFactory;
         INotificationFactory NotificationFactory;
         IRepository<LogInfo> db;
         IRepository<DataForEditInfo> dbData;
+
+        /// <summary>
+        /// Подключение библиотек
+        /// </summary>
+        /// <param name="monitorFactory">Фабрика мониторинга</param>
+        /// <param name="notificationFactory"></param>
+        /// <param name="repository">Репоз логов</param>
+        /// <param name="repositoryData">Репоз параметров приложения</param>
         public ExternalMonitorHandler(IMonitorFactory monitorFactory, INotificationFactory notificationFactory, IRepository<LogInfo> repository, IRepository<DataForEditInfo> repositoryData)
         {
             MonitorFactory = monitorFactory;
@@ -21,6 +32,9 @@ namespace ClientMonitor.Application.Handler
             dbData = repositoryData;
         }
 
+        /// <summary>
+        /// Логика
+        /// </summary>
         public void Handle()
         {
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
@@ -66,12 +80,16 @@ namespace ClientMonitor.Application.Handler
             }
         }
 
-        private void AddInLog(string k)
+        /// <summary>
+        /// Добавление логов в бд
+        /// </summary>
+        /// <param name="message">Значение лога</param>
+        private void AddInLog(string message)
         {
             LogInfo log = new LogInfo
             {
                 TypeLog = LogTypes.Information,
-                Text = k,
+                Text = message,
                 DateTime = DateTime.Now
             };
             db.AddInDb(log);

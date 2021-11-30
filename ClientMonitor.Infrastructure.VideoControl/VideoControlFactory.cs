@@ -5,8 +5,7 @@ using ClientMonitor.Infrastructure.VideoControl.Adaptors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ClientMonitor.Infrastructure.VideoControl
 {
@@ -20,10 +19,10 @@ namespace ClientMonitor.Infrastructure.VideoControl
         }
 
         /// <summary>
-        /// 
+        /// Создание адапторов для списка параметры камеры по каждому типу камер
         /// </summary>
-        /// <param name="infos"></param>
-        /// <param name="type"></param>
+        /// <param name="infos">Список параметров камер (название, ссылка на трансляцию)</param>
+        /// <param name="type">Тип камеры (Ip,WEB etc)</param>
         public bool CreateAdaptors(List<ControlVideoInfo> infos, VideoMonitoringTypes type)
         {
             try
@@ -43,7 +42,7 @@ namespace ClientMonitor.Infrastructure.VideoControl
         /// <summary>
         /// Выбор адаптора в соответсвии с типом
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">Тип камеры(IP, WEB etc)</param>
         /// <returns></returns>
         public IEnumerable<IVideoControl> GetAdaptors(VideoMonitoringTypes type)
         {
