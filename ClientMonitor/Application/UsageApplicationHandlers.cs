@@ -28,16 +28,16 @@ namespace ClientMonitor.Application
 
                     if (isEnable == false)
                     {
-                        DateTime dt = DateTime.Now;
+                        int dt = 18;
                         //получение времени с БД
                         if (repository.GetData("TimeCloud") != "")
                         {
-                            dt = Convert.ToDateTime(repository.GetData("TimeCloud"));
+                            dt = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
                         }
 
                         //if (dt.Hour == 18 && dt.Minute <= 2)
-                        //if (dt.Hour == 18)
-                        //{
+                        if (dt == DateTime.Now.Hour)
+                        {
                             handle.Invoke(service);
                             Thread.Sleep(85800000);
                         //}
