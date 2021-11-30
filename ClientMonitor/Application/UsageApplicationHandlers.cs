@@ -3,7 +3,6 @@ using ClientMonitor.Application.Domanes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Globalization;
 using System.Threading;
 
 namespace ClientMonitor.Application
@@ -28,31 +27,32 @@ namespace ClientMonitor.Application
 
                     if (isEnable == false)
                     {
-                        int dt = 18;
-                        //получение времени с БД
-                        if (repository.GetData("TimeCloud") != "")
+                        if (isEnable == false)
                         {
-                            dt = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
+                            int dt = 18;
+                            //получение времени с БД
+                            if (repository.GetData("TimeCloud") != "")
+                            {
+                                dt = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
+                            }
+                            if (dt == DateTime.Now.Hour)
+                            {
+                                handle.Invoke(service);
+                                Thread.Sleep(85800000);
+                            }
+                            else
+                            {
+                                Thread.Sleep(10000);
+                            }
                         }
-
-                        //if (dt.Hour == 18 && dt.Minute <= 2)
-                        if (dt == DateTime.Now.Hour)
-                        {
-                            handle.Invoke(service);
-                            Thread.Sleep(85800000);
-                        //}
-                        //else
-                        //{
-                        //    Thread.Sleep(10000);
-                        //}
+                        else { Thread.Sleep(10000); }
                     }
-                    else { Thread.Sleep(10000); }
                 }
             });
             thread.Start();
         }
 
-        /*
+        
         /// <summary>
         /// Ежечасовая проверка сайтов и серверов
         /// </summary>
@@ -184,6 +184,6 @@ namespace ClientMonitor.Application
             if (input == "False")
                 return false;
             else return false;
-        }*/
+        }
     }
 }
