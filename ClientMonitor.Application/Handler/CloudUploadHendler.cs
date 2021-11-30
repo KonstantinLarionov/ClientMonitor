@@ -5,6 +5,7 @@ using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
@@ -14,11 +15,11 @@ namespace ClientMonitor.Application.Handler
     /// </summary>
     public class CloudUploadHendler : ICludUploadHendler
     {
-        readonly ICloud Cloud;
-        readonly INotification TelegramNotification;
-        readonly INotification MaileNotification;
-        readonly IRepository<LogInfo> dbLog;
-        readonly IRepository<DataForEditInfo> dbData;
+        readonly ICloud _cloud;
+        readonly INotification _telegramNotification;
+        readonly INotification _maileNotification;
+        readonly IRepository<LogInfo> _dbLog;
+        readonly IRepository<DataForEditInfo> _dbData;
 
         /// <summary>
         /// Подключение библиотек
@@ -29,11 +30,11 @@ namespace ClientMonitor.Application.Handler
         /// <param name="repositoryData">Репоз параметров</param>
         public CloudUploadHendler(ICloudFactory cloud, INotificationFactory notification, IRepository<LogInfo> repositoryLog, IRepository<DataForEditInfo> repositoryData)
         {
-            Cloud = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
-            TelegramNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
-            MaileNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Mail);
-            dbLog = repositoryLog;
-            dbData = repositoryData;
+            _cloud = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
+            _telegramNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
+            _maileNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Mail);
+            _dbLog = repositoryLog;
+            _dbData = repositoryData;
         }
 
         /// <summary>
@@ -44,17 +45,19 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="ОзонПГ выдача",
-                //LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE",
-                LocDownloadVideo=@"C:\Test\Test1",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE",
+                //LocDownloadVideo=@"C:\Test\Test1",
                 LocDownloadCloud="Записи/Выдача",
+                //LocDownloadCloud="Тест/Выдача",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="ОзонПГ склад",
-                //LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM",
-                LocDownloadVideo=@"C:\Test\Test2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM",
+                //LocDownloadVideo=@"C:\Test\Test2",
                 LocDownloadCloud="Записи/Склад",
+                //LocDownloadCloud="Тест/Склад",
                 FormatFiles="*.mp4",
             },
         };
@@ -66,11 +69,11 @@ namespace ClientMonitor.Application.Handler
         public async Task Handle()
         {
             string idChatTg = "-742266994";
-            if (dbData.GetData("IdChatServer") != "")
+            if (_dbData.GetData("IdChatServer") != "")
             {
-                idChatTg = dbData.GetData("IdChatServer");
+                idChatTg = _dbData.GetData("IdChatServer");
             }
-            //await TelegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
+            await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in _listClouds)
             {
                 if (Directory.Exists(listClouds.LocDownloadVideo))
@@ -83,15 +86,15 @@ namespace ClientMonitor.Application.Handler
                         {
                             FileInfo fileInf = new FileInfo(file);
                             var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
-                            await Cloud.UploadFiles(uploadFile);
-                            await TelegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
+                            await _cloud.UploadFiles(uploadFile);
+                            await _telegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                             fileInf.Delete();
                         }
-                        await TelegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
+                        await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
                     }
                     else
                     {
-                        await TelegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
+                        await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
                         AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
                     }
                 }
@@ -141,7 +144,7 @@ namespace ClientMonitor.Application.Handler
                 Text = message,
                 DateTime = DateTime.Now
             };
-            dbLog.AddInDb(log);
+            _dbLog.AddInDb(log);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace ClientMonitor.Application
             services.AddSingleton<IExternalMonitorHandler, ExternalMonitorHandler>();
             services.AddSingleton<IPcMonitoringHandler, PcMonitoringHandler>();
             services.AddSingleton<IVideoControlHandler, VideoControlHandler>();
+            //services.AddSingleton<, >();
         }
     }
 }

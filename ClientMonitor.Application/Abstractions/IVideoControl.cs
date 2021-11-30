@@ -28,5 +28,10 @@ namespace ClientMonitor.Application.Abstractions
         /// 
         /// </summary>
         public event EventHandler ConnectionErrorEvent;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler InfoAboutLog;
     }
 }

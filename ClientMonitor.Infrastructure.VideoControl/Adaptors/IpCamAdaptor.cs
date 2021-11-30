@@ -35,6 +35,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             }
         }
         public event EventHandler ConnectionErrorEvent;
+        public event EventHandler InfoAboutLog;
 
         private readonly ControlVideoInfo _videoInfo;
         private readonly string _currentDirectory;
@@ -53,6 +54,15 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
             _mediaPlayer.EncounteredError += (objec, message) =>
                 ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
+            _mediaPlayer.Log += GetLogError;
+        }
+
+        private void GetLogError(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
+        {
+            if (e.Message.Contains("live555 demux error"))
+            {
+                InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
+            }
         }
 
         /// <summary>
@@ -70,7 +80,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         /// остановка плеера
         /// </summary>
         public void StopMonitoring()
-        {   
+        {
             if (_mediaPlayer.CouldPlay == true)
             {
                 _mediaPlayer.Stop();
