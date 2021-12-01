@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Objects;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
