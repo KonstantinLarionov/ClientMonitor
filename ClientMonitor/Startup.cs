@@ -11,7 +11,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ClientMonitor.Infrastructure.Database;
 using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Infrastructure.StreamingRecording;
 using ClientMonitor.Infrastructure.Database.Contexts;
 using ClientMonitor.Infrastructure.VideoControl;
 using Microsoft.EntityFrameworkCore;
@@ -37,14 +36,13 @@ namespace ClientMonitor
             services.AddControllersWithViews();
 
             services.AddControllers();
-            services.AddInfrastructureCloudManager();
+            services.AddInfrastructureCloudManager(Configuration);
             services.AddInfrastructureNotifications();
             services.AddInfrastructureScreenRecording();
             services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
-            services.AddInfrastructureStreamingRecording();
             //services.AddInfrastructureInternalConnector();
 
             services.AddSwaggerGen(c =>
@@ -54,7 +52,7 @@ namespace ClientMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IStreamingRecording streamingRecording)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -62,8 +60,6 @@ namespace ClientMonitor
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClientMonitor v1"));
             }
-
-            streamingRecording.StartStreamingRecording();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
