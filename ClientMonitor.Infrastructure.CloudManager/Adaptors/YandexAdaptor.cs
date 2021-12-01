@@ -73,58 +73,6 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             //Console.WriteLine(response);
             #endregion
 
-            #region [Запрос на загрузку в облако]
-            HttpWebRequest myweb = (HttpWebRequest)WebRequest.Create("https://webdav.yandex.ru/");
-            myweb.Accept = "*/*";
-            myweb.Headers.Add("Authorization: OAuth " + "AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF_o");
-            myweb.Method = "PUT";
-            myweb.ContentType = "application/binary";
-
-            try
-            {
-                Stream myReqStream = myweb.GetRequestStream();
-                FileStream myFile = new FileStream(@"C:\box.png", FileMode.Open, FileAccess.Read);
-                BinaryReader myReader = new BinaryReader(myFile);
-                byte[] buffer = myReader.ReadBytes(2048);
-                while (buffer.Length > 0)
-                {
-                    myReqStream.Write(buffer, 0, buffer.Length);
-                    buffer = myReader.ReadBytes(2048);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            try
-            {
-                HttpWebResponse resp = (HttpWebResponse)myweb.GetResponse();
-                Console.WriteLine(resp);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            #endregion
-
-            #region [Запрос создания папки]
-            //HttpWebRequest myweb = (HttpWebRequest)WebRequest.Create("https://webdav.yandex.ru/" + "Test2");
-            //myweb.Accept = "*/*";
-            ////myweb.Headers.Add("Depth: 1");
-            //myweb.Headers.Add("Authorization: OAuth" + "AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF_o");
-            //myweb.Method = "MKCOL";
-
-            //try
-            //{
-            //    HttpWebResponse resp = (HttpWebResponse)myweb.GetResponse();
-            //    Console.WriteLine(resp);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
-            #endregion
-
             var rootFolderData = await GetFilesAndFoldersAsync();
             var conect = new DiskHttpApi(_сloudOptions.Token);
             var link = await conect.Files.GetUploadLinkAsync(_сloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
