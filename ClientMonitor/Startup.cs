@@ -85,7 +85,7 @@ namespace ClientMonitor
             {
                 cloudHandler.Handle();
             });
-
+            /*
             app.UseExternalMonitor(externalMonitorHandler =>
             {
                 externalMonitorHandler.Handle();
@@ -120,7 +120,7 @@ namespace ClientMonitor
             {
                 testCamHandler.Handle();
             }
-            );
+            );*/
             #endregion
         }
     }

@@ -45,19 +45,19 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="ОзонПГ выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE",
-                //LocDownloadVideo=@"C:\Test\Test1",
-                LocDownloadCloud="Записи/Выдача",
-                //LocDownloadCloud="Тест/Выдача",
+                //LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE",
+                LocDownloadVideo=@"C:\Test\Test1",
+                //LocDownloadCloud="Записи/Выдача",
+                LocDownloadCloud="Тест/Выдача",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="ОзонПГ склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM",
-                //LocDownloadVideo=@"C:\Test\Test2",
-                LocDownloadCloud="Записи/Склад",
-                //LocDownloadCloud="Тест/Склад",
+                //LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM",
+                LocDownloadVideo=@"C:\Test\Test2",
+                //LocDownloadCloud="Записи/Склад",
+                LocDownloadCloud="Тест/Склад",
                 FormatFiles="*.mp4",
             },
         };
@@ -73,7 +73,7 @@ namespace ClientMonitor.Application.Handler
             {
                 idChatTg = _dbData.GetData("IdChatServer");
             }
-            await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
+            //await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in _listClouds)
             {
                 if (Directory.Exists(listClouds.LocDownloadVideo))
@@ -87,14 +87,14 @@ namespace ClientMonitor.Application.Handler
                             FileInfo fileInf = new FileInfo(file);
                             var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
                             await _cloud.UploadFiles(uploadFile);
-                            await _telegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
+                            //await _telegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                             fileInf.Delete();
                         }
-                        await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
+                        //await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
                     }
                     else
                     {
-                        await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
+                        //await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
                         AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
                     }
                 }

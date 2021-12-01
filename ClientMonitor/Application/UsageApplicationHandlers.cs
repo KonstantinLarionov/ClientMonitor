@@ -24,34 +24,30 @@ namespace ClientMonitor.Application
                 while (true)
                 {
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-
                     if (isEnable == false)
                     {
-                        if (isEnable == false)
+                        int dt = 18;
+                        //получение времени с БД
+                        if (repository.GetData("TimeCloud") != "")
                         {
-                            int dt = 18;
-                            //получение времени с БД
-                            if (repository.GetData("TimeCloud") != "")
-                            {
-                                dt = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
-                            }
-                            if (dt == DateTime.Now.Hour)
-                            {
-                                handle.Invoke(service);
-                                Thread.Sleep(85800000);
-                            }
-                            else
-                            {
-                                Thread.Sleep(10000);
-                            }
+                            dt = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
                         }
-                        else { Thread.Sleep(10000); }
+                        //if (dt == DateTime.Now.Hour)
+                        //{
+                        handle.Invoke(service);
+                        Thread.Sleep(85800000);
+                        //}
+                        //else
+                        //{
+                        //    Thread.Sleep(10000);
+                        //}
                     }
+                    else { Thread.Sleep(10000); }
                 }
             });
             thread.Start();
         }
-
+        /*
         
         /// <summary>
         /// Ежечасовая проверка сайтов и серверов
@@ -184,6 +180,6 @@ namespace ClientMonitor.Application
             if (input == "False")
                 return false;
             else return false;
-        }
+        }*/
     }
 }

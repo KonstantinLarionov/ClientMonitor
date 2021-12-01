@@ -4,6 +4,7 @@ using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -54,21 +55,75 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
         /// <returns></returns>
         public async Task UploadFiles(UploadedFilesInfo uploadedFilesInfo)
         {
+            #region [Беспощадная попытка]
             //HttpClient client = new HttpClient();
             //HttpRequestMessage request = new HttpRequestMessage();
             //request.RequestUri = new Uri("https://webdav.yandex.ru");
             //request.Method = HttpMethod.Put;
 
-            //StreamReader sr = new StreamReader("test.txt", System.Text.Encoding.Default);
-            //FileStream sr = new FileStream("test.txt", FileMode.Create, System.IO.FileAccess.Write);
-            //StreamContent sr = new StreamContent(new FileStream("test.txt", FileMode.Open));
+            ////StreamReader sr = new StreamReader("test.txt", System.Text.Encoding.Default);
+            ////FileStream sr = new FileStream("test.txt", FileMode.Create, System.IO.FileAccess.Write);
+            ////StreamContent sr = new StreamContent(new FileStream("test.txt", FileMode.Open));
 
-            //StreamContent sr = new StreamContent(new FileStream("test.txt", FileMode.Open));
+            //StreamContent sr = new StreamContent(new FileStream(@"C:\box.png", FileMode.Open));
             //request.Content = sr;
             //request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/binary");
-            //request.Headers.Add("Authorization", "Basic AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF_o");
+            //request.Headers.Add("Authorization: OAuth", "AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF_o");
             //var response = await client.SendAsync(request);
             //Console.WriteLine(response);
+            #endregion
+
+            #region [Запрос на загрузку в облако]
+            HttpWebRequest myweb = (HttpWebRequest)WebRequest.Create("https://webdav.yandex.ru/");
+            myweb.Accept = "*/*";
+            myweb.Headers.Add("Authorization: OAuth " + "AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF_o");
+            myweb.Method = "PUT";
+            myweb.ContentType = "application/binary";
+
+            try
+            {
+                Stream myReqStream = myweb.GetRequestStream();
+                FileStream myFile = new FileStream(@"C:\box.png", FileMode.Open, FileAccess.Read);
+                BinaryReader myReader = new BinaryReader(myFile);
+                byte[] buffer = myReader.ReadBytes(2048);
+                while (buffer.Length > 0)
+                {
+                    myReqStream.Write(buffer, 0, buffer.Length);
+                    buffer = myReader.ReadBytes(2048);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            try
+            {
+                HttpWebResponse resp = (HttpWebResponse)myweb.GetResponse();
+                Console.WriteLine(resp);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            #endregion
+
+            #region [Запрос создания папки]
+            //HttpWebRequest myweb = (HttpWebRequest)WebRequest.Create("https://webdav.yandex.ru/" + "Test2");
+            //myweb.Accept = "*/*";
+            ////myweb.Headers.Add("Depth: 1");
+            //myweb.Headers.Add("Authorization: OAuth" + "AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF_o");
+            //myweb.Method = "MKCOL";
+
+            //try
+            //{
+            //    HttpWebResponse resp = (HttpWebResponse)myweb.GetResponse();
+            //    Console.WriteLine(resp);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
+            #endregion
 
             var rootFolderData = await GetFilesAndFoldersAsync();
             var conect = new DiskHttpApi(_сloudOptions.Token);
@@ -93,5 +148,6 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             await conect.Files.DownloadFileAsync(path: Path.Combine(cloudpath, name), Path.Combine(downloadpath, name));
             return true;
         }
+
     }
 }
