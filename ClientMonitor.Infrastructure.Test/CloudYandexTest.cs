@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ClientMonitor.Infrastructure.Test
@@ -21,7 +24,7 @@ namespace ClientMonitor.Infrastructure.Test
         /// <summary>
         /// Путь локального файла
         /// </summary>
-        private readonly string Path = @"C:\Users\kosty\Desktop\PatternRepository.txt";
+        private readonly string Path = @"C:\Test\Test1\Озон-ПГ-Склад_2021_11_29_13_7_24 — копия (3).mp4";
 
         /// <summary>
         /// Базовый адрес API
@@ -31,7 +34,7 @@ namespace ClientMonitor.Infrastructure.Test
         /// <summary>
         /// Путь файла в облаке (Так класть в корень)
         /// </summary>
-        private readonly string PathOnCloud = "PatternRepository.txt";
+        private readonly string PathOnCloud = "Озон-ПГ-Склад_2021_11_29_13_7_24 — копия (3).mp4";
 
         /// <summary>
         /// Заголовок запроса без указания размера файла
@@ -60,29 +63,48 @@ namespace ClientMonitor.Infrastructure.Test
         [Fact]
         public async void UploadToCloudYandex()
         {
+            #region [Первый запрос]
+
             // Заводим клиента
             HttpClient client = new HttpClient();
+
+            //убрать Expect: 100-continue
+            client.DefaultRequestHeaders.ExpectContinue = false;
             client.BaseAddress = new Uri(BaseUrl);
             // Берем файл в поток
             StreamContent sr = new StreamContent(new FileStream(Path, FileMode.Open));
-
             // Заводим запрос
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, PathOnCloud);
+            request.Headers.Add("Authorization", $"Basic {BasicAuth}");
+            request.Headers.Add("Transfer-Encoding", TransferEncoding);
+
             // передаем файл в запрос
             request.Content = sr;
             // Указываем заголовки запроса
             request.Content.Headers.ContentType = new MediaTypeHeaderValue(ContentType);
-            request.Headers.Add("Authorization", $"Basic {BasicAuth}");
-            request.Headers.Add("Transfer-Encoding", TransferEncoding);
 
-            // Отправляем
+
+            //Отправляем
             var response = await client.SendAsync(request);
 
+
+
+
+
+            //Task<HttpResponseMessage> response = client.SendAsync(request);
+            Assert.True((int)response.StatusCode == 201);
+
+            //var response = await client.SendAsync(request);
             // Проверяем результат
             // Тут не 200 код приходит а 201 что говорит об успешном создании файла в облаке 
-            Assert.True((int)response.StatusCode == 201);
-            Assert.True(response.StatusCode == System.Net.HttpStatusCode.Created);
+            //Assert.True((int)response.Result.StatusCode == 201);
+
+            //Assert.True(response.StatusCode == System.Net.HttpStatusCode.Created);
+
+            #endregion
+
         }
+
 
         /// <summary>
         /// Хелперс для кодинга строки

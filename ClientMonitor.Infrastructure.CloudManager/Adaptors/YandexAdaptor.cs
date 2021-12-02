@@ -60,16 +60,18 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             //#region [Запрос на облако]
             // Заводим клиента
             HttpClient client = new HttpClient();
+            //Expect: 100-continue
+            client.DefaultRequestHeaders.ExpectContinue = false;
             client.BaseAddress = new Uri(_сloudOptions.BaseAddress);
             // Берем файл в поток
             //StreamContent sr = new StreamContent(new FileStream(uploadedFilesInfo.Path+@"\\"+ uploadedFilesInfo.Name, FileMode.Open));
-            StreamContent sr = new StreamContent(new FileStream(@"C:\Test\Test1\Озон-ПГ-Склад_2021_11_29_13_7_24 — копия (2).mp4", FileMode.Open));
+            StreamContent sr = new StreamContent(new FileStream(@"C:\Test\Test1\Озон-ПГ-Склад_2021_11_29_13_7_24 — копия (3).mp4", FileMode.Open));
             // Заводим запрос
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, "Озон-ПГ-Склад_2021_11_29_13_7_24 — копия (2).mp4");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, "Озон-ПГ-Склад_2021_11_29_13_7_24 — копия (3).mp4");
             // передаем файл в запрос
             request.Content = sr;
             // Указываем заголовки запроса
-            request.Content.Headers.ContentType = new MediaTypeHeaderValue(ContentType);
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/binary");
             request.Headers.Add("Authorization", $"Basic {BasicAuth}");
             request.Headers.Add("Transfer-Encoding", "chunked");
 
@@ -81,7 +83,7 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             }
             catch (Exception e) 
             {
-            
+                //Console.WriteLine(e.Message);
             }
             //if ((int)response.StatusCode == 201)
             //{
