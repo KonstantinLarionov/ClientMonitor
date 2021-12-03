@@ -1,52 +1,28 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.ComponentModel;
-
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
-    public class VideoControlBackgroundWorker
+    public class VideoControlBackgroundWorker : BackgroundService
     {
-        readonly IApplicationBuilder _application;
-        readonly Action<IVideoControlHandler> _handle;
+        readonly IVideoControlHandler _handle;
 
-        public VideoControlBackgroundWorker(IApplicationBuilder application, Action<IVideoControlHandler> handle)
+        public VideoControlBackgroundWorker(IVideoControlHandler handle)
         {
-            _application = application;
             _handle = handle;
         }
 
-        /// <summary>
-        /// Старт
-        /// </summary>
-        public void Start()
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            BackgroundWorker bgWorker = new BackgroundWorker();
-            bgWorker.DoWork += BgWorker_DoWork;
-            bgWorker.RunWorkerCompleted += BgWorker_RunWorkerCompleted;
+            _handle.Handle();
+            return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Запуск
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BgWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            var service = _application.ApplicationServices.GetRequiredService<IVideoControlHandler>();
-            _handle.Invoke(service);
-        }
-
-        /// <summary>
-        /// Если остановится/завершится
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

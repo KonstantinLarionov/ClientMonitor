@@ -46,6 +46,15 @@ namespace ClientMonitor
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
 
+            //services.AddHostedService<VideoControlBackgroundWorker>();
+            //services.AddHostedService<CloudUploadingBackgroundWorker>();
+            //services.AddHostedService<CpuBackgroundWorker>();
+            //services.AddHostedService<ExternalMonitorBackgroundWorker>();
+            //services.AddHostedService<HttpBackgroundWorker>();
+            //services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
+            //services.AddHostedService<ProcBackgroundWorker>();
+            //services.AddHostedService<RamBackgroundWorker>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientMonitor", Version = "v1" });
@@ -113,11 +122,11 @@ namespace ClientMonitor
             //}
             //);
 
-            app.UseVideoControl(testCamHandler =>
-            {
-                testCamHandler.Handle();
-            }
-            );
+            //app.UseVideoControl(testCamHandler =>
+            //{
+            //    testCamHandler.Handle();
+            //}
+            //);
 
 
 
