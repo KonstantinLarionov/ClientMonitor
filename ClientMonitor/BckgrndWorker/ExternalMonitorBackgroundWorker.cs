@@ -2,8 +2,6 @@
 using ClientMonitor.Application.Domanes;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +23,6 @@ namespace ClientMonitor.BckgrndWorker
             while (true)
             {
                 var repository = _db;
-                bool isEnable = false;
                 if (repository.GetData("onOff") != "")
                 {
                     isEnable = ParseBool(repository.GetData("onOff"));
