@@ -59,7 +59,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
 
         private void GetLogError(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
         {
-            if (e.Message.Contains("live555 demux error"))
+            if (e.Message.Contains("Failed to connect to RTSP server"))
             {
                 InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
             }

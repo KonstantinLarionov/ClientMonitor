@@ -17,15 +17,17 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using ClientMonitor.BckgrndWorker;
+using System.ComponentModel;
+using System;
 
 namespace ClientMonitor
 {
     public class Startup
     {
-        private LoggerContext db;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = configuration;        
         }
 
         public IConfiguration Configuration { get; }
@@ -43,7 +45,6 @@ namespace ClientMonitor
             services.AddInfrastructureMonitor();
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
-            //services.AddInfrastructureInternalConnector();
 
             services.AddSwaggerGen(c =>
             {
@@ -77,46 +78,50 @@ namespace ClientMonitor
 
             #region [WorkBehind]
 
-            app.UseCloudUploading(cloudHandler =>
-            {
-                cloudHandler.Handle();
-            });
-            /*
-            app.UseExternalMonitor(externalMonitorHandler =>
-            {
-                externalMonitorHandler.Handle();
-            });
+            //app.UseCloudUploading(cloudHandler =>
+            //{
+            //    cloudHandler.Handle();
+            //});
 
-            app.UsePcMonitoring(
-            cpuHandler =>
-            {
-                cpuHandler.HandleCpu();
-            },
-            ramHandler =>
-            {
-                ramHandler.HandleRam();
-            },
-            procHandler =>
-            {
-                procHandler.HandleProc();
-            },
-             httpHandler =>
-             {
-                 httpHandler.HandleHttp();
-             }
-            );
+            //app.UseExternalMonitor(externalMonitorHandler =>
+            //{
+            //    externalMonitorHandler.Handle();
+            //});
 
-            app.UsePcMonitoringMessage(messageHandler =>
-            {
-                messageHandler.HandleMessageMonitoringPc();
-            }
-            );
+            //app.UsePcMonitoring(
+            //cpuHandler =>
+            //{
+            //    cpuHandler.HandleCpu();
+            //},
+            //ramHandler =>
+            //{
+            //    ramHandler.HandleRam();
+            //},
+            //procHandler =>
+            //{
+            //    procHandler.HandleProc();
+            //},
+            // httpHandler =>
+            // {
+            //     httpHandler.HandleHttp();
+            // }
+            //);
+
+            //app.UsePcMonitoringMessage(messageHandler =>
+            //{
+            //    messageHandler.HandleMessageMonitoringPc();
+            //}
+            //);
 
             app.UseVideoControl(testCamHandler =>
             {
                 testCamHandler.Handle();
             }
-            );*/
+            );
+
+
+
+
             #endregion
         }
     }

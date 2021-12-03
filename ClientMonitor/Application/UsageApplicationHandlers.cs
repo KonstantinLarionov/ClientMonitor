@@ -1,5 +1,6 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes;
+using ClientMonitor.BckgrndWorker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -47,7 +48,7 @@ namespace ClientMonitor.Application
             });
             thread.Start();
         }
-        /*
+        
         
         /// <summary>
         /// Ежечасовая проверка сайтов и серверов
@@ -153,6 +154,7 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
+
         /// <summary>
         /// Видеопоток
         /// </summary>
@@ -180,6 +182,6 @@ namespace ClientMonitor.Application
             if (input == "False")
                 return false;
             else return false;
-        }*/
+        }
     }
 }

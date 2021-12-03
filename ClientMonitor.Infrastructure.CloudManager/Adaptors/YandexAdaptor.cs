@@ -57,50 +57,13 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
         /// <returns></returns>
         public async Task UploadFiles(UploadedFilesInfo uploadedFilesInfo)
         {
-            //#region [Запрос на облако]
-            // Заводим клиента
-            HttpClient client = new HttpClient();
-            //Expect: 100-continue
-            client.DefaultRequestHeaders.ExpectContinue = false;
-            client.BaseAddress = new Uri(_сloudOptions.BaseAddress);
-            // Берем файл в поток
-            //StreamContent sr = new StreamContent(new FileStream(uploadedFilesInfo.Path+@"\\"+ uploadedFilesInfo.Name, FileMode.Open));
-            StreamContent sr = new StreamContent(new FileStream(@"C:\Test\Test1\Озон-ПГ-Склад_2021_11_29_13_7_24 — копия (3).mp4", FileMode.Open));
-            // Заводим запрос
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, "Озон-ПГ-Склад_2021_11_29_13_7_24 — копия (3).mp4");
-            // передаем файл в запрос
-            request.Content = sr;
-            // Указываем заголовки запроса
-            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/binary");
-            request.Headers.Add("Authorization", $"Basic {BasicAuth}");
-            request.Headers.Add("Transfer-Encoding", "chunked");
+            var conect = new DiskHttpApi(_сloudOptions.Token);
+            var link = await conect.Files.GetUploadLinkAsync(_сloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
 
-            // Отправляем
-            try
+            using (var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
             {
-                var response = await client.SendAsync(request);
-                Console.WriteLine(response);
+                await conect.Files.UploadAsync(link, fs);
             }
-            catch (Exception e) 
-            {
-                //Console.WriteLine(e.Message);
-            }
-            //if ((int)response.StatusCode == 201)
-            //{
-
-            //    //чето написать, можно в логи добавить
-            //}
-
-            //#endregion
-
-            //var rootFolderData = await GetFilesAndFoldersAsync();
-            //var conect = new DiskHttpApi(_сloudOptions.Token);
-            //var link = await conect.Files.GetUploadLinkAsync(_сloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
-
-            //using (var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
-            //{
-            //    await conect.Files.UploadAsync(link, fs);
-            //}
         }
 
         /// <summary>
