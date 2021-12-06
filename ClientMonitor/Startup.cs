@@ -9,8 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ClientMonitor.Infrastructure.Database;
-using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Infrastructure.Database.Contexts;
 using ClientMonitor.Infrastructure.VideoControl;
 using ClientMonitor.BckgrndWorker;
 
@@ -18,7 +16,6 @@ namespace ClientMonitor
 {
     public class Startup
     {
-        private LoggerContext db;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;

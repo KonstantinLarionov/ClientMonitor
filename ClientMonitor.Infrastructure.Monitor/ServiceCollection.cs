@@ -12,6 +12,5 @@ namespace ClientMonitor.Infrastructure.Monitor
 
             services.AddSingleton<IMonitorFactory, MonitorsFactory>();
         }
-
     }
 }
