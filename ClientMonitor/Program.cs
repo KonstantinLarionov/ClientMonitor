@@ -29,7 +29,7 @@ namespace ClientMonitor
                 {
                     services.AddHostedService<VideoControlBackgroundWorker>();
                     services.AddHostedService<CloudUploadingBackgroundWorker>();
-                    services.AddHostedService<CpuBackgroundWorker>();
+                    services.AddHostedService<StatPcBackgroundWorker>();
                     services.AddHostedService<ExternalMonitorBackgroundWorker>();
                     services.AddHostedService<HttpBackgroundWorker>();
                     services.AddHostedService<PcMonitoringMessageBackgroundWorker>();

@@ -6,31 +6,39 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
-    public class RamBackgroundWorker : BackgroundService
+    public class StatPcBackgroundWorker : BackgroundService
     {
         readonly IPcMonitoringHandler _handle;
         readonly IRepository<DataForEditInfo> _db;
         private static bool isEnable = false;
-        public RamBackgroundWorker(IPcMonitoringHandler handle, IRepository<DataForEditInfo> db)
+        public StatPcBackgroundWorker(IPcMonitoringHandler handle, IRepository<DataForEditInfo> db)
         {
             _handle = handle;
             _db = db;
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        /// <summary>
+        /// Запуск службы мониторинга CPU,RAM,Proc,Http
+        /// </summary>
+        /// <param name="stoppingToken"></param>
+        /// <returns></returns>
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (true)
+            while (!stoppingToken.IsCancellationRequested)
             {
                 var repository = _db;
+                if (repository.GetData("onOff") != "")
+                {
+                    isEnable = ParseBool(repository.GetData("onOff"));
+                }
                 if (isEnable == false)
                 {
+                    _handle.HandleCpu();
                     _handle.HandleRam();
-                    Thread.Sleep(1000);
+                    _handle.HandleHttp();
+                    _handle.HandleProc();
                 }
-                else
-                {
-                    Thread.Sleep(1000);
-                }
+                await Task.Delay(100, stoppingToken);
             }
         }
 
@@ -39,7 +47,7 @@ namespace ClientMonitor.BckgrndWorker
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool ParseBool(string input)
+        private static bool ParseBool(string input)
         {
             if (input == "True")
                 return true;

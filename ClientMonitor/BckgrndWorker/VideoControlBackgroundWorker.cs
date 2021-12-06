@@ -14,11 +14,15 @@ namespace ClientMonitor.BckgrndWorker
             _handle = handle;
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        /// <summary>
+        /// Запуск службы записи видосов  скамер
+        /// </summary>
+        /// <param name="stoppingToken"></param>
+        /// <returns></returns>
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _handle.Handle();
-            return Task.CompletedTask;
+            await Task.Delay(1000, stoppingToken);
         }
-
     }
 }

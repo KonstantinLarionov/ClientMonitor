@@ -18,13 +18,22 @@ namespace ClientMonitor.BckgrndWorker
             _db = db;
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        /// <summary>
+        /// Запуск службы отчётов по мониторингу ПК
+        /// </summary>
+        /// <param name="stoppingToken"></param>
+        /// <returns></returns>
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 30, 0);
-            DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
-            while (true)
+            while (!stoppingToken.IsCancellationRequested)
             {
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 30, 0);
+                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
                 var repository = _db;
+                if (repository.GetData("onOff") != "")
+                {
+                    isEnable = ParseBool(repository.GetData("onOff"));
+                }
                 if (isEnable == false)
                 {
                     //получение времени с БД
@@ -46,21 +55,26 @@ namespace ClientMonitor.BckgrndWorker
                     }
                     Thread.Sleep(10000);
                 }
+                await Task.Delay(1000, stoppingToken);
             }
         }
 
-        /// <summary>
-        /// Конвертирование string в bool
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static bool ParseBool(string input)
-        {
-            if (input == "True")
-                return true;
-            if (input == "False")
-                return false;
-            else return false;
-        }
+
+        
+    
+
+    /// <summary>
+    /// Конвертирование string в bool
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    private static bool ParseBool(string input)
+    {
+        if (input == "True")
+            return true;
+        if (input == "False")
+            return false;
+        else return false;
     }
+}
 }

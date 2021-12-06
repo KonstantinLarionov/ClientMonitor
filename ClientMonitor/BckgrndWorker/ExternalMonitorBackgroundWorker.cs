@@ -18,9 +18,14 @@ namespace ClientMonitor.BckgrndWorker
             _db = db;
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        /// <summary>
+        /// Запуск службы проверки сайтов и серверов
+        /// </summary>
+        /// <param name="stoppingToken"></param>
+        /// <returns></returns>
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (true)
+            while (!stoppingToken.IsCancellationRequested)
             {
                 var repository = _db;
                 if (repository.GetData("onOff") != "")
@@ -42,10 +47,7 @@ namespace ClientMonitor.BckgrndWorker
                     _handle.Handle();
                     Thread.Sleep(time);
                 }
-                else
-                {
-                    Thread.Sleep(1000);
-                }
+                await Task.Delay(1000, stoppingToken);
             }
         }
 
@@ -54,7 +56,7 @@ namespace ClientMonitor.BckgrndWorker
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool ParseBool(string input)
+        private static bool ParseBool(string input)
         {
             if (input == "True")
                 return true;

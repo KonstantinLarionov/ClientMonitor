@@ -18,16 +18,19 @@ namespace ClientMonitor.BckgrndWorker
             _db = db;
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        /// <summary>
+        /// Запуск службы загрузки в облако
+        /// </summary>
+        /// <param name="stoppingToken"></param>
+        /// <returns></returns>
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _handle.Handle();
-            while (true)
+            while (!stoppingToken.IsCancellationRequested)
             {
                 var repository = _db;
                 if (repository.GetData("onOff") != "")
                 {
                     isEnable = ParseBool(repository.GetData("onOff"));
-                    Thread.Sleep(10000);
                 }
                 if (isEnable == false)
                 {
@@ -39,7 +42,7 @@ namespace ClientMonitor.BckgrndWorker
                     }
                     if (dt == DateTime.Now.Hour)
                     {
-                        _handle.Handle();
+                        await _handle.Handle();
                         Thread.Sleep(85800000);
                     }
                     else
@@ -47,12 +50,14 @@ namespace ClientMonitor.BckgrndWorker
                         Thread.Sleep(10000);
                     }
                 }
-                else 
-                { 
-                    Thread.Sleep(10000); 
+                else
+                {
+                    Thread.Sleep(10000);
                 }
-                return Task.CompletedTask;
+                await Task.Delay(1000, stoppingToken);
             }
+
+            //return Task.CompletedTask;
         }
 
         /// <summary>
@@ -60,7 +65,7 @@ namespace ClientMonitor.BckgrndWorker
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool ParseBool(string input)
+        private static bool ParseBool(string input)
         {
             if (input == "True")
                 return true;

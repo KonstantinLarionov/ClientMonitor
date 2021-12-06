@@ -102,7 +102,7 @@ namespace ClientMonitor.Application.Handler
             {
                 idChatTg = _dbData.GetData("IdChatServer");
             }
-            //await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
+            await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in _listClouds)
             {
                 //проверка есть ли вообще этот путь на компе
@@ -117,14 +117,14 @@ namespace ClientMonitor.Application.Handler
                             FileInfo fileInf = new FileInfo(file);
                             var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
                             await _cloud.UploadFiles(uploadFile);
-                            //await _telegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
+                            await _telegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
                             fileInf.Delete();
                         }
-                        //await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
+                        await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
                     }
                     else
                     {
-                        //await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
+                        await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
                         AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
                     }
                 }
