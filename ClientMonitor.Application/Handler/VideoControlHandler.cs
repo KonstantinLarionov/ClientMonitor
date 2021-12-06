@@ -21,21 +21,45 @@ namespace ClientMonitor.Application.Handler
         INotificationFactory NotificationFactory;
 
         /// <summary>
-        /// Лист с параметрами камер
+        /// Лист с параметрами камер, stream1 - 1080p (1920×1080) stream2 - 360p (640×360)
         /// </summary>
         private readonly List<ControlVideoInfo> _listReceiveVideoInfoIp = new List<ControlVideoInfo>()
         {
             new ControlVideoInfo
             {
+                Name="Озон-ПГ-Зал",
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.7:554/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Зал"
+            },
+            new ControlVideoInfo
+            {
+                Name="Озон-ПГ-Тамбур",
+                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.5:554/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур"
+            },
+            new ControlVideoInfo
+            {
                 Name="Озон-ПГ-Выдача",
-                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.7:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\ZLOSE"
+                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.9:554/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Выдача"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад",
-                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.5:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\KMXLM"
+                PathStream=new Uri("rtsp://PoligonnayaSklad:123456@192.168.1.11:554/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад"
+            },
+            new ControlVideoInfo
+            {
+                Name="Озон-ПГ-Склад-2",
+                PathStream=new Uri("rtsp://PoligonnayaSklad1:123456@192.168.1.10:554/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад2"
+            },
+            new ControlVideoInfo
+            {
+                Name="Озон-ПГ-Тамбур-2",
+                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@192.168.1.12:554/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур2"
             }
         };
 

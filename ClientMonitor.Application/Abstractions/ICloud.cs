@@ -15,5 +15,6 @@ namespace ClientMonitor.Application.Abstractions
         Task UploadFiles(UploadedFilesInfo uploadedFilesInfo);
 
         Task<bool> DawnloadFiles(string path, string name, string downloadpath);
+
     }
 }

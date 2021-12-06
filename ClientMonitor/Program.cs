@@ -1,6 +1,8 @@
+using ClientMonitor.BckgrndWorker;
 using ClientMonitor.Infrastructure.Database.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,6 +24,14 @@ namespace ClientMonitor
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<VideoControlBackgroundWorker>();
+                    services.AddHostedService<CloudUploadingBackgroundWorker>();
+                    services.AddHostedService<StatPcBackgroundWorker>();
+                    services.AddHostedService<ExternalMonitorBackgroundWorker>();
+                    services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
                 });
     }
 }
