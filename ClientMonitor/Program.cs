@@ -31,10 +31,7 @@ namespace ClientMonitor
                     services.AddHostedService<CloudUploadingBackgroundWorker>();
                     services.AddHostedService<StatPcBackgroundWorker>();
                     services.AddHostedService<ExternalMonitorBackgroundWorker>();
-                    services.AddHostedService<HttpBackgroundWorker>();
                     services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
-                    services.AddHostedService<ProcBackgroundWorker>();
-                    services.AddHostedService<RamBackgroundWorker>();
                 });
     }
 }
