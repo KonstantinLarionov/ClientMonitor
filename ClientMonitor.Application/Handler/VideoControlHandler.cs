@@ -96,9 +96,15 @@ namespace ClientMonitor.Application.Handler
                 Thread thread = new Thread(() =>
                 {
                     item.ConnectionErrorEvent += (obj, error) =>
+                    {
                         notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                        AddInLog($"Ошибка подключения к камере: {item.Name}");
+                    };
                     item.InfoAboutLog += (obj, message) =>
-                         notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                    {
+                        notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                        AddInLog($"Ошибка подключения к камере: {item.Name}");
+                    };
                     while (true)
                     {
                         item.StartMonitoring();
@@ -109,6 +115,21 @@ namespace ClientMonitor.Application.Handler
                 _threads.Add(thread);
             }
             _threads.ForEach(x => x.Start());
+        }
+
+        /// <summary>
+        /// Метод добавления в бд
+        /// </summary>
+        /// <param name="message">Содержание лога</param>
+        private void AddInLog(string message)
+        {
+            LogInfo log = new LogInfo
+            {
+                TypeLog = LogTypes.Error,
+                Text = message,
+                DateTime = DateTime.Now
+            };
+            _dbLog.AddInDb(log);
         }
     }
 }

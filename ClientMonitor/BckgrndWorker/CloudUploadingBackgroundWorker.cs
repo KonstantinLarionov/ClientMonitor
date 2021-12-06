@@ -40,15 +40,15 @@ namespace ClientMonitor.BckgrndWorker
                     {
                         dt = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
                     }
-                    if (dt == DateTime.Now.Hour)
-                    {
+                    //if (dt == DateTime.Now.Hour)
+                    //{
                         await _handle.Handle();
                         Thread.Sleep(85800000);
-                    }
-                    else
-                    {
-                        Thread.Sleep(10000);
-                    }
+                    //}
+                    //else
+                    //{
+                    //    Thread.Sleep(10000);
+                    //}
                 }
                 else
                 {
