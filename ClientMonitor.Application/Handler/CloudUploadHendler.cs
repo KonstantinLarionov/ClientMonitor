@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
@@ -125,6 +126,7 @@ namespace ClientMonitor.Application.Handler
                                 catch
                                 {
                                     check = true;
+                                    Thread.Sleep(2000);
                                 }
                             }
                             while (check);
