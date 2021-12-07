@@ -109,25 +109,39 @@ namespace ClientMonitor.Application.Handler
                         string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
                         foreach (var file in files)
                         {
-                            FileInfo fileInf = new FileInfo(file);
-                            var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
-                            await _cloud.UploadFiles(uploadFile);
-                            //await _telegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
-                            AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}",2);
-                            fileInf.Delete();
-                            summ++;
+                            bool check = false;
+                            do
+                            {
+                                FileInfo fileInf = new FileInfo(file);
+                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
+                                try
+                                {
+                                    await _cloud.UploadFiles(uploadFile);
+                                    AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
+                                    fileInf.Delete();
+                                    summ++;
+                                }
+                                catch
+                                {
+                                    check = true;
+                                }
+                            }
+                            while (check);
                         }
                         //await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
                     }
                     else
                     {
                         //await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
-                        AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!",1);
+                        AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
                     }
                 }
             }
-            await _telegramNotification.SendMessage(idChatTg, $"Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
-            summ = 0;
+            if (summ != 0)
+            {
+                await _telegramNotification.SendMessage(idChatTg, $"Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+                summ = 0;
+            }
         }
 
         /// <summary>
@@ -165,10 +179,10 @@ namespace ClientMonitor.Application.Handler
         /// Добавление логов в бд
         /// </summary>
         /// <param name="message"></param>
-        private void AddInBd(string message,int error)
+        private void AddInBd(string message, int error)
         {
             LogTypes type = LogTypes.Information;
-            if (error ==1)
+            if (error == 1)
             {
                 type = LogTypes.Error;
             }
