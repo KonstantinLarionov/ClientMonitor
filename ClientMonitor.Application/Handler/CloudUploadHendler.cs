@@ -109,7 +109,7 @@ namespace ClientMonitor.Application.Handler
                         string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
                         foreach (var file in files)
                         {
-                            bool check = false;
+                            bool check;
                             do
                             {
                                 FileInfo fileInf = new FileInfo(file);
@@ -120,6 +120,7 @@ namespace ClientMonitor.Application.Handler
                                     AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
                                     fileInf.Delete();
                                     summ++;
+                                    check = false;
                                 }
                                 catch
                                 {
