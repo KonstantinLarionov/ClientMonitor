@@ -142,7 +142,7 @@ namespace ClientMonitor.Application.Handler
             }
             if (summ != 0)
             {
-                await _telegramNotification.SendMessage(idChatTg, $"Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+                await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
                 summ = 0;
             }
         }
