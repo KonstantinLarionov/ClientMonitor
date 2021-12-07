@@ -18,14 +18,6 @@ namespace ClientMonitor
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                .ConfigureServices(services =>
-                {
-                    services.AddHostedService<VideoControlBackgroundWorker>();
-                    services.AddHostedService<CloudUploadingBackgroundWorker>();
-                    services.AddHostedService<StatPcBackgroundWorker>();
-                    services.AddHostedService<ExternalMonitorBackgroundWorker>();
-                    services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
                 });
     }
 }

@@ -44,53 +44,49 @@ namespace ClientMonitor.Application.Handler
         {
             new ListDownloadCloud
             {
-                Name="ОзонПГ-Тамбур",
-                //LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур",
-                LocDownloadVideo=@"C:\Test\Test1",
-                //LocDownloadCloud="Записи/Тамбур",
-                LocDownloadCloud="Тест/Выдача",
+                Name="Озон-ПГ-Зал",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Зал",
+                LocDownloadCloud="Записи/Зал",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
-                Name="ОзонПГ-Зал",
-                //LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Зал",
-                LocDownloadVideo=@"C:\Test\Test2",
-                //LocDownloadCloud="Записи/Зал",
-                LocDownloadCloud="Тест/Склад",
+                Name="Озон-ПГ-Тамбур",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур",
+                LocDownloadCloud="Записи/Тамбур",
                 FormatFiles="*.mp4",
             },
-            //new ListDownloadCloud
-            //{
-            //    Name="ОзонПГ-Выдача",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Выдача",
-            //    LocDownloadCloud="Записи/Выдача1",
-            //    FormatFiles="*.mp4",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="ОзонПГ-Склад",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад",
-            //    LocDownloadCloud="Записи/Склад1",
-            //    FormatFiles="*.mp4",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="ОзонПГ-Склад2",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад2",
-            //    LocDownloadCloud="Записи/Склад2",
-            //    FormatFiles="*.mp4",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="ОзонПГ-Тамбур2",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур2",
-            //    LocDownloadCloud="Записи/Тамбур2",
-            //    FormatFiles="*.mp4",
-            //},
-
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Выдача",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Выдача",
+                LocDownloadCloud="Записи/Выдача1",
+                FormatFiles="*.mp4",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад",
+                LocDownloadCloud="Записи/Склад1",
+                FormatFiles="*.mp4",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Склад-2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад2",
+                LocDownloadCloud="Записи/Склад2",
+                FormatFiles="*.mp4",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Тамбур-2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур2",
+                LocDownloadCloud="Записи/Тамбур2",
+                FormatFiles="*.mp4",
+            },
         };
 
+        public int summ = 0;
         /// <summary>
         /// Логика загрузки в облако
         /// </summary>
@@ -102,10 +98,9 @@ namespace ClientMonitor.Application.Handler
             {
                 idChatTg = _dbData.GetData("IdChatServer");
             }
-            await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
+            //await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in _listClouds)
             {
-                //проверка есть ли вообще этот путь на компе
                 if (Directory.Exists(listClouds.LocDownloadVideo))
                 {
                     string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo, listClouds.FormatFiles);
@@ -117,18 +112,22 @@ namespace ClientMonitor.Application.Handler
                             FileInfo fileInf = new FileInfo(file);
                             var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
                             await _cloud.UploadFiles(uploadFile);
-                            await _telegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
+                            //await _telegramNotification.SendMessage(idChatTg, $"Файл: {uploadFile.Name} загружен: {DateTime.Now}");
+                            AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}",2);
                             fileInf.Delete();
+                            summ++;
                         }
-                        await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
+                        //await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
                     }
                     else
                     {
-                        await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
-                        AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
+                        //await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
+                        AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!",1);
                     }
                 }
             }
+            await _telegramNotification.SendMessage(idChatTg, $"Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+            summ = 0;
         }
 
         /// <summary>
@@ -166,11 +165,17 @@ namespace ClientMonitor.Application.Handler
         /// Добавление логов в бд
         /// </summary>
         /// <param name="message"></param>
-        private void AddInBd(string message)
+        private void AddInBd(string message,int error)
         {
+            LogTypes type = LogTypes.Information;
+            if (error ==1)
+            {
+                type = LogTypes.Error;
+            }
+
             LogInfo log = new LogInfo
             {
-                TypeLog = LogTypes.Error,
+                TypeLog = type,
                 Text = message,
                 DateTime = DateTime.Now
             };

@@ -1,7 +1,6 @@
 using ClientMonitor.Application;
 using ClientMonitor.Infrastructure.CloudManager;
 using ClientMonitor.Infrastructure.Notifications;
-using ClientMonitor.Infrastructure.ScreenRecording;
 using ClientMonitor.Infrastructure.Monitor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,16 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ClientMonitor.Infrastructure.Database;
-using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Infrastructure.Database.Contexts;
 using ClientMonitor.Infrastructure.VideoControl;
-using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.IO;
-using Microsoft.Extensions.FileProviders;
 using ClientMonitor.BckgrndWorker;
-using System.ComponentModel;
-using System;
 
 namespace ClientMonitor
 {
@@ -27,7 +18,7 @@ namespace ClientMonitor
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;        
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -38,13 +29,18 @@ namespace ClientMonitor
             services.AddControllersWithViews();
 
             services.AddControllers();
-            services.AddInfrastructureCloudManager(Configuration);
+            services.AddInfrastructureCloudManager();
             services.AddInfrastructureNotifications();
-            services.AddInfrastructureScreenRecording();
             services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
+
+            services.AddHostedService<VideoControlBackgroundWorker>();
+            services.AddHostedService<CloudUploadingBackgroundWorker>();
+            services.AddHostedService<StatPcBackgroundWorker>();
+            services.AddHostedService<ExternalMonitorBackgroundWorker>();
+            services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {
@@ -75,54 +71,6 @@ namespace ClientMonitor
                     name: "default",
                     pattern: "{controller=Home}/{action=Home}/{id?}");
             });
-
-            #region [WorkBehind]
-
-            //app.UseCloudUploading(cloudHandler =>
-            //{
-            //    cloudHandler.Handle();
-            //});
-
-            //app.UseExternalMonitor(externalMonitorHandler =>
-            //{
-            //    externalMonitorHandler.Handle();
-            //});
-
-            //app.UsePcMonitoring(
-            //cpuHandler =>
-            //{
-            //    cpuHandler.HandleCpu();
-            //},
-            //ramHandler =>
-            //{
-            //    ramHandler.HandleRam();
-            //},
-            //procHandler =>
-            //{
-            //    procHandler.HandleProc();
-            //},
-            // httpHandler =>
-            // {
-            //     httpHandler.HandleHttp();
-            // }
-            //);
-
-            //app.UsePcMonitoringMessage(messageHandler =>
-            //{
-            //    messageHandler.HandleMessageMonitoringPc();
-            //}
-            //);
-
-            //app.UseVideoControl(testCamHandler =>
-            //{
-            //    testCamHandler.Handle();
-            //}
-            //);
-
-
-
-
-            #endregion
         }
     }
 }
