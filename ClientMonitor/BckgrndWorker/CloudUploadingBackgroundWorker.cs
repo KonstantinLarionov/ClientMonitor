@@ -34,21 +34,8 @@ namespace ClientMonitor.BckgrndWorker
                 }
                 if (isEnable == false)
                 {
-                    int dt = 18;
-                    //получение времени с БД
-                    if (repository.GetData("TimeCloud") != "")
-                    {
-                        dt = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
-                    }
-                    //if (dt == DateTime.Now.Hour)
-                    //{
-                        await _handle.Handle();
-                        Thread.Sleep(85800000);
-                    //}
-                    //else
-                    //{
-                    //    Thread.Sleep(10000);
-                    //}
+                    await _handle.Handle();
+                    Thread.Sleep(10000);
                 }
                 else
                 {
@@ -56,8 +43,6 @@ namespace ClientMonitor.BckgrndWorker
                 }
                 await Task.Delay(1000, stoppingToken);
             }
-
-            //return Task.CompletedTask;
         }
 
         /// <summary>
