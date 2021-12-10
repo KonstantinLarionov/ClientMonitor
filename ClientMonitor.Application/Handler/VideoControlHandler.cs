@@ -102,7 +102,7 @@ namespace ClientMonitor.Application.Handler
                         item.StartMonitoring();
                         Thread.Sleep(300000);
                         item.StopMonitoring();
-                        Thread.Sleep(1000);
+                        Thread.Sleep(2000);
                     }
                 });
                 _threads.Add(thread);
