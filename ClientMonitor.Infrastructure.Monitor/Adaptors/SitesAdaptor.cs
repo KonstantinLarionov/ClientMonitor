@@ -85,12 +85,6 @@ namespace ClientMonitor.Infrastructure.Monitor.Adaptors
                         Name = "Личный сайт",
                         Path = "http://goldencat.su/",
                         Type = ClientResourseType.Site,
-                    },
-                    new ClientResource
-                    {
-                        Name = "Личный сайт",
-                        Path = "http://badik56.ru/",
-                        Type = ClientResourseType.Site,
                     }
                 }
             },
