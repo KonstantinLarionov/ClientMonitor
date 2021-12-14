@@ -96,7 +96,7 @@ namespace ClientMonitor.Application.Handler
                 Thread thread = new Thread(() =>
                 {
                     item.ConnectionErrorEvent += (obj, error) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
-                    item.InfoAboutLog += (obj, message) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                    //item.InfoAboutLog += (obj, message) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
                     while (true)
                     {
                         item.StartMonitoring();
