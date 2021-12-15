@@ -56,22 +56,24 @@ namespace ClientMonitor.Application.Handler
                 results.AddRange(resultMonitoring);
                 var resultMonitoringservers = infoservers.ReceiveInfoMonitor() as List<ResultMonitoring>;
                 results.AddRange(resultMonitoringservers);
-                string test1 = "";
+                string msgError = "";
 
                 foreach (var result in results)
                 {
                     if (!result.Success)
                     {
-                        test1 = test1 + "!Ошибка проверки!\r\n" + result.Message + "\r\n";
-                        AddInLog(result.Message);
+                        msgError = msgError + "!Ошибка проверки!\r\n" + result.Message + "\r\n";
+                        AddInLog("!Ошибка проверки! "+result.Message);
                     }
                     else
                     {
-                        test1 = test1 + "!Проверка успешна!\r\n" + result.Message + "\r\n";
-                        AddInLog(result.Message);
+                        AddInLog("!Проверка успешна! "+result.Message);
                     }
                 }
-                notifyer.SendMessage(idChatServer, test1);
+                if (msgError != "")
+                {
+                    notifyer.SendMessage(idChatServer, msgError);
+                }
             }
             catch
             {

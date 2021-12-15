@@ -136,13 +136,13 @@ namespace ClientMonitor.Application.Handler
                     else
                     {
                         //await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
-                        AddInBd($"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
+                        AddInBd($"!~~~ОЗОН_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
                     }
                 }
             }
             if (summ != 0)
             {
-                await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+                await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
                 summ = 0;
             }
         }

@@ -58,7 +58,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур-2",
-                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@192.168.1.12:554/stream2"),
+                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:554/stream2"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур2"
             }
         };
@@ -96,13 +96,13 @@ namespace ClientMonitor.Application.Handler
                 Thread thread = new Thread(() =>
                 {
                     item.ConnectionErrorEvent += (obj, error) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
-                    item.InfoAboutLog += (obj, message) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                    //item.InfoAboutLog += (obj, message) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
                     while (true)
                     {
                         item.StartMonitoring();
                         Thread.Sleep(300000);
                         item.StopMonitoring();
-                        Thread.Sleep(1000);
+                        Thread.Sleep(2000);
                     }
                 });
                 _threads.Add(thread);
