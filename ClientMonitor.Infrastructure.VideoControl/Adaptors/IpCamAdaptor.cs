@@ -41,29 +41,39 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         private readonly string _currentDirectory;
         private readonly DirectoryInfo _libDirectory;
         private readonly Vlc.DotNet.Core.VlcMediaPlayer _mediaPlayer;
-
         /// <summary>
         /// Настройка плеера, подгрузка библиотек
         /// </summary>
         /// <param name="info"> Параметры камеры</param>
         public IpCamAdaptor(ControlVideoInfo info)
         {
+            
+
             _videoInfo = info;
             _currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             _libDirectory = new DirectoryInfo(Path.Combine(_currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
             _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
             _mediaPlayer.EncounteredError += (objec, message) =>
                 ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
-            _mediaPlayer.Log += GetLogError;
+            //_mediaPlayer.Log += GetLogError;
         }
 
-        private void GetLogError(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
-        {
-            if (e.Message.Contains("Failed to connect to RTSP server"))
-            {
-                InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
-            }
-        }
+        //private void GetLogError(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
+        //{
+        //    //InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
+        //    //Console.WriteLine(DateTime.Now+"__"+e.Message);
+        //    //if (e.Message.Contains("Failed to connect to RTSP server"))
+        //    //{
+        //    //    InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
+        //    //}
+
+            
+        //    //if (e.Message.Contains("movie duration"))
+        //    //{
+        //        Console.WriteLine(DateTime.Now + "__" + e.Message);
+        //        //InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
+        //    //}
+        //}
 
         /// <summary>
         /// запуск плеера

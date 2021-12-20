@@ -31,9 +31,9 @@ namespace ClientMonitor.Application.Handler
         /// <param name="repositoryData">Репоз параметров</param>
         public CloudUploadHendler(ICloudFactory cloud, INotificationFactory notification, IRepository<LogInfo> repositoryLog, IRepository<DataForEditInfo> repositoryData)
         {
-            _cloud = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
-            _telegramNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
-            _maileNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Mail);
+            _cloud = cloud.GetCloud(CloudTypes.YandexCloud);
+            _telegramNotification = notification.GetNotification(NotificationTypes.Telegram);
+            _maileNotification = notification.GetNotification(NotificationTypes.Mail);
             _dbLog = repositoryLog;
             _dbData = repositoryData;
         }
@@ -47,42 +47,42 @@ namespace ClientMonitor.Application.Handler
             {
                 Name="Озон-ПГ-Зал",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Зал",
-                LocDownloadCloud="Записи/Зал",
+                LocDownloadCloud="Записи/Зал/",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур",
-                LocDownloadCloud="Записи/Тамбур",
+                LocDownloadCloud="Записи/Тамбур/",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Выдача",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Выдача",
-                LocDownloadCloud="Записи/Выдача1",
+                LocDownloadCloud="Записи/Выдача1/",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Склад",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад",
-                LocDownloadCloud="Записи/Склад1",
+                LocDownloadCloud="Записи/Склад1/",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Склад-2",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад2",
-                LocDownloadCloud="Записи/Склад2",
+                LocDownloadCloud="Записи/Склад2/",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур-2",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур2",
-                LocDownloadCloud="Записи/Тамбур2",
+                LocDownloadCloud="Записи/Тамбур2/",
                 FormatFiles="*.mp4",
             },
         };
@@ -99,7 +99,7 @@ namespace ClientMonitor.Application.Handler
             {
                 idChatTg = _dbData.GetData("IdChatServer");
             }
-            //await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
+
             foreach (var listClouds in _listClouds)
             {
                 if (Directory.Exists(listClouds.LocDownloadVideo))
@@ -114,7 +114,11 @@ namespace ClientMonitor.Application.Handler
                             do
                             {
                                 FileInfo fileInf = new FileInfo(file);
-                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
+                                var month = fileInf.CreationTime.Month;
+                                var year = fileInf.CreationTime.Year;
+                                MonthTypes day = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(month);
+                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud+year+"/"+day.ToString());
+                                var gg = 4;
                                 try
                                 {
                                     await _cloud.UploadFiles(uploadFile);
@@ -131,12 +135,10 @@ namespace ClientMonitor.Application.Handler
                             }
                             while (check);
                         }
-                        //await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
                     }
                     else
                     {
-                        //await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
-                        AddInBd($"!~~~ОЗОН_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
+                         AddInBd($"!~~~ОЗОН_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
                     }
                 }
             }

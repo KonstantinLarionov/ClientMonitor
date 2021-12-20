@@ -36,11 +36,11 @@ namespace ClientMonitor
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
 
-            services.AddHostedService<VideoControlBackgroundWorker>();
+            //services.AddHostedService<VideoControlBackgroundWorker>();
             services.AddHostedService<CloudUploadingBackgroundWorker>();
-            services.AddHostedService<StatPcBackgroundWorker>();
-            services.AddHostedService<ExternalMonitorBackgroundWorker>();
-            services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
+            //services.AddHostedService<StatPcBackgroundWorker>();
+            //services.AddHostedService<ExternalMonitorBackgroundWorker>();
+            //services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {

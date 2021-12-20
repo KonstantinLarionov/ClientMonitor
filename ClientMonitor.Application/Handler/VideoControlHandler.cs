@@ -3,7 +3,9 @@ using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 namespace ClientMonitor.Application.Handler
@@ -25,6 +27,18 @@ namespace ClientMonitor.Application.Handler
         /// </summary>
         private readonly List<ControlVideoInfo> _listReceiveVideoInfoIp = new List<ControlVideoInfo>()
         {
+            //new ControlVideoInfo
+            //{
+            //    Name="Баг",
+            //    PathStream=new Uri("http://158.58.130.148/mjpg/video.mjpg"),
+            //    PathDownload=@"C:\Test\Баг"
+            //},
+            new ControlVideoInfo
+            {
+                Name="Баги",
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.7:554/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестБаг"
+            },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Зал",
@@ -97,6 +111,7 @@ namespace ClientMonitor.Application.Handler
                 {
                     item.ConnectionErrorEvent += (obj, error) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
                     //item.InfoAboutLog += (obj, message) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+
                     while (true)
                     {
                         item.StartMonitoring();
