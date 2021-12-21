@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
@@ -20,7 +21,7 @@ namespace ClientMonitor.Application.Handler
         readonly INotification _maileNotification;
         readonly IRepository<LogInfo> _dbLog;
         readonly IRepository<DataForEditInfo> _dbData;
-
+        
         /// <summary>
         /// Подключение библиотек
         /// </summary>
@@ -45,46 +46,80 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Зал",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Зал",
-                LocDownloadCloud="Записи/Зал/",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Зал",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Зал",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур",
-                LocDownloadCloud="Записи/Тамбур/",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Выдача",
-                LocDownloadCloud="Записи/Выдача1/",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Выдача1",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Выдача1",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад",
-                LocDownloadCloud="Записи/Склад1/",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад1",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад1",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Склад-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад2",
-                LocDownloadCloud="Записи/Склад2/",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад2",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад2",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур2",
-                LocDownloadCloud="Записи/Тамбур2/",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур2",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур2",
+                FormatFiles="*.mp4",
+            },
+
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Выдача",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача",
+                LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача",
+                FormatFiles="*.mp4",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Выдача2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача2",
+                LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача2",
+                FormatFiles="*.mp4",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Склад",
+                LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Склад",
                 FormatFiles="*.mp4",
             },
         };
+
+        /// <summary>
+        /// Получение названия папки по дате
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        private static string MonthStats(DateTime dateTime)
+        {
+            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(dateTime.Month);
+            string data = $"{dateTime.Year}/{monthTypes}";
+            return data;
+        }
 
         public int summ = 0;
         /// <summary>
@@ -103,7 +138,8 @@ namespace ClientMonitor.Application.Handler
             {
                 if (Directory.Exists(listClouds.LocDownloadVideo))
                 {
-                    string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo, listClouds.FormatFiles);
+                    DateTime dt = DateTime.Now;
+                    string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo+"/"+MonthStats(dt), listClouds.FormatFiles);
                     if (getFilesFromHall.Length != 0)
                     {
                         string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
@@ -116,8 +152,8 @@ namespace ClientMonitor.Application.Handler
                                 var month = fileInf.CreationTime.Month;
                                 var year = fileInf.CreationTime.Year;
                                 MonthTypes day = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(month);
-                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud+year+"/"+day.ToString());
-                                var gg = 4;
+                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud+"/"+ MonthStats(fileInf.CreationTime));
+
                                 try
                                 {
                                     await _cloud.UploadFiles(uploadFile);

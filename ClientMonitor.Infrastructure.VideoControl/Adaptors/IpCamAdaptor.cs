@@ -1,4 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.IO;
@@ -30,8 +31,8 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         {
             get
             {
-                DateTime dt = DateTime.Now;
-                return Path.Combine(_videoInfo.PathDownload, $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.mp4");
+                DateTime dt = DateTime.Now;     
+                return Path.Combine(_videoInfo.PathDownload+"\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.mp4");
             }
         }
         public event EventHandler ConnectionErrorEvent;
@@ -48,8 +49,6 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         /// <param name="info"> Параметры камеры</param>
         public IpCamAdaptor(ControlVideoInfo info)
         {
-
-
             _videoInfo = info;
             _currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             _libDirectory = new DirectoryInfo(Path.Combine(_currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
@@ -59,9 +58,21 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             _mediaPlayer.Log += Log;
         }
 
+        /// <summary>
+        /// Получение названия папки по дате
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        private static string MonthStats(DateTime dateTime)
+        {
+            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(dateTime.Month);
+            string data = $"{dateTime.Year}\\{monthTypes}";
+            return data;
+        }
+
         private void Log(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         /// <summary>
