@@ -43,6 +43,8 @@ namespace ClientMonitor.BckgrndWorker
                 }
                 await Task.Delay(1000, stoppingToken);
             }
+            stoppingToken = new CancellationToken();
+            ExecuteAsync(stoppingToken);
         }
 
         /// <summary>
