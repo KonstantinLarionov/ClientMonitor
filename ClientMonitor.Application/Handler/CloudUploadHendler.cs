@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
@@ -31,9 +30,9 @@ namespace ClientMonitor.Application.Handler
         /// <param name="repositoryData">Репоз параметров</param>
         public CloudUploadHendler(ICloudFactory cloud, INotificationFactory notification, IRepository<LogInfo> repositoryLog, IRepository<DataForEditInfo> repositoryData)
         {
-            _cloud = cloud.GetCloud(CloudTypes.YandexCloud);
-            _telegramNotification = notification.GetNotification(NotificationTypes.Telegram);
-            _maileNotification = notification.GetNotification(NotificationTypes.Mail);
+            _cloud = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
+            _telegramNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
+            _maileNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Mail);
             _dbLog = repositoryLog;
             _dbData = repositoryData;
         }
@@ -99,7 +98,7 @@ namespace ClientMonitor.Application.Handler
             {
                 idChatTg = _dbData.GetData("IdChatServer");
             }
-
+            //await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in _listClouds)
             {
                 if (Directory.Exists(listClouds.LocDownloadVideo))
@@ -135,6 +134,7 @@ namespace ClientMonitor.Application.Handler
                             }
                             while (check);
                         }
+                        //await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
                     }
                     else
                     {
@@ -142,11 +142,8 @@ namespace ClientMonitor.Application.Handler
                     }
                 }
             }
-            if (summ != 0)
-            {
-                await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
-                summ = 0;
-            }
+            await _telegramNotification.SendMessage(idChatTg, $"Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+            summ = 0;
         }
 
         /// <summary>
@@ -184,10 +181,10 @@ namespace ClientMonitor.Application.Handler
         /// Добавление логов в бд
         /// </summary>
         /// <param name="message"></param>
-        private void AddInBd(string message, int error)
+        private void AddInBd(string message,int error)
         {
             LogTypes type = LogTypes.Information;
-            if (error == 1)
+            if (error ==1)
             {
                 type = LogTypes.Error;
             }
