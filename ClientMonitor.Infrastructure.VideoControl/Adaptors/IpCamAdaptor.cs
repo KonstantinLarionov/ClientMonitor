@@ -3,7 +3,7 @@ using ClientMonitor.Application.Domanes.Objects;
 using System;
 using System.IO;
 using System.Reflection;
-
+using System.Threading;
 
 namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
 {
@@ -41,13 +41,14 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         private readonly string _currentDirectory;
         private readonly DirectoryInfo _libDirectory;
         private readonly Vlc.DotNet.Core.VlcMediaPlayer _mediaPlayer;
+        private string VideoName;
         /// <summary>
         /// Настройка плеера, подгрузка библиотек
         /// </summary>
         /// <param name="info"> Параметры камеры</param>
         public IpCamAdaptor(ControlVideoInfo info)
         {
-            
+
 
             _videoInfo = info;
             _currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -55,25 +56,13 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
             _mediaPlayer.EncounteredError += (objec, message) =>
                 ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
-            //_mediaPlayer.Log += GetLogError;
+            _mediaPlayer.Log += Log;
         }
 
-        //private void GetLogError(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
-        //{
-        //    //InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
-        //    //Console.WriteLine(DateTime.Now+"__"+e.Message);
-        //    //if (e.Message.Contains("Failed to connect to RTSP server"))
-        //    //{
-        //    //    InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
-        //    //}
-
-            
-        //    //if (e.Message.Contains("movie duration"))
-        //    //{
-        //        Console.WriteLine(DateTime.Now + "__" + e.Message);
-        //        //InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
-        //    //}
-        //}
+        private void Log(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// запуск плеера
@@ -83,6 +72,14 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             if (SetInfo())
             {
                 _mediaPlayer.Play();
+                //слип на 10 секунд
+                Thread.Sleep(10000);
+                //проверка размера видоса, если не устраивает то перезапускаем старт
+                if (GetSizeVideo() == false)
+                {
+                    _mediaPlayer.Stop();
+                    StartMonitoring();
+                }
             }
         }
 
@@ -98,10 +95,11 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         }
 
         /// <summary>
-        /// Полчение настроек для запуска плеера
+        /// Получение настроек для запуска плеера
         /// </summary>
         private bool SetInfo()
         {
+            VideoName = NameFile;
             var mediaOptions = new[]
             {
                 ":sout=#file{dst=" + NameFile + "}",
@@ -109,6 +107,23 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             };
             var result = _mediaPlayer.SetMedia(_videoInfo.PathStream, mediaOptions);
             return result.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.NothingSpecial;
+        }
+
+        /// <summary>
+        /// Проверка размера видеофайла
+        /// </summary>
+        /// <returns></returns>
+        private bool GetSizeVideo()
+        {
+            bool checkVideo = true;
+            FileInfo file = new FileInfo(VideoName);
+            long size = file.Length / 1024;
+            //если размерм меньше 17кБ
+            if (size < 17)
+            {
+                checkVideo = false;
+            }
+            return checkVideo;
         }
     }
 }
