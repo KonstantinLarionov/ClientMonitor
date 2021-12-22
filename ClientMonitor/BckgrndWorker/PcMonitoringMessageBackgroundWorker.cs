@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
+    /// <summary>
+    /// Фоновая задача Общая стата по мониторингу
+    /// </summary>
     public class PcMonitoringMessageBackgroundWorker : BackgroundService
     {
         readonly IPcMonitoringHandler _handle;

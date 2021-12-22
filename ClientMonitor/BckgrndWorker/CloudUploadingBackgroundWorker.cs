@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
-
-    //BackgroundServices
-    
+    /// <summary>
+    /// Фоновая задача Загрузка в облако
+    /// </summary>
     public class CloudUploadingBackgroundWorker : BackgroundService
     {
         readonly ICludUploadHendler _handle;
