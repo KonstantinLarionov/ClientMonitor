@@ -1,12 +1,16 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes;
+
 using Microsoft.Extensions.Hosting;
-using System;
+
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
+
+    //BackgroundServices
+    
     public class CloudUploadingBackgroundWorker : BackgroundService
     {
         readonly ICludUploadHendler _handle;
@@ -43,8 +47,6 @@ namespace ClientMonitor.BckgrndWorker
                 }
                 await Task.Delay(1000, stoppingToken);
             }
-            stoppingToken = new CancellationToken();
-            ExecuteAsync(stoppingToken);
         }
 
         /// <summary>

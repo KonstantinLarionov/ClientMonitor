@@ -38,11 +38,19 @@ namespace ClientMonitor.Application.Handler
             _dbData = repositoryData;
         }
 
+        //СДЕЛАТЬ ЕСЛИ ВЫЛЕТАЕТ ОШИБКА ПОДКЛЮЧЕНИЯ ТО ЧЕРЕЗ ЛОГИ ЧТОБЫ ВЫЗЫВАЛАСЬ ФУНКЦИЯ СТОПА ВИДЕО И НОВыЙ СТАРТ ЗАПИСИ
         /// <summary>
         /// Список параметров для выгрузки в облако
         /// </summary>
         private readonly static List<ListDownloadCloud> _listClouds = new List<ListDownloadCloud>()
         {
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Зал",
+            //    LocDownloadVideo=@"C:\Test\Баг",
+            //    LocDownloadCloud="Тест/Склад",
+            //    FormatFiles="*.mp4",
+            //},
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Зал",
