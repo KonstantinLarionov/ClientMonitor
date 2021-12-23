@@ -37,7 +37,7 @@ namespace ClientMonitor
             services.AddInfrastructureDatabase();
 
             services.AddHostedService<VideoControlBackgroundWorker>();
-            services.AddHostedService<CloudUploadingBackgroundWorker>();
+            //services.AddHostedService<CloudUploadingBackgroundWorker>();
             services.AddHostedService<StatPcBackgroundWorker>();
             services.AddHostedService<ExternalMonitorBackgroundWorker>();
             services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
@@ -70,6 +70,11 @@ namespace ClientMonitor
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Home}/{id?}");
+            });
+
+            app.UseCloudUploading(cloudHandler =>
+            {
+                cloudHandler.Handle();
             });
         }
     }

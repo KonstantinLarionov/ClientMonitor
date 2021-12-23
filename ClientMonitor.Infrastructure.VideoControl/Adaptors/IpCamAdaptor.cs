@@ -54,9 +54,16 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             _currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             _libDirectory = new DirectoryInfo(Path.Combine(_currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
             _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
-            _mediaPlayer.EncounteredError += (objec, message) =>
-                ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
+            //_mediaPlayer.EncounteredError += (objec, message) =>
+            //    ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
+            _mediaPlayer.EncounteredError += Error;
             _mediaPlayer.Log += Log;
+        }
+
+        private void Error(object sender, Vlc.DotNet.Core.VlcMediaPlayerEncounteredErrorEventArgs e)
+        {
+            ConnectionErrorEvent?.Invoke(sender, new ErrorEventArgs(new Exception(e.ToString())));
+            _mediaPlayer.Stop();
         }
 
         /// <summary>

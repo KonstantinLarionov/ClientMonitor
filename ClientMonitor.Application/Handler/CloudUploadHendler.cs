@@ -182,11 +182,11 @@ namespace ClientMonitor.Application.Handler
                     }
                     else
                     {
-                         AddInBd($"!~~~ОЗОН_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
+                         AddInBd($"!~~~ОЗОН/Wb_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
                     }
                 }
             }
-            await _telegramNotification.SendMessage(idChatTg, $"Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+            await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
             summ = 0;
         }
 
