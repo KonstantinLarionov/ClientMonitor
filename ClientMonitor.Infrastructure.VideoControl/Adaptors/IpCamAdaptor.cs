@@ -1,8 +1,7 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
-using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
+
 using System;
 using System.IO;
 using System.Reflection;
@@ -72,9 +71,26 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             return data;
         }
 
+        private bool Check=false;
+        /// <summary>
+        /// проверка на размер файла через логи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Log(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
         {
-
+            if (Check)
+            {
+                Thread.Sleep(30000);
+                FileInfo file = new FileInfo(VideoName);
+                long size = file.Length / 1024;
+                if (size < 50)
+                {
+                    _mediaPlayer.Stop();
+                    _mediaPlayer.Play();
+                }
+                Check = false;
+            }
         }
 
         /// <summary>
@@ -85,14 +101,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             if (SetInfo())
             {
                 _mediaPlayer.Play();
-                //слип на 10 секунд
-                Thread.Sleep(10000);
-                //проверка размера видоса, если не устраивает то перезапускаем старт
-                if (GetSizeVideo() == false)
-                {
-                    _mediaPlayer.Stop();
-                    StartMonitoring();
-                }
+                Check = true;
             }
         }
 
@@ -126,25 +135,25 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         /// Проверка размера видеофайла
         /// </summary>
         /// <returns></returns>
-        private bool GetSizeVideo()
-        {
-            bool checkVideo = true;
-            try
-            {
-                string newName = VideoName.Replace('\\', '/');
-                ShellObject shell = ShellObject.FromParsingName(newName);
-                IShellProperty prop = shell.Properties.System.Media.Duration;
-                // Duration will be formatted as 00:44:08
-                string duration = prop.FormatForDisplay(PropertyDescriptionFormatOptions.None);
+        //private bool GetSizeVideo()
+        //{
+        //    bool checkVideo = true;
+        //    try
+        //    {
+        //        string newName = VideoName.Replace('\\', '/');
+        //        ShellObject shell = ShellObject.FromParsingName(newName);
+        //        IShellProperty prop = shell.Properties.System.Media.Duration;
+        //        // Duration will be formatted as 00:44:08
+        //        string duration = prop.FormatForDisplay(PropertyDescriptionFormatOptions.None);
 
-                //если размерм меньше 2кБ
-                if (duration == "00:00:01" || duration == "00:00:02")
-                {
-                    checkVideo = false;
-                }
-            }
-            catch { }
-            return checkVideo;
-        }
+        //        //если размерм меньше 2кБ
+        //        if (duration == "00:00:01" || duration == "00:00:02")
+        //        {
+        //            checkVideo = false;
+        //        }
+        //    }
+        //    catch { }
+        //    return checkVideo;
+        //}
     }
 }
