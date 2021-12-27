@@ -21,7 +21,7 @@ namespace ClientMonitor.Application.Handler
         readonly INotification _maileNotification;
         readonly IRepository<LogInfo> _dbLog;
         readonly IRepository<DataForEditInfo> _dbData;
-        
+
         /// <summary>
         /// Подключение библиотек
         /// </summary>
@@ -147,42 +147,33 @@ namespace ClientMonitor.Application.Handler
                 if (Directory.Exists(listClouds.LocDownloadVideo))
                 {
                     DateTime dt = DateTime.Now;
-                    string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo+"/"+MonthStats(dt), listClouds.FormatFiles);
+                    string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo + "/" + MonthStats(dt), listClouds.FormatFiles);
                     if (getFilesFromHall.Length != 0)
                     {
                         string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
                         foreach (var file in files)
                         {
-                            bool check;
-                            do
+                            try
                             {
                                 FileInfo fileInf = new FileInfo(file);
                                 var month = fileInf.CreationTime.Month;
                                 var year = fileInf.CreationTime.Year;
                                 MonthTypes day = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(month);
-                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud+"/"+ MonthStats(fileInf.CreationTime));
-
-                                try
-                                {
-                                    await _cloud.UploadFiles(uploadFile);
-                                    AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
-                                    fileInf.Delete();
-                                    summ++;
-                                    check = false;
-                                }
-                                catch
-                                {
-                                    check = true;
-                                    Thread.Sleep(2000);
-                                }
+                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud + "/" + MonthStats(fileInf.CreationTime));
+                                await _cloud.UploadFiles(uploadFile);
+                                AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
+                                fileInf.Delete();
+                                summ++;
                             }
-                            while (check);
+                            catch
+                            {
+                                Thread.Sleep(2000);
+                            }
                         }
-                        //await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
                     }
                     else
                     {
-                         AddInBd($"!~~~ОЗОН/Wb_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
+                        AddInBd($"!~~~ОЗОН/Wb_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
                     }
                 }
             }
@@ -225,10 +216,10 @@ namespace ClientMonitor.Application.Handler
         /// Добавление логов в бд
         /// </summary>
         /// <param name="message"></param>
-        private void AddInBd(string message,int error)
+        private void AddInBd(string message, int error)
         {
             LogTypes type = LogTypes.Information;
-            if (error ==1)
+            if (error == 1)
             {
                 type = LogTypes.Error;
             }

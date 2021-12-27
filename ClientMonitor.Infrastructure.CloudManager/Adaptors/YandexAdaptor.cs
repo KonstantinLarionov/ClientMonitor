@@ -25,6 +25,7 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
 
         public async Task<List<CloudFilesInfo>> GetFilesAndFoldersAsync()
         {
+
             var conect = new DiskHttpApi(CloudOptions.Token);
             var rootFolderData = await conect.MetaInfo.GetInfoAsync(new ResourceRequest { Path = CloudOptions.Path });
             List<CloudFilesInfo> filesAndFoldersList = new List<CloudFilesInfo>();

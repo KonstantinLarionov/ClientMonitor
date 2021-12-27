@@ -1,8 +1,9 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes;
-using ClientMonitor.BckgrndWorker;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+
 using System;
 using System.Threading;
 
@@ -32,7 +33,7 @@ namespace ClientMonitor.Application
                     if (isEnable == false)
                     {
                         handle.Invoke(service);
-                        Thread.Sleep(10000);
+                        Thread.Sleep(3600000);
                     }
                     else
                     {

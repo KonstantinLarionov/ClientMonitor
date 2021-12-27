@@ -36,11 +36,11 @@ namespace ClientMonitor
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
 
-            services.AddHostedService<VideoControlBackgroundWorker>();
+            //services.AddHostedService<VideoControlBackgroundWorker>();
             //services.AddHostedService<CloudUploadingBackgroundWorker>();
-            services.AddHostedService<StatPcBackgroundWorker>();
-            services.AddHostedService<ExternalMonitorBackgroundWorker>();
-            services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
+            //services.AddHostedService<StatPcBackgroundWorker>();
+            //services.AddHostedService<ExternalMonitorBackgroundWorker>();
+            //services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {
@@ -72,10 +72,49 @@ namespace ClientMonitor
                     pattern: "{controller=Home}/{action=Home}/{id?}");
             });
 
+
+            #region [WorkBehind]
             app.UseCloudUploading(cloudHandler =>
             {
                 cloudHandler.Handle();
             });
+
+            app.UseExternalMonitor(externalMonitorHandler =>
+            {
+                externalMonitorHandler.Handle();
+            });
+
+            app.UsePcMonitoring(
+            cpuHandler =>
+            {
+                cpuHandler.HandleCpu();
+            },
+            ramHandler =>
+            {
+                ramHandler.HandleRam();
+            },
+            procHandler =>
+            {
+                procHandler.HandleProc();
+            },
+             httpHandler =>
+             {
+                 httpHandler.HandleHttp();
+             }
+            );
+
+            app.UsePcMonitoringMessage(messageHandler =>
+            {
+                messageHandler.HandleMessageMonitoringPc();
+            }
+            );
+
+            app.UseVideoControl(videoControlHandler =>
+            {
+                videoControlHandler.Handle();
+            }
+            );
+            #endregion
         }
     }
 }
