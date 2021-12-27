@@ -146,14 +146,14 @@ namespace ClientMonitor.Application.Handler
             {
                 if (Directory.Exists(listClouds.LocDownloadVideo))
                 {
-                    DateTime dt = DateTime.Now;
-                    string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo + "/" + MonthStats(dt), listClouds.FormatFiles);
-                    if (getFilesFromHall.Length != 0)
+                    try
                     {
-                        string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
-                        foreach (var file in files)
+                        DateTime dt = DateTime.Now;
+                        string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo + "/" + MonthStats(dt), listClouds.FormatFiles);
+                        if (getFilesFromHall.Length != 0)
                         {
-                            try
+                            string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
+                            foreach (var file in files)
                             {
                                 FileInfo fileInf = new FileInfo(file);
                                 var month = fileInf.CreationTime.Month;
@@ -165,16 +165,13 @@ namespace ClientMonitor.Application.Handler
                                 fileInf.Delete();
                                 summ++;
                             }
-                            catch
-                            {
-                                Thread.Sleep(2000);
-                            }
+                        }
+                        else
+                        {
+                            AddInBd($"!~~~ОЗОН/Wb_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
                         }
                     }
-                    else
-                    {
-                        AddInBd($"!~~~ОЗОН/Wb_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
-                    }
+                    catch (Exception e) { AddInBd($"{e.Message} : {DateTime.Now}", 1); }
                 }
             }
             await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");

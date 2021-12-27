@@ -55,6 +55,8 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
         /// <returns></returns>
         public async Task UploadFiles(UploadedFilesInfo uploadedFilesInfo)
         {
+            //var rootFolderData = await GetFilesAndFoldersAsync();
+
             var conect = new DiskHttpApi(_token);
             var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
             using (var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
