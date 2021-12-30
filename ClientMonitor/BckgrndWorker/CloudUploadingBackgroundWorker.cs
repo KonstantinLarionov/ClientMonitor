@@ -39,7 +39,7 @@ namespace ClientMonitor.BckgrndWorker
                 if (isEnable == false)
                 {
                     await _handle.Handle();
-                    Thread.Sleep(10000);
+                    Thread.Sleep(60000);
                 }
                 else
                 {
