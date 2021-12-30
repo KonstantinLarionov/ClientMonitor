@@ -1,8 +1,9 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes;
-using ClientMonitor.BckgrndWorker;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+
 using System;
 using System.Threading;
 
@@ -25,30 +26,23 @@ namespace ClientMonitor.Application
                 while (true)
                 {
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
+                    if (repository.GetData("onOff") != "")
+                    {
+                        isEnable = ParseBool(repository.GetData("onOff"));
+                    }
                     if (isEnable == false)
                     {
-                        int dt = 18;
-                        //получение времени с БД
-                        if (repository.GetData("TimeCloud") != "")
-                        {
-                            dt = Convert.ToDateTime(repository.GetData("TimeCloud")).Hour;
-                        }
-                        //if (dt == DateTime.Now.Hour)
-                        //{
                         handle.Invoke(service);
-                        Thread.Sleep(85800000);
-                        //}
-                        //else
-                        //{
-                        //    Thread.Sleep(10000);
-                        //}
+                        Thread.Sleep(3600000);
                     }
-                    else { Thread.Sleep(10000); }
+                    else
+                    {
+                        Thread.Sleep(60000);
+                    }
                 }
             });
             thread.Start();
         }
-        
         
         /// <summary>
         /// Ежечасовая проверка сайтов и серверов

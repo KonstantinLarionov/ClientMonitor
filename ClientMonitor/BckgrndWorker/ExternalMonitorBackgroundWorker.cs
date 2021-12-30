@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
+    /// <summary>
+    /// Фоновая задача Мониторинг сайтов и серверов
+    /// </summary>
     public class ExternalMonitorBackgroundWorker : BackgroundService
     {
         readonly IExternalMonitorHandler _handle;

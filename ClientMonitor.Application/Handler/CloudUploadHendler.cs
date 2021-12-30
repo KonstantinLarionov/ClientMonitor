@@ -38,54 +38,96 @@ namespace ClientMonitor.Application.Handler
             _dbData = repositoryData;
         }
 
+        //СДЕЛАТЬ ЕСЛИ ВЫЛЕТАЕТ ОШИБКА ПОДКЛЮЧЕНИЯ ТО ЧЕРЕЗ ЛОГИ ЧТОБЫ ВЫЗЫВАЛАСЬ ФУНКЦИЯ СТОПА ВИДЕО И НОВыЙ СТАРТ ЗАПИСИ
         /// <summary>
         /// Список параметров для выгрузки в облако
         /// </summary>
         private readonly static List<ListDownloadCloud> _listClouds = new List<ListDownloadCloud>()
         {
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Зал",
+            //    LocDownloadVideo=@"C:\Test\Баг",
+            //    LocDownloadCloud="Тест/Склад",
+            //    FormatFiles="*.mp4",
+            //},
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Зал",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Зал",
-                LocDownloadCloud="Записи/Зал",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Зал",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Зал",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур",
-                LocDownloadCloud="Записи/Тамбур",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Выдача",
-                LocDownloadCloud="Записи/Выдача1",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Выдача",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Выдача1",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад",
-                LocDownloadCloud="Записи/Склад1",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад1",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Склад-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Склад2",
-                LocDownloadCloud="Записи/Склад2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад2",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад2",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Тамбур2",
-                LocDownloadCloud="Записи/Тамбур2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур2",
+                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур2",
+                FormatFiles="*.mp4",
+            },
+
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Выдача",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача",
+                LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача",
+                FormatFiles="*.mp4",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Выдача2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача2",
+                LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача2",
+                FormatFiles="*.mp4",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Склад",
+                LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Склад",
                 FormatFiles="*.mp4",
             },
         };
+
+        /// <summary>
+        /// Получение названия папки по дате
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        private static string MonthStats(DateTime dateTime)
+        {
+            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(dateTime.Month);
+            string data = $"{dateTime.Year}/{monthTypes}";
+            return data;
+        }
 
         public int summ = 0;
         /// <summary>
@@ -104,47 +146,36 @@ namespace ClientMonitor.Application.Handler
             {
                 if (Directory.Exists(listClouds.LocDownloadVideo))
                 {
-                    string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo, listClouds.FormatFiles);
-                    if (getFilesFromHall.Length != 0)
+                    try
                     {
-                        string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
-                        foreach (var file in files)
+                        DateTime dt = DateTime.Now;
+                        string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo + "/" + MonthStats(dt), listClouds.FormatFiles);
+                        if (getFilesFromHall.Length != 0)
                         {
-                            bool check;
-                            do
+                            string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
+                            foreach (var file in files)
                             {
                                 FileInfo fileInf = new FileInfo(file);
-                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud);
-                                try
-                                {
-                                    await _cloud.UploadFiles(uploadFile);
-                                    AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
-                                    fileInf.Delete();
-                                    summ++;
-                                    check = false;
-                                }
-                                catch
-                                {
-                                    check = true;
-                                    Thread.Sleep(2000);
-                                }
+                                var month = fileInf.CreationTime.Month;
+                                var year = fileInf.CreationTime.Year;
+                                MonthTypes day = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(month);
+                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud + "/" + MonthStats(fileInf.CreationTime));
+                                await _cloud.UploadFiles(uploadFile);
+                                AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
+                                fileInf.Delete();
+                                summ++;
                             }
-                            while (check);
                         }
-                        //await _telegramNotification.SendMessage(idChatTg, $"~~~Отправка файлов из папки: {listClouds.Name} завершена. Файлов отправлено: {getFilesFromHall.Length - 1} Время: {DateTime.Now}~~~");
+                        else
+                        {
+                            AddInBd($"!~~~ОЗОН/Wb_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
+                        }
                     }
-                    else
-                    {
-                        //await _telegramNotification.SendMessage(idChatTg, $"!~~~Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!");
-                        AddInBd($"!~~~ОЗОН_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
-                    }
+                    catch (Exception e) { AddInBd($"{e.Message} : {DateTime.Now}", 1); }
                 }
             }
-            if (summ != 0)
-            {
-                await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
-                summ = 0;
-            }
+            await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+            summ = 0;
         }
 
         /// <summary>

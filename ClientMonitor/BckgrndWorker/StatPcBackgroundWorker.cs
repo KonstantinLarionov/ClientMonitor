@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
+    /// <summary>
+    /// Фоновая задача Статистика ежесекундная ЦП РАМ ХТТП ПРОЦЕССЫ
+    /// </summary>
     public class StatPcBackgroundWorker : BackgroundService
     {
         readonly IPcMonitoringHandler _handle;

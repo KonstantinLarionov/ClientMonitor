@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
+    /// <summary>
+    /// Фоновая задача Запись видосов с камеры
+    /// </summary>
     public class VideoControlBackgroundWorker : BackgroundService
     {
         readonly IVideoControlHandler _handle;

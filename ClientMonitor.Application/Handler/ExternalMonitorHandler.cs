@@ -40,7 +40,7 @@ namespace ClientMonitor.Application.Handler
             var notifyer = NotificationFactory.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
             if (notifyer == null)
             {
-                AddInLog("Ошибка соединения!");
+                AddInLog("Ошибка соединения!",2);
             }
             string idChatServer = "-742266994";
             if (dbData.GetData("IdChatServer") != "")
@@ -63,11 +63,11 @@ namespace ClientMonitor.Application.Handler
                     if (!result.Success)
                     {
                         msgError = msgError + "!Ошибка проверки!\r\n" + result.Message + "\r\n";
-                        AddInLog("!Ошибка проверки! "+result.Message);
+                        AddInLog("!Ошибка проверки! "+result.Message,2);
                     }
                     else
                     {
-                        AddInLog("!Проверка успешна! "+result.Message);
+                        AddInLog("!Проверка успешна! "+result.Message,1);
                     }
                 }
                 if (msgError != "")
@@ -77,7 +77,7 @@ namespace ClientMonitor.Application.Handler
             }
             catch
             {
-                AddInLog("Ошибка выполнения метода проверки сайтов и серверов");
+                AddInLog("Ошибка выполнения метода проверки сайтов и серверов",2);
                 notifyer.SendMessage(idChatServer, "Ошибка выполнения проверки сайтов и серверов");
             }
         }
@@ -86,11 +86,20 @@ namespace ClientMonitor.Application.Handler
         /// Добавление логов в бд
         /// </summary>
         /// <param name="message">Значение лога</param>
-        private void AddInLog(string message)
+        private void AddInLog(string message, int codeMsg)
         {
+            LogTypes logTypes = LogTypes.Information;
+            if (codeMsg==2)
+            {
+                logTypes = LogTypes.Error;
+            }
+            if (codeMsg == 3)
+            {
+                logTypes = LogTypes.Warning;
+            }
             LogInfo log = new LogInfo
             {
-                TypeLog = LogTypes.Information,
+                TypeLog = logTypes,
                 Text = message,
                 DateTime = DateTime.Now
             };
