@@ -97,6 +97,8 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
                     _mediaPlayer.Play();
                 }
                 Check = false;
+
+                
             }
         }
 

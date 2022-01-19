@@ -31,20 +31,20 @@ namespace ClientMonitor.BckgrndWorker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var repository = _db;
-                if (repository.GetData("onOff") != "")
-                {
-                    isEnable = ParseBool(repository.GetData("onOff"));
-                }
-                if (isEnable == false)
-                {
+                //var repository = _db;
+                //if (repository.GetData("onOff") != "")
+                //{
+                //    isEnable = ParseBool(repository.GetData("onOff"));
+                //}
+                //if (isEnable == false)
+                //{
                     await _handle.Handle();
-                    Thread.Sleep(60000);
-                }
-                else
-                {
-                    Thread.Sleep(10000);
-                }
+                    //Thread.Sleep(60000);
+                //}
+                //else
+                //{
+                //    Thread.Sleep(10000);
+                //}
                 await Task.Delay(1000, stoppingToken);
             }
         }

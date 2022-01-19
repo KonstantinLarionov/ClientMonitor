@@ -174,8 +174,15 @@ namespace ClientMonitor.Application.Handler
                     catch (Exception e) { AddInBd($"{e.Message} : {DateTime.Now}", 1); }
                 }
             }
-            await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
-            summ = 0;
+            if (summ > 10)
+            {
+                await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+                summ = 0;
+            }
+            if (summ ==0)
+            {
+                Thread.Sleep(10000);
+            }
         }
 
         /// <summary>
@@ -203,8 +210,8 @@ namespace ClientMonitor.Application.Handler
         /// <returns></returns>
         private string[] GetWitoutLastElement(string[] mas, int leght)
         {
-            string[] files = new string[leght - 1];
-            for (int i = 0; i < leght - 1; i++)
+            string[] files = new string[leght - 2];
+            for (int i = 0; i < leght - 2; i++)
                 files[i] = mas[i];
             return files;
         }
