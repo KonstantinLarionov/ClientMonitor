@@ -137,10 +137,10 @@ namespace ClientMonitor.Application.Handler
         public async Task Handle()
         {
             string idChatTg = "-742266994";
-            if (_dbData.GetData("IdChatServer") != "")
-            {
-                idChatTg = _dbData.GetData("IdChatServer");
-            }
+            //if (_dbData.GetData("IdChatServer") != "")
+            //{
+            //    idChatTg = _dbData.GetData("IdChatServer");
+            //}
             //await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in _listClouds)
             {
@@ -176,8 +176,15 @@ namespace ClientMonitor.Application.Handler
             }
             if (summ > 10)
             {
-                await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
-                summ = 0;
+                try
+                {
+                    await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+                    summ = 0;
+                }
+                catch (Exception e)
+                {
+                    AddInBd($"Уведы в телеге : {e.Message} : {DateTime.Now}", 1);
+                }
             }
             if (summ ==0)
             {
