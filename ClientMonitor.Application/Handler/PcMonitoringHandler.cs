@@ -137,10 +137,10 @@ namespace ClientMonitor.Application.Handler
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
             string idChatMonitoring = "-693501604";
 
-            if (dbData.GetData("IdChatMonitoring") != "")
-            {
-                idChatMonitoring = dbData.GetData("IdChatMonitoring");
-            }
+            //if (dbData.GetData("IdChatMonitoring") != "")
+            //{
+            //    idChatMonitoring = dbData.GetData("IdChatMonitoring");
+            //}
 
             if (notifyer == null)
             {
@@ -150,13 +150,20 @@ namespace ClientMonitor.Application.Handler
             List<string> resRam;
             List<string> resHttp;
 
-            string test = $"Статистика CPU, RAM и HTTP на {DateTime.Now}";
+            string test = $"ПГ__Статистика CPU, RAM и HTTP на {DateTime.Now}";
             string proverkaOnNull = "";
 
             if (dbCpu.StatDb(DateTime.Now).Count != 0)
             {
                 resCpu = dbCpu.StatDb(DateTime.Now);
-                test = test + "\r\n" + $"Цп использовалось % Мин: {resCpu[0]} Max: {resCpu[1]} Сред: {resCpu[2]}";
+                if (resCpu[0] != "")
+                {
+                    test = test + "\r\n" + $"Цп использовалось % Мин: {resCpu[0]} Max: {resCpu[1]} Сред: {resCpu[2]}";
+                }
+                else
+                {
+                    proverkaOnNull = "Ошибка проверки CPU";
+                }
             }
             else { proverkaOnNull = "Ошибка проверки CPU"; }
 
@@ -176,8 +183,16 @@ namespace ClientMonitor.Application.Handler
             {
                 AddInLog($"Ошибка получения информации о ПК: {proverkaOnNull}");
             }
+            try
+            {
+                notifyer.SendMessage(idChatMonitoring, test);
+            }
+            catch (Exception e)
+            {
+                AddInLog($"Ошибка отправки уведомления в телеграм: {DateTime.Now}");
+            } 
+            
 
-            notifyer.SendMessage(idChatMonitoring, test);
         }
 
         /// <summary>

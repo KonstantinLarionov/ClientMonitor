@@ -1,9 +1,11 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
+
 using System;
 using System.IO;
 using System.Reflection;
-
+using System.Threading;
 
 namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
 {
@@ -30,8 +32,8 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         {
             get
             {
-                DateTime dt = DateTime.Now;
-                return Path.Combine(_videoInfo.PathDownload, $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.mp4");
+                DateTime dt = DateTime.Now;     
+                return Path.Combine(_videoInfo.PathDownload+"\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.mp4");
             }
         }
         public event EventHandler ConnectionErrorEvent;
@@ -41,7 +43,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         private readonly string _currentDirectory;
         private readonly DirectoryInfo _libDirectory;
         private readonly Vlc.DotNet.Core.VlcMediaPlayer _mediaPlayer;
-
+        private string VideoName;
         /// <summary>
         /// Настройка плеера, подгрузка библиотек
         /// </summary>
@@ -52,16 +54,51 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             _currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             _libDirectory = new DirectoryInfo(Path.Combine(_currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
             _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
-            _mediaPlayer.EncounteredError += (objec, message) =>
-                ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
-            _mediaPlayer.Log += GetLogError;
+            //_mediaPlayer.EncounteredError += (objec, message) =>
+            //    ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
+            _mediaPlayer.EncounteredError += Error;
+            _mediaPlayer.Log += Log;
         }
 
-        private void GetLogError(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
+        private void Error(object sender, Vlc.DotNet.Core.VlcMediaPlayerEncounteredErrorEventArgs e)
         {
-            if (e.Message.Contains("Failed to connect to RTSP server"))
+            ConnectionErrorEvent?.Invoke(sender, new ErrorEventArgs(new Exception(e.ToString())));
+            _mediaPlayer.Stop();
+        }
+
+        /// <summary>
+        /// Получение названия папки по дате
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        private static string MonthStats(DateTime dateTime)
+        {
+            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(dateTime.Month);
+            string data = $"{dateTime.Year}\\{monthTypes}";
+            return data;
+        }
+
+        private bool Check=false;
+        /// <summary>
+        /// проверка на размер файла через логи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Log(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
+        {
+            if (Check)
             {
-                InfoAboutLog?.Invoke(sender, new ErrorEventArgs(new Exception(e.Message)));
+                Thread.Sleep(30000);
+                FileInfo file = new FileInfo(VideoName);
+                long size = file.Length / 1024;
+                if (size < 50)
+                {
+                    _mediaPlayer.Stop();
+                    _mediaPlayer.Play();
+                }
+                Check = false;
+
+                
             }
         }
 
@@ -73,6 +110,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             if (SetInfo())
             {
                 _mediaPlayer.Play();
+                Check = true;
             }
         }
 
@@ -88,10 +126,11 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         }
 
         /// <summary>
-        /// Полчение настроек для запуска плеера
+        /// Получение настроек для запуска плеера
         /// </summary>
         private bool SetInfo()
         {
+            VideoName = NameFile;
             var mediaOptions = new[]
             {
                 ":sout=#file{dst=" + NameFile + "}",
@@ -100,5 +139,30 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             var result = _mediaPlayer.SetMedia(_videoInfo.PathStream, mediaOptions);
             return result.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.NothingSpecial;
         }
+
+        /// <summary>
+        /// Проверка размера видеофайла
+        /// </summary>
+        /// <returns></returns>
+        //private bool GetSizeVideo()
+        //{
+        //    bool checkVideo = true;
+        //    try
+        //    {
+        //        string newName = VideoName.Replace('\\', '/');
+        //        ShellObject shell = ShellObject.FromParsingName(newName);
+        //        IShellProperty prop = shell.Properties.System.Media.Duration;
+        //        // Duration will be formatted as 00:44:08
+        //        string duration = prop.FormatForDisplay(PropertyDescriptionFormatOptions.None);
+
+        //        //если размерм меньше 2кБ
+        //        if (duration == "00:00:01" || duration == "00:00:02")
+        //        {
+        //            checkVideo = false;
+        //        }
+        //    }
+        //    catch { }
+        //    return checkVideo;
+        //}
     }
 }

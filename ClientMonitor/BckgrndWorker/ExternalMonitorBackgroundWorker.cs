@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
+    /// <summary>
+    /// Фоновая задача Мониторинг сайтов и серверов
+    /// </summary>
     public class ExternalMonitorBackgroundWorker : BackgroundService
     {
         readonly IExternalMonitorHandler _handle;
@@ -27,23 +30,23 @@ namespace ClientMonitor.BckgrndWorker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var repository = _db;
-                if (repository.GetData("onOff") != "")
-                {
-                    isEnable = ParseBool(repository.GetData("onOff"));
-                }
+                //var repository = _db;
+                //if (repository.GetData("onOff") != "")
+                //{
+                //    isEnable = ParseBool(repository.GetData("onOff"));
+                //}
                 int time = 3600000;
-                if (repository.GetData("onOff") != "")
-                {
-                    isEnable = ParseBool(repository.GetData("onOff"));
-                }
+                //if (repository.GetData("onOff") != "")
+                //{
+                //    isEnable = ParseBool(repository.GetData("onOff"));
+                //}
                 if (isEnable == false)
                 {
                     //получение времени с БД
-                    if (repository.GetData("PeriodMonitoring") != "")
-                    {
-                        time = Convert.ToInt32(repository.GetData("PeriodMonitoring"));
-                    }
+                    //if (repository.GetData("PeriodMonitoring") != "")
+                    //{
+                    //    time = Convert.ToInt32(repository.GetData("PeriodMonitoring"));
+                    //}
                     _handle.Handle();
                     Thread.Sleep(time);
                 }

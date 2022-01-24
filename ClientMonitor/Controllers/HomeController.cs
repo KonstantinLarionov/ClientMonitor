@@ -48,7 +48,6 @@ namespace ClientMonitor.Controllers
 
 
         [HttpGet]
-
         public ActionResult Edit(string key)
         {
             if (key == null)

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.BckgrndWorker
 {
+    /// <summary>
+    /// Фоновая задача Общая стата по мониторингу
+    /// </summary>
     public class PcMonitoringMessageBackgroundWorker : BackgroundService
     {
         readonly IPcMonitoringHandler _handle;
@@ -29,26 +32,26 @@ namespace ClientMonitor.BckgrndWorker
             {
                 DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 30, 0);
                 DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
-                var repository = _db;
-                if (repository.GetData("onOff") != "")
-                {
-                    isEnable = ParseBool(repository.GetData("onOff"));
-                }
+                //var repository = _db;
+                //if (repository.GetData("onOff") != "")
+                //{
+                //    isEnable = ParseBool(repository.GetData("onOff"));
+                //}
                 if (isEnable == false)
                 {
                     //получение времени с БД
-                    if (repository.GetData("TimeFirst") != "" && repository.GetData("TimeSecond") != "")
-                    {
-                        date = Convert.ToDateTime(repository.GetData("TimeFirst"));
-                        date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
-                    }
+                    //if (repository.GetData("TimeFirst") != "" && repository.GetData("TimeSecond") != "")
+                    //{
+                    //    date = Convert.ToDateTime(repository.GetData("TimeFirst"));
+                    //    date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
+                    //}
                     DateTime dateTime = DateTime.Now;
-                    if (date.Hour == dateTime.Hour && date.Minute == dateTime.Minute)
+                    if (date.Hour == dateTime.Hour && date.Minute < dateTime.Minute)
                     {
                         _handle.HandleMessageMonitoringPc();
                         Thread.Sleep(32400000);
                     }
-                    else if (date1.Hour == dateTime.Hour && date1.Minute == dateTime.Minute)
+                    else if (date1.Hour == dateTime.Hour && date1.Minute < dateTime.Minute)
                     {
                         _handle.HandleMessageMonitoringPc();
                         Thread.Sleep(32400000);

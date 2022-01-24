@@ -71,6 +71,50 @@ namespace ClientMonitor
                     name: "default",
                     pattern: "{controller=Home}/{action=Home}/{id?}");
             });
+
+
+            #region [WorkBehind]
+            //app.UseCloudUploading(cloudHandler =>
+            //{
+            //    cloudHandler.Handle();
+            //});
+
+            //app.UseExternalMonitor(externalMonitorHandler =>
+            //{
+            //    externalMonitorHandler.Handle();
+            //});
+
+            //app.UsePcMonitoring(
+            //cpuHandler =>
+            //{
+            //    cpuHandler.HandleCpu();
+            //},
+            //ramHandler =>
+            //{
+            //    ramHandler.HandleRam();
+            //},
+            //procHandler =>
+            //{
+            //    procHandler.HandleProc();
+            //},
+            // httpHandler =>
+            // {
+            //     httpHandler.HandleHttp();
+            // }
+            //);
+
+            //app.UsePcMonitoringMessage(messageHandler =>
+            //{
+            //    messageHandler.HandleMessageMonitoringPc();
+            //}
+            //);
+
+            //app.UseVideoControl(videoControlHandler =>
+            //{
+            //    videoControlHandler.Handle();
+            //}
+            //);
+            #endregion
         }
     }
 }
