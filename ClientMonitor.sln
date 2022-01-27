@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A19DC8FE-8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.VideoControl", "ClientMonitor.Infrastructure.VideoControl\ClientMonitor.Infrastructure.VideoControl.csproj", "{A785DDC9-45DA-4407-A846-F306C060BEB8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.MonitoringDomen", "ClientMonitor.Infrastructure.MonitoringDomen\ClientMonitor.Infrastructure.MonitoringDomen.csproj", "{DA34022F-1FD1-4680-8E18-F668E7C89DC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,10 @@ Global
 		{A785DDC9-45DA-4407-A846-F306C060BEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A785DDC9-45DA-4407-A846-F306C060BEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A785DDC9-45DA-4407-A846-F306C060BEB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA34022F-1FD1-4680-8E18-F668E7C89DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA34022F-1FD1-4680-8E18-F668E7C89DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA34022F-1FD1-4680-8E18-F668E7C89DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA34022F-1FD1-4680-8E18-F668E7C89DC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

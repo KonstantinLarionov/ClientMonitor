@@ -2,6 +2,7 @@
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Handler;
 
+
 namespace ClientMonitor.Application
 {
     public static class ServiceCollection
@@ -12,7 +13,8 @@ namespace ClientMonitor.Application
             services.AddSingleton<ICludUploadHendler, CloudUploadHendler>();
             services.AddSingleton<IExternalMonitorHandler, ExternalMonitorHandler>();
             services.AddSingleton<IPcMonitoringHandler, PcMonitoringHandler>();
-            services.AddSingleton<IVideoControlHandler, VideoControlHandler>();          
+            services.AddSingleton<IVideoControlHandler, VideoControlHandler>();
+            services.AddSingleton<IRegruHandler, RegruHandler>();
         }
     }
 }
