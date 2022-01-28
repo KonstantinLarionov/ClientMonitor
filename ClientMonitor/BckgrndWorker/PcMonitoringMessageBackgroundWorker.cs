@@ -30,8 +30,8 @@ namespace ClientMonitor.BckgrndWorker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 30, 0);
-                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 30, 0);
+                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0);
                 //var repository = _db;
                 //if (repository.GetData("onOff") != "")
                 //{

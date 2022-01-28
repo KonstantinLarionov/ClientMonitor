@@ -44,54 +44,54 @@ namespace ClientMonitor.Application.Handler
         /// </summary>
         private readonly static List<ListDownloadCloud> _listClouds = new List<ListDownloadCloud>()
         {
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Зал",
-            //    LocDownloadVideo=@"C:\Test\Баг",
-            //    LocDownloadCloud="Тест/Склад",
-            //    FormatFiles="*.mp4",
-            //},
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Зал",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Зал",
-                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Зал",
-                FormatFiles="*.mp4",
+                LocDownloadVideo=@"C:\Test\Баг",
+                LocDownloadCloud="Тест/Склад",
+                FormatFiles="*.avi",
             },
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Зал",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Зал",
+            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Зал",
+            //    FormatFiles="*.avi",
+            //},
             //new ListDownloadCloud
             //{
             //    Name="Озон-ПГ-Тамбур",
             //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур",
             //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур",
-            //    FormatFiles="*.mp4",
+            //    FormatFiles="*.avi",
             //},
             //new ListDownloadCloud
             //{
             //    Name="Озон-ПГ-Выдача",
             //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Выдача",
             //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Выдача1",
-            //    FormatFiles="*.mp4",
+            //    FormatFiles="*.avi",
             //},
             //new ListDownloadCloud
             //{
             //    Name="Озон-ПГ-Склад",
             //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад",
             //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад1",
-            //    FormatFiles="*.mp4",
+            //    FormatFiles="*.avi",
             //},
             //new ListDownloadCloud
             //{
             //    Name="Озон-ПГ-Склад-2",
             //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад2",
             //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад2",
-            //    FormatFiles="*.mp4",
+            //    FormatFiles="*.avi",
             //},
             //new ListDownloadCloud
             //{
             //    Name="Озон-ПГ-Тамбур-2",
             //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур2",
             //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур2",
-            //    FormatFiles="*.mp4",
+            //    FormatFiles="*.avi",
             //},
 
             //new ListDownloadCloud
@@ -99,21 +99,21 @@ namespace ClientMonitor.Application.Handler
             //    Name="WB-ПГ-Выдача",
             //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача",
             //    LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача",
-            //    FormatFiles="*.mp4",
+            //    FormatFiles="*.avi",
             //},
             //new ListDownloadCloud
             //{
             //    Name="WB-ПГ-Выдача2",
             //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача2",
             //    LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача2",
-            //    FormatFiles="*.mp4",
+            //    FormatFiles="*.avi",
             //},
             //new ListDownloadCloud
             //{
             //    Name="WB-ПГ-Склад",
             //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Склад",
             //    LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Склад",
-            //    FormatFiles="*.mp4",
+            //    FormatFiles="*.avi",
             //},
         };
 
@@ -170,6 +170,7 @@ namespace ClientMonitor.Application.Handler
                         else
                         {
                             AddInBd($"!~~~ОЗОН/Wb_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
+                            Thread.Sleep(10000);
                         }
                     }
                     catch (Exception e) { AddInBd($"{e.Message} : {DateTime.Now}", 1); }

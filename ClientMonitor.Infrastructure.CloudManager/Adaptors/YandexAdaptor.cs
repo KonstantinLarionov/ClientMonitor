@@ -61,9 +61,10 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             //await conect.Commands.CreateDictionaryAsync(CloudOptions.Path + uploadedFilesInfo.FolderName);
             
             var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
-            using (var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
+            using ( var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
             {
-                await conect.Files.UploadAsync(link, fs);
+                //await conect.Files.UploadAsync(link, fs, CancellationToken.None);
+                await conect.Files.UploadAsync(link, fs, CancellationToken.None).ConfigureAwait(false);
             }
         }
 
