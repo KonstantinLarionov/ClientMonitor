@@ -37,14 +37,14 @@ namespace ClientMonitor
             services.AddInfrastructureMonitor();
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
-            //services.AddInfrastructureMonitoringDomens();
+            services.AddInfrastructureMonitoringDomens();
 
-            services.AddHostedService<VideoControlBackgroundWorker>();
-            services.AddHostedService<CloudUploadingBackgroundWorker>();
+            //services.AddHostedService<VideoControlBackgroundWorker>();
+            //services.AddHostedService<CloudUploadingBackgroundWorker>();
             //services.AddHostedService<StatPcBackgroundWorker>();
             //services.AddHostedService<ExternalMonitorBackgroundWorker>();
             //services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
-            //services.AddHostedService<DomenMonitorBackgroundWorker>();
+            services.AddHostedService<DomenMonitorBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {

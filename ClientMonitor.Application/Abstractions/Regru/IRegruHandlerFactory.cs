@@ -1,9 +1,6 @@
-﻿using ClientMonitor.Application.Abstractions.Regru;
-using ClientMonitor.Application.Domanes.Enums;
-using ClientMonitor.Application.Domanes.Objects;
-using ClientMonitor.Application.Domanes.Objects.Regru;
-
-using System.Collections.Generic;
+﻿using ClientMonitor.Application.Domanes.Response.Regru;
+using ClientMonitor.Application.Handler.JsonHandlers;
+using JetBrains.Annotations;
 
 namespace ClientMonitor.Application.Abstractions
 {
@@ -12,18 +9,7 @@ namespace ClientMonitor.Application.Abstractions
     /// </summary>
     public interface IRegruHandlerFactory
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="infos"></param>
-        /// <param name="type"></param>
-        public bool CreateAdaptors(List<UserRegruData> infos, DomenTypes type);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public IEnumerable<IRegru> GetAdaptors(DomenTypes type);
+        [NotNull]
+        ISingleMessageHandler<GetInfoResponse> CreateGetInfoResponse();
     }
 }
