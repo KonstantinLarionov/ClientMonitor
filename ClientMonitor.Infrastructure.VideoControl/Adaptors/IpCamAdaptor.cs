@@ -32,8 +32,15 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         {
             get
             {
-                DateTime dt = DateTime.Now;     
-                return Path.Combine(_videoInfo.PathDownload+"\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.mp4");
+                DateTime dt = DateTime.Now;
+
+                DirectoryInfo dirInfo = new DirectoryInfo(_videoInfo.PathDownload + "\\" + MonthStats(dt));
+                if (!dirInfo.Exists)
+                {
+                    dirInfo.Create();
+                }
+
+                return Path.Combine(_videoInfo.PathDownload+"\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}_{dt.Month}_{dt.Day}_{dt.Hour}_{dt.Minute}_{dt.Second}.avi");
             }
         }
         public event EventHandler ConnectionErrorEvent;
@@ -74,7 +81,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         private static string MonthStats(DateTime dateTime)
         {
             MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(dateTime.Month);
-            string data = $"{dateTime.Year}\\{monthTypes}";
+            string data = $"{dateTime.Year}\\{monthTypes}\\{dateTime.Day}";
             return data;
         }
 

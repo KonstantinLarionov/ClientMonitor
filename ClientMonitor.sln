@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor", "ClientMonitor\ClientMonitor.csproj", "{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}"
 	ProjectSection(ProjectDependencies) = postProject
+		{DA34022F-1FD1-4680-8E18-F668E7C89DC8} = {DA34022F-1FD1-4680-8E18-F668E7C89DC8}
 		{02FCA541-C83D-4853-BBB6-A6F94573DF90} = {02FCA541-C83D-4853-BBB6-A6F94573DF90}
 	EndProjectSection
 EndProject

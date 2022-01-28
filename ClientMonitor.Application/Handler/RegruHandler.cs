@@ -2,9 +2,7 @@
 using ClientMonitor.Application.Abstractions.Regru;
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
-using ClientMonitor.Application.Domanes.Request;
-using ClientMonitor.Application.Domanes.Request.Regru;
-using RestSharp;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,9 +36,9 @@ namespace ClientMonitor.Application.Handler
             }
             var notifyer = _notificationFactory.GetNotification(NotificationTypes.Telegram);
 
-            foreach (var list in _listUser)
+            foreach (var list in _listDomen)
             {
-                list.
+                list.ReceiveInfoMonitoring();
             }
 
             throw new NotImplementedException();

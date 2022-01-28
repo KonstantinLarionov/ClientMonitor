@@ -58,63 +58,63 @@ namespace ClientMonitor.Application.Handler
                 LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Зал",
                 FormatFiles="*.mp4",
             },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Тамбур",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур",
-                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур",
-                FormatFiles="*.mp4",
-            },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Выдача",
-                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Выдача1",
-                FormatFiles="*.mp4",
-            },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад",
-                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад1",
-                FormatFiles="*.mp4",
-            },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Склад-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад2",
-                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад2",
-                FormatFiles="*.mp4",
-            },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Тамбур-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур2",
-                LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур2",
-                FormatFiles="*.mp4",
-            },
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Тамбур",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур",
+            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур",
+            //    FormatFiles="*.mp4",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Выдача",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Выдача",
+            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Выдача1",
+            //    FormatFiles="*.mp4",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Склад",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад",
+            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад1",
+            //    FormatFiles="*.mp4",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Склад-2",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад2",
+            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад2",
+            //    FormatFiles="*.mp4",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Тамбур-2",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур2",
+            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур2",
+            //    FormatFiles="*.mp4",
+            //},
 
-            new ListDownloadCloud
-            {
-                Name="WB-ПГ-Выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача",
-                LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача",
-                FormatFiles="*.mp4",
-            },
-            new ListDownloadCloud
-            {
-                Name="WB-ПГ-Выдача2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача2",
-                LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача2",
-                FormatFiles="*.mp4",
-            },
-            new ListDownloadCloud
-            {
-                Name="WB-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Склад",
-                LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Склад",
-                FormatFiles="*.mp4",
-            },
+            //new ListDownloadCloud
+            //{
+            //    Name="WB-ПГ-Выдача",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача",
+            //    LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача",
+            //    FormatFiles="*.mp4",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="WB-ПГ-Выдача2",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача2",
+            //    LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача2",
+            //    FormatFiles="*.mp4",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="WB-ПГ-Склад",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Склад",
+            //    LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Склад",
+            //    FormatFiles="*.mp4",
+            //},
         };
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace ClientMonitor.Application.Handler
         private static string MonthStats(DateTime dateTime)
         {
             MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(dateTime.Month);
-            string data = $"{dateTime.Year}/{monthTypes}";
+            string data = $"{dateTime.Year}/{monthTypes}/{dateTime.Day}";
             return data;
         }
 
@@ -149,7 +149,8 @@ namespace ClientMonitor.Application.Handler
                     try
                     {
                         DateTime dt = DateTime.Now;
-                        string[] getFilesFromHall = Directory.GetFiles(listClouds.LocDownloadVideo + "/" + MonthStats(dt), listClouds.FormatFiles);
+                        string path = listClouds.LocDownloadVideo + "\\" + MonthStats(dt);
+                        string[] getFilesFromHall = Directory.GetFiles(path, listClouds.FormatFiles);
                         if (getFilesFromHall.Length != 0)
                         {
                             string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);

@@ -1,10 +1,6 @@
 using ClientMonitor.Application;
-using ClientMonitor.Infrastructure.CloudManager;
 using ClientMonitor.Infrastructure.Notifications;
-using ClientMonitor.Infrastructure.Monitor;
 using ClientMonitor.Infrastructure.Database;
-using ClientMonitor.Infrastructure.VideoControl;
-using ClientMonitor.BckgrndWorker;
 using ClientMonitor.Infrastructure.MonitoringDomen;
 
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ClientMonitor.BckgrndWorker;
+using ClientMonitor.Infrastructure.CloudManager;
+using ClientMonitor.Infrastructure.Monitor;
+using ClientMonitor.Infrastructure.VideoControl;
 
 namespace ClientMonitor
 {
@@ -37,13 +37,14 @@ namespace ClientMonitor
             services.AddInfrastructureMonitor();
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
-            services.AddInfrastructureMonitoringDomens();
+            //services.AddInfrastructureMonitoringDomens();
 
             services.AddHostedService<VideoControlBackgroundWorker>();
             services.AddHostedService<CloudUploadingBackgroundWorker>();
-            services.AddHostedService<StatPcBackgroundWorker>();
-            services.AddHostedService<ExternalMonitorBackgroundWorker>();
-            services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
+            //services.AddHostedService<StatPcBackgroundWorker>();
+            //services.AddHostedService<ExternalMonitorBackgroundWorker>();
+            //services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
+            //services.AddHostedService<DomenMonitorBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {
