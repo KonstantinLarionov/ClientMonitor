@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Handler;
-
+using ClientMonitor.Application.Abstractions.Metrika;
 
 namespace ClientMonitor.Application
 {
@@ -15,6 +15,7 @@ namespace ClientMonitor.Application
             services.AddSingleton<IPcMonitoringHandler, PcMonitoringHandler>();
             services.AddSingleton<IVideoControlHandler, VideoControlHandler>();
             services.AddSingleton<IRegruHandler, RegruHandler>();
+            //services.AddSingleton<IMetrikaHandler, MetrikaHandler>();
         }
     }
 }

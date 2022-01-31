@@ -1,48 +1,49 @@
 ﻿using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Application.Domanes.Enums;
-using ClientMonitor.Application.Domanes.Objects;
+using ClientMonitor.Application.Abstractions.Metrika;
 using ClientMonitor.Application.Domanes.Request;
-using ClientMonitor.Application.Domanes.Request.Regru;
-using ClientMonitor.Application.Domanes.Response.Regru;
 using ClientMonitor.Application.Handler.JsonHandlers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
 {
-    /// <summary>
-    /// Бизнес-логика?
-    /// </summary>
-    public class RegruHandler : IRegruHandler
+    public class MetrikaHandler : IMetrikaHandler
     {
-        private readonly ISingleMessageHandler<GetInfoResponse> _getGetInfoResponse;
+        //private readonly ISingleMessageHandler<GetInfoResponse> _getGetInfoResponse;
 
-        IRegruHandlerFactory _regruFactory;
+        IMetrikaFactory _regruFactory;
         INotificationFactory _notificationFactory;
 
-        public RegruHandler(IRegruHandlerFactory iRegruFactory, INotificationFactory notificationFactory, IRegruHandlerFactory factory)
+        public MetrikaHandler(IMetrikaFactory metrikaFactory, INotificationFactory notificationFactory)
         {
-            _getGetInfoResponse = factory.CreateGetInfoResponse();
-            _regruFactory = iRegruFactory;
+            //_getGetInfoResponse = metrikaFactory.CreateGetInfoResponse();
+            _regruFactory = metrikaFactory;
             _notificationFactory = notificationFactory;
         }
 
-        public GetInfoResponse HandleGetInfoResponse(string message) => _getGetInfoResponse.HandleSingle(message);
-        
-        private static RestClient client = new RestClient("https://api.reg.ru/api/regru2/");
+        //public GetInfoResponse HandleGetInfoResponse(string message) => _getGetInfoResponse.HandleSingle(message);
+
+        private static RestClient client = new RestClient("https://rest-api.display.yandex.net/rest/v0.2/counters");
 
 
         public void Handle()
         {
-            foreach (var list in _listUser)
-            {
-                var k = _getGetInfoResponse.HandleSingle(SendRequest(new GetInfoRequest(list.Username, list.Password,list.Servtype)));
-                var l = 10;
-            }
-        }
+            var req = new RestRequest(".json?line_id=9F53A0C7-A68C-461A-8D41-87112288DBBB&include=goals", Method.GET);
+            req.AddHeader("Authorization", "OAuth AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF_o");
+            var res = client.Execute(req);
+            var fg = res;
 
+            //foreach (var list in _listUser)
+            //{
+            //    var k = _getGetInfoResponse.HandleSingle(SendRequest(new GetInfoRequest(list.Username, list.Password, list.Servtype)));
+            //    var l = 10;
+            //}
+        }
+        /*
         private static List<UserRegruData> _listUser = new List<UserRegruData>()
         {
             new UserRegruData
@@ -93,7 +94,7 @@ namespace ClientMonitor.Application.Handler
                 Password="214614ntk",
                 Servtype="srv_hosting_plesk",
             },
-        };
+        };*/
 
         private static string SendRequest(CommonRequest request)
         {
