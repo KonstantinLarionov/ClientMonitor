@@ -58,14 +58,16 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
             //var rootFolderData = await GetFilesAndFoldersAsync();
 
             var conect = new DiskHttpApi(_token);
+            ResourceRequest req = new ResourceRequest();
+            req.Path = uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name;
+            var k = await conect.MetaInfo.GetInfoAsync(req);
             //await conect.Commands.CreateDictionaryAsync(CloudOptions.Path + uploadedFilesInfo.FolderName);
-            
-            var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
-            using ( var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
-            {
-                //await conect.Files.UploadAsync(link, fs, CancellationToken.None);
-                await conect.Files.UploadAsync(link, fs, CancellationToken.None).ConfigureAwait(false);
-            }
+            //var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
+            //using ( var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
+            //{
+            //    //await conect.Files.UploadAsync(link, fs, CancellationToken.None);
+            //    await conect.Files.UploadAsync(link, fs, CancellationToken.None).ConfigureAwait(false);
+            //}
         }
 
         /// <summary>

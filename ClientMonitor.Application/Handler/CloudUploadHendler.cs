@@ -44,77 +44,77 @@ namespace ClientMonitor.Application.Handler
         /// </summary>
         private readonly static List<ListDownloadCloud> _listClouds = new List<ListDownloadCloud>()
         {
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Зал",
-                LocDownloadVideo=@"C:\Test\Баг",
-                LocDownloadCloud="Тест/Склад",
-                FormatFiles="*.avi",
-            },
             //new ListDownloadCloud
             //{
             //    Name="Озон-ПГ-Зал",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Зал",
-            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Зал",
+            //    LocDownloadVideo=@"C:\Test\Баг",
+            //    LocDownloadCloud="Тест/Склад",
             //    FormatFiles="*.avi",
             //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Тамбур",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур",
-            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Выдача",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Выдача",
-            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Выдача1",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Склад",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад",
-            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад1",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Склад-2",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад2",
-            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад2",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Тамбур-2",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур2",
-            //    LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Тамбур2",
-            //    FormatFiles="*.avi",
-            //},
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Зал",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Зал",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Зал",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Тамбур",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Выдача",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Выдача",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Выдача1",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад1",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Склад-2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад2",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Тамбур-2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур2",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур2",
+                FormatFiles="*.avi",
+            },
 
-            //new ListDownloadCloud
-            //{
-            //    Name="WB-ПГ-Выдача",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача",
-            //    LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="WB-ПГ-Выдача2",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача2",
-            //    LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Выдача2",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="WB-ПГ-Склад",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Склад",
-            //    LocDownloadCloud="ЗаписиКамерыПГ/Wildberries/Склад",
-            //    FormatFiles="*.avi",
-            //},
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Выдача",
+                LocDownloadVideo=@"Компьютер DESKTOP-UCI85FS/C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Выдача2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача2",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Склад",
+                FormatFiles="*.avi",
+            },
         };
 
         /// <summary>
@@ -161,10 +161,18 @@ namespace ClientMonitor.Application.Handler
                                 var year = fileInf.CreationTime.Year;
                                 MonthTypes day = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(month);
                                 var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud + "/" + MonthStats(fileInf.CreationTime));
-                                await _cloud.UploadFiles(uploadFile);
-                                AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
-                                fileInf.Delete();
-                                summ++;
+                                try
+                                {
+                                    await _cloud.UploadFiles(uploadFile);
+                                    AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
+                                    fileInf.Delete();
+                                    summ++;
+                                }
+                                catch (Exception e)
+                                {
+                                    AddInBd($"Какая-то фигня с проверкой файла Дата: {DateTime.Now}", 2);
+                                    Thread.Sleep(60000);
+                                }
                             }
                         }
                         else
@@ -173,7 +181,7 @@ namespace ClientMonitor.Application.Handler
                             Thread.Sleep(10000);
                         }
                     }
-                    catch (Exception e) { AddInBd($"{e.Message} : {DateTime.Now}", 1); }
+                    catch (Exception e) { AddInBd($"Какая-то фигня в целом с хендлером проверки файлов {e.Message} : {DateTime.Now}", 1); }
                 }
             }
             if (summ > 10)

@@ -40,13 +40,13 @@ namespace ClientMonitor
             services.AddInfrastructureMonitoringDomens();
             //services.AddInfrastructureMetrika();
 
-            //services.AddHostedService<VideoControlBackgroundWorker>();
-            //services.AddHostedService<CloudUploadingBackgroundWorker>();
-            //services.AddHostedService<StatPcBackgroundWorker>();
-            //services.AddHostedService<ExternalMonitorBackgroundWorker>();
-            //services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
-            //services.AddHostedService<DomenMonitorBackgroundWorker>();
-            services.AddHostedService<MetrikaBackgroundWorker>();
+            services.AddHostedService<VideoControlBackgroundWorker>();
+            services.AddHostedService<CloudUploadingBackgroundWorker>();
+            services.AddHostedService<StatPcBackgroundWorker>();
+            services.AddHostedService<ExternalMonitorBackgroundWorker>();
+            services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
+            services.AddHostedService<DomenMonitorBackgroundWorker>();
+            //services.AddHostedService<MetrikaBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {
