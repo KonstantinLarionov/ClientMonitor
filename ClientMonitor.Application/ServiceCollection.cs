@@ -15,7 +15,7 @@ namespace ClientMonitor.Application
             services.AddSingleton<IPcMonitoringHandler, PcMonitoringHandler>();
             services.AddSingleton<IVideoControlHandler, VideoControlHandler>();
             services.AddSingleton<IRegruHandler, RegruHandler>();
-            //services.AddSingleton<IMetrikaHandler, MetrikaHandler>();
+            services.AddSingleton<IMetrikaHandler, MetrikaHandler>();
         }
     }
 }

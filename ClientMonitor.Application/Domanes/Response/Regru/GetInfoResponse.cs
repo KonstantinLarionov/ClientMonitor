@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace ClientMonitor.Application.Domanes.Response.Regru
 {
+    /// <summary>
+    /// респонс регру
+    /// </summary>
     public class GetInfoResponse
     {
         [JsonConstructor]

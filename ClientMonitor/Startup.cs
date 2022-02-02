@@ -13,6 +13,7 @@ using ClientMonitor.BckgrndWorker;
 using ClientMonitor.Infrastructure.CloudManager;
 using ClientMonitor.Infrastructure.Monitor;
 using ClientMonitor.Infrastructure.VideoControl;
+using ClientMonitor.Infrastructure.Metrika;
 
 namespace ClientMonitor
 {
@@ -38,7 +39,7 @@ namespace ClientMonitor
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
             services.AddInfrastructureMonitoringDomens();
-            //services.AddInfrastructureMetrika();
+            services.AddInfrastructureMetrika();
 
             services.AddHostedService<VideoControlBackgroundWorker>();
             services.AddHostedService<CloudUploadingBackgroundWorker>();
@@ -46,7 +47,7 @@ namespace ClientMonitor
             services.AddHostedService<ExternalMonitorBackgroundWorker>();
             services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
             services.AddHostedService<DomenMonitorBackgroundWorker>();
-            //services.AddHostedService<MetrikaBackgroundWorker>();
+            services.AddHostedService<MetrikaBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {
