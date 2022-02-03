@@ -38,8 +38,9 @@ namespace ClientMonitor.BckgrndWorker
                 //}
                 //if (isEnable == false)
                 //{
-                    await _handle.Handle();
-                    //Thread.Sleep(60000);
+                await _handle.Handle();
+                Thread.Sleep(32400000);
+                //Thread.Sleep(60000);
                 //}
                 //else
                 //{

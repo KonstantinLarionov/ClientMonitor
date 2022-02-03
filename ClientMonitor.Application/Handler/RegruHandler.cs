@@ -43,18 +43,21 @@ namespace ClientMonitor.Application.Handler
             {
                 var response = _getGetInfoResponse.HandleSingle(SendRequest(new GetInfoRequest(list.Username, list.Password,list.Servtype)));
                 var dateTime = response.Answer.Services[0].ExpirationDate.ToShortDateString();
+                string type="";
                 if (list.Servtype== "domain")
                 {
                     domains = domains+ "\n" + list.Username +" истечёт : "+ dateTime;
+                    type = "Домен: ";
                 }
                 if (list.Servtype == "srv_hosting_plesk")
                 {
                     hosting = hosting + "\n" + list.Username + " истечёт : " + dateTime;
+                    type = "Хостинг: ";
                 }
                 TimeSpan dt = response.Answer.Services[0].ExpirationDate - DateTime.Now;
                 if(dt.Days<=7)
                 {
-                    notifyer.SendMessage("-693501604", list.Username + " истечёт : " + dateTime);
+                    notifyer.SendMessage("-693501604", type+list.Username + " истечёт через " + dt.Days +" дней!!!");
                 }
             }
             string message = domains + "\n" + hosting;

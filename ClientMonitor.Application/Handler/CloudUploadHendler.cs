@@ -44,77 +44,77 @@ namespace ClientMonitor.Application.Handler
         /// </summary>
         private readonly static List<ListDownloadCloud> _listClouds = new List<ListDownloadCloud>()
         {
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Зал",
-            //    LocDownloadVideo=@"C:\Test\Баг",
-            //    LocDownloadCloud="Тест/Склад",
-            //    FormatFiles="*.avi",
-            //},
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Зал",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Зал",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Зал",
+                LocDownloadVideo=@"C:\Test\Баг",
+                LocDownloadCloud="Тест/Склад",
                 FormatFiles="*.avi",
             },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Тамбур",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур",
-                FormatFiles="*.avi",
-            },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Выдача",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Выдача1",
-                FormatFiles="*.avi",
-            },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад1",
-                FormatFiles="*.avi",
-            },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Склад-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад2",
-                FormatFiles="*.avi",
-            },
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Тамбур-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур2",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур2",
-                FormatFiles="*.avi",
-            },
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Зал",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Зал",
+            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Зал",
+            //    FormatFiles="*.avi",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Тамбур",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур",
+            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур",
+            //    FormatFiles="*.avi",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Выдача",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Выдача",
+            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Выдача1",
+            //    FormatFiles="*.avi",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Склад",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад",
+            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад1",
+            //    FormatFiles="*.avi",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Склад-2",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2",
+            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад2",
+            //    FormatFiles="*.avi",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Тамбур-2",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур2",
+            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур2",
+            //    FormatFiles="*.avi",
+            //},
 
-            new ListDownloadCloud
-            {
-                Name="WB-ПГ-Выдача",
-                LocDownloadVideo=@"Компьютер DESKTOP-UCI85FS/C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача",
-                FormatFiles="*.avi",
-            },
-            new ListDownloadCloud
-            {
-                Name="WB-ПГ-Выдача2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача2",
-                FormatFiles="*.avi",
-            },
-            new ListDownloadCloud
-            {
-                Name="WB-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Склад",
-                FormatFiles="*.avi",
-            },
+            //new ListDownloadCloud
+            //{
+            //    Name="WB-ПГ-Выдача",
+            //    LocDownloadVideo=@"Компьютер DESKTOP-UCI85FS/C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
+            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача",
+            //    FormatFiles="*.avi",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="WB-ПГ-Выдача2",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2",
+            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача2",
+            //    FormatFiles="*.avi",
+            //},
+            //new ListDownloadCloud
+            //{
+            //    Name="WB-ПГ-Склад",
+            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
+            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Склад",
+            //    FormatFiles="*.avi",
+            //},
         };
 
         /// <summary>
@@ -124,8 +124,9 @@ namespace ClientMonitor.Application.Handler
         /// <returns></returns>
         private static string MonthStats(DateTime dateTime)
         {
-            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(dateTime.Month);
-            string data = $"{dateTime.Year}/{monthTypes}/{dateTime.Day}";
+            DateTime twoday = dateTime.AddDays(-2);
+            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(twoday.Month);
+            string data = $"{twoday.Year}/{monthTypes}/{twoday.Day}";
             return data;
         }
 
@@ -150,13 +151,30 @@ namespace ClientMonitor.Application.Handler
                     {
                         DateTime dt = DateTime.Now;
                         string path = listClouds.LocDownloadVideo + "\\" + MonthStats(dt);
-                        string[] getFilesFromHall = Directory.GetFiles(path, listClouds.FormatFiles);
-                        if (getFilesFromHall.Length != 0)
+
+                        if (Directory.Exists(path))
                         {
-                            string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
-                            foreach (var file in files)
+
+                            string[] getFilesFromHall = Directory.GetFiles(path, listClouds.FormatFiles);
+
+                            FileSystemInfo[] fileSystemInfo = new DirectoryInfo(path).GetFileSystemInfos();
+                            DateTime dt1 = new DateTime(1990, 1, 1);
+                            string fileName = "";
+                            //поиск последнего файла
+                            foreach (FileSystemInfo fileSI in fileSystemInfo)
                             {
-                                FileInfo fileInf = new FileInfo(file);
+                                if (fileSI.Extension == ".avi")//добавить нужные форматы
+                                {
+                                    if (dt1 < Convert.ToDateTime(fileSI.CreationTime))
+                                    {
+                                        dt1 = Convert.ToDateTime(fileSI.CreationTime);
+                                        fileName = fileSI.Name;
+                                    }
+                                }
+                            }
+                            if (getFilesFromHall.Length != 0)
+                            {
+                                FileInfo fileInf = new FileInfo(path + "\\" + fileName);
                                 var month = fileInf.CreationTime.Month;
                                 var year = fileInf.CreationTime.Year;
                                 MonthTypes day = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(month);
@@ -164,8 +182,11 @@ namespace ClientMonitor.Application.Handler
                                 try
                                 {
                                     await _cloud.UploadFiles(uploadFile);
-                                    AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
-                                    fileInf.Delete();
+                                    
+                                    DirectoryInfo dirInfo = new DirectoryInfo(path);
+                                    dirInfo.Delete(true);
+                                    AddInBd($"Директория: {path} удалена: {DateTime.Now}", 2);
+                                    //fileInf.Delete();
                                     summ++;
                                 }
                                 catch (Exception e)
@@ -175,6 +196,30 @@ namespace ClientMonitor.Application.Handler
                                 }
                             }
                         }
+                        //if (getFilesFromHall.Length != 0)
+                        //{
+                        //    string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
+                        //    foreach (var file in files)
+                        //    {
+                        //        FileInfo fileInf = new FileInfo(file);
+                        //        var month = fileInf.CreationTime.Month;
+                        //        var year = fileInf.CreationTime.Year;
+                        //        MonthTypes day = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(month);
+                        //        var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud + "/" + MonthStats(fileInf.CreationTime));
+                        //        try
+                        //        {
+                        //            await _cloud.UploadFiles(uploadFile);
+                        //            AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
+                        //            fileInf.Delete();
+                        //            summ++;
+                        //        }
+                        //        catch (Exception e)
+                        //        {
+                        //            AddInBd($"Какая-то фигня с проверкой файла Дата: {DateTime.Now}", 2);
+                        //            Thread.Sleep(60000);
+                        //        }
+                        //    }
+                        //}
                         else
                         {
                             AddInBd($"!~~~ОЗОН/Wb_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
@@ -184,22 +229,22 @@ namespace ClientMonitor.Application.Handler
                     catch (Exception e) { AddInBd($"Какая-то фигня в целом с хендлером проверки файлов {e.Message} : {DateTime.Now}", 1); }
                 }
             }
-            if (summ > 10)
-            {
-                try
-                {
-                    await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
-                    summ = 0;
-                }
-                catch (Exception e)
-                {
-                    AddInBd($"Уведы в телеге : {e.Message} : {DateTime.Now}", 1);
-                }
-            }
-            if (summ ==0)
-            {
-                Thread.Sleep(10000);
-            }
+            //if (summ > 10)
+            //{
+            //    try
+            //    {
+            //        await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
+            //        summ = 0;
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        AddInBd($"Уведы в телеге : {e.Message} : {DateTime.Now}", 1);
+            //    }
+            //}
+            //if (summ == 0)
+            //{
+            //    Thread.Sleep(10000);
+            //}
         }
 
         /// <summary>

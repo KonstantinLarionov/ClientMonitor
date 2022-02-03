@@ -52,29 +52,8 @@ namespace ClientMonitor.Application.Handler
         {
             new InfoCounterData
             {
-                Name="Адвокаты: azkon.ru",
-                Ids=62766334,
-                Date1=DateTime.Now,
-                Date2=DateTime.Now,
-            },
-            new InfoCounterData
-            {
                 Name="АФК: afcstudio.ru",
                 Ids=62766436,
-                Date1=DateTime.Now,
-                Date2=DateTime.Now,
-            },
-            new InfoCounterData
-            {
-                Name="Бухгалтерия: buchrussia.ru",
-                Ids=62766478,
-                Date1=DateTime.Now,
-                Date2=DateTime.Now,
-            },
-            new InfoCounterData
-            {
-                Name="ВиртЭкс: virtexchange.ru",
-                Ids=62766466,
                 Date1=DateTime.Now,
                 Date2=DateTime.Now,
             },
@@ -87,22 +66,8 @@ namespace ClientMonitor.Application.Handler
             },
             new InfoCounterData
             {
-                Name="ЗПК: zpk.su",
-                Ids=62766409,
-                Date1=DateTime.Now,
-                Date2=DateTime.Now,
-            },
-            new InfoCounterData
-            {
                 Name="Кот: goldencat.su",
                 Ids=62766403,
-                Date1=DateTime.Now,
-                Date2=DateTime.Now,
-            },
-            new InfoCounterData
-            {
-                Name="Обменник: cleancash.net",
-                Ids=62766421,
                 Date1=DateTime.Now,
                 Date2=DateTime.Now,
             },
@@ -115,25 +80,11 @@ namespace ClientMonitor.Application.Handler
             },
             new InfoCounterData
             {
-                Name="Ортопедия: badik56.ru",
-                Ids=62766454,
-                Date1=DateTime.Now,
-                Date2=DateTime.Now,
-            },
-            new InfoCounterData
-            {
                 Name="Памятники: pamiatnikigm.ru",
                 Ids=62766295,
                 Date1=DateTime.Now,
                 Date2=DateTime.Now,
-            },
-            new InfoCounterData
-            {
-                Name="Руслан: korall56.ru",
-                Ids=62766310,
-                Date1=DateTime.Now,
-                Date2=DateTime.Now,
-            },
+            }
         };
 
         private static string SendRequest(CommonRequest request)

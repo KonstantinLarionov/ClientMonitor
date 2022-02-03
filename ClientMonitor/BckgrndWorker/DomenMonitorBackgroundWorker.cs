@@ -25,7 +25,7 @@ namespace ClientMonitor.BckgrndWorker
             while (!stoppingToken.IsCancellationRequested)
             {
                 DateTime dt = DateTime.Now;
-                if (dt.Hour > 12 && dt.Hour < 13)
+                if (dt.Hour >= 10 && dt.Hour<=15)
                 {
                     _handle.Handle();
                     Thread.Sleep(32400000);
