@@ -1,4 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
+using ClientMonitor.Application.Abstractions.Metrika;
 using ClientMonitor.Application.Domanes;
 
 using Microsoft.AspNetCore.Builder;
@@ -25,25 +26,13 @@ namespace ClientMonitor.Application
                 var service = application.ApplicationServices.GetRequiredService<ICludUploadHendler>();
                 while (true)
                 {
-                    var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                    if (repository.GetData("onOff") != "")
-                    {
-                        isEnable = ParseBool(repository.GetData("onOff"));
-                    }
-                    if (isEnable == false)
-                    {
-                        handle.Invoke(service);
-                        Thread.Sleep(3600000);
-                    }
-                    else
-                    {
-                        Thread.Sleep(60000);
-                    }
+                    handle.Invoke(service);
+                    Thread.Sleep(3600000);
                 }
             });
             thread.Start();
         }
-        
+
         /// <summary>
         /// Ежечасовая проверка сайтов и серверов
         /// </summary>
@@ -56,25 +45,10 @@ namespace ClientMonitor.Application
                 var service = application.ApplicationServices.GetRequiredService<IExternalMonitorHandler>();
                 while (true)
                 {
-                    var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                    bool isEnable = false;
                     int time = 3600000;
-                    if (repository.GetData("onOff") != "")
-                    {
-                        isEnable = ParseBool(repository.GetData("onOff"));
-                        Thread.Sleep(10000);
-                    }
-                    if (isEnable == false)
-                    {
-                        //получение времени с БД
-                        if (repository.GetData("PeriodMonitoring") != "")
-                        {
-                            time = Convert.ToInt32(repository.GetData("PeriodMonitoring"));
-                        }
-                        handle.Invoke(service);
-                        Thread.Sleep(time);
-                    }
-                    else { Thread.Sleep(1000); }
+                    handle.Invoke(service);
+                    Thread.Sleep(time);
+
                 }
             });
             thread.Start();
@@ -94,13 +68,8 @@ namespace ClientMonitor.Application
                     var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
                     while (true)
                     {
-                        var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                        if (isEnable == false)
-                        {
-                            i.Invoke(service);
-                            Thread.Sleep(1000);
-                        }
-                        else { Thread.Sleep(1000); }
+                        i.Invoke(service);
+                        Thread.Sleep(1000);
                     }
                 });
                 thread.Start();
@@ -117,32 +86,25 @@ namespace ClientMonitor.Application
             Thread thread = new Thread(() =>
             {
                 var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 30, 0);
-                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 0);
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 30, 0);
+                DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0);
                 while (true)
                 {
                     var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
-                    if (isEnable == false)
+
+                    DateTime dateTime = DateTime.Now;
+                    if (date.Hour == dateTime.Hour && dateTime.Minute > 30)
                     {
-                        //получение времени с БД
-                        if (repository.GetData("TimeFirst") != "" && repository.GetData("TimeSecond") != "")
-                        {
-                            date = Convert.ToDateTime(repository.GetData("TimeFirst"));
-                            date1 = Convert.ToDateTime(repository.GetData("TimeSecond"));
-                        }
-                        DateTime dateTime = DateTime.Now;
-                        if (date.Hour == dateTime.Hour && date.Minute == dateTime.Minute)
-                        {
-                            handle.Invoke(service);
-                            Thread.Sleep(32400000);
-                        }
-                        else if (date1.Hour == dateTime.Hour && date1.Minute == dateTime.Minute)
-                        {
-                            handle.Invoke(service);
-                            Thread.Sleep(32400000);
-                        }
-                        Thread.Sleep(10000);
+                        handle.Invoke(service);
+                        Thread.Sleep(32400000);
                     }
+                    else if (date1.Hour == dateTime.Hour && dateTime.Minute > 30)
+                    {
+                        handle.Invoke(service);
+                        Thread.Sleep(32400000);
+                    }
+                    Thread.Sleep(10000);
+
                 }
             });
             thread.Start();
@@ -164,6 +126,51 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
+        /// <summary>
+        /// Видеопоток
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
+        public static void UseMonitoringDomens(this IApplicationBuilder application, Action<IRegruHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<IRegruHandler>();
+                while (true)
+                {
+                    if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour<=14)
+                    {
+                        handle.Invoke(service);
+                        Thread.Sleep(3600000);
+                    }
+                    Thread.Sleep(2400000);
+                }
+            });
+            thread.Start();
+        }
+
+        /// <summary>
+        /// Видеопоток
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
+        public static void UseMetrika(this IApplicationBuilder application, Action<IMetrikaHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<IMetrikaHandler>();
+                while (true)
+                {
+                    if (DateTime.Now.Hour >= 22)
+                    {
+                        handle.Invoke(service);
+                        Thread.Sleep(3600000);
+                    }
+                    Thread.Sleep(2400000);
+                }
+            });
+            thread.Start();
+        }
         /// <summary>
         /// Конвертирование string в bool
         /// </summary>

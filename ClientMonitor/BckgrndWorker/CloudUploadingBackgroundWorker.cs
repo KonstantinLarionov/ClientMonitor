@@ -46,8 +46,8 @@ namespace ClientMonitor.BckgrndWorker
                 //{
                 //    Thread.Sleep(10000);
                 //}
-                await Task.Delay(1000, stoppingToken);
             }
+            await Task.Delay(1000, stoppingToken);
         }
 
         /// <summary>
