@@ -44,77 +44,77 @@ namespace ClientMonitor.Application.Handler
         /// </summary>
         private readonly static List<ListDownloadCloud> _listClouds = new List<ListDownloadCloud>()
         {
-            new ListDownloadCloud
-            {
-                Name="Озон-ПГ-Зал",
-                LocDownloadVideo=@"C:\Test\Баг",
-                LocDownloadCloud="Тест/Склад",
-                FormatFiles="*.avi",
-            },
             //new ListDownloadCloud
             //{
             //    Name="Озон-ПГ-Зал",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Зал",
-            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Зал",
+            //    LocDownloadVideo=@"C:\Test\Баг",
+            //    LocDownloadCloud="Тест/Склад",
             //    FormatFiles="*.avi",
             //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Тамбур",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур",
-            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Выдача",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Выдача",
-            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Выдача1",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Склад",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад",
-            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад1",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Склад-2",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2",
-            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад2",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Тамбур-2",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур2",
-            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур2",
-            //    FormatFiles="*.avi",
-            //},
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Зал",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Зал",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Зал",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Тамбур",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Выдача",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Выдача",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Выдача1",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад1",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Склад-2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад2",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-ПГ-Тамбур-2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур2",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур2",
+                FormatFiles="*.avi",
+            },
 
-            //new ListDownloadCloud
-            //{
-            //    Name="WB-ПГ-Выдача",
-            //    LocDownloadVideo=@"Компьютер DESKTOP-UCI85FS/C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
-            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="WB-ПГ-Выдача2",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2",
-            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача2",
-            //    FormatFiles="*.avi",
-            //},
-            //new ListDownloadCloud
-            //{
-            //    Name="WB-ПГ-Склад",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
-            //    LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Склад",
-            //    FormatFiles="*.avi",
-            //},
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Выдача",
+                LocDownloadVideo=@"Компьютер DESKTOP-UCI85FS/C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Выдача2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача2",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-ПГ-Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Склад",
+                FormatFiles="*.avi",
+            },
         };
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace ClientMonitor.Application.Handler
         /// <returns></returns>
         private static string MonthStats(DateTime dateTime)
         {
-            DateTime twoday = dateTime.AddDays(-2);
+            DateTime twoday = dateTime.AddDays(-1);
             MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(twoday.Month);
             string data = $"{twoday.Year}/{monthTypes}/{twoday.Day}";
             return data;
@@ -181,7 +181,7 @@ namespace ClientMonitor.Application.Handler
                                 var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud + "/" + MonthStats(fileInf.CreationTime));
                                 try
                                 {
-                                    await _cloud.UploadFiles(uploadFile);
+                                    //await _cloud.UploadFiles(uploadFile);
                                     
                                     DirectoryInfo dirInfo = new DirectoryInfo(path);
                                     dirInfo.Delete(true);
