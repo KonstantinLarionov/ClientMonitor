@@ -41,13 +41,13 @@ namespace ClientMonitor
             services.AddInfrastructureMonitoringDomens();
             services.AddInfrastructureMetrika();
 
-            //services.AddHostedService<VideoControlBackgroundWorker>();
-            //services.AddHostedService<CloudUploadingBackgroundWorker>();
-            //services.AddHostedService<StatPcBackgroundWorker>();
-            //services.AddHostedService<ExternalMonitorBackgroundWorker>();
-            //services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
-            //services.AddHostedService<DomenMonitorBackgroundWorker>();
-            //services.AddHostedService<MetrikaBackgroundWorker>();
+            services.AddHostedService<VideoControlBackgroundWorker>();
+            services.AddHostedService<CloudUploadingBackgroundWorker>();
+            services.AddHostedService<StatPcBackgroundWorker>();
+            services.AddHostedService<ExternalMonitorBackgroundWorker>();
+            services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
+            services.AddHostedService<DomenMonitorBackgroundWorker>();
+            services.AddHostedService<MetrikaBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {
@@ -81,58 +81,58 @@ namespace ClientMonitor
 
 
             #region [WorkBehind]
-            app.UseCloudUploading(cloudHandler =>
-            {
-                cloudHandler.Handle();
-            });
+            //app.UseCloudUploading(cloudHandler =>
+            //{
+            //    cloudHandler.Handle();
+            //});
 
-            app.UseExternalMonitor(externalMonitorHandler =>
-            {
-                externalMonitorHandler.Handle();
-            });
+            //app.UseExternalMonitor(externalMonitorHandler =>
+            //{
+            //    externalMonitorHandler.Handle();
+            //});
 
-            app.UsePcMonitoring(
-            cpuHandler =>
-            {
-                cpuHandler.HandleCpu();
-            },
-            ramHandler =>
-            {
-                ramHandler.HandleRam();
-            },
-            procHandler =>
-            {
-                procHandler.HandleProc();
-            },
-             httpHandler =>
-             {
-                 httpHandler.HandleHttp();
-             }
-            );
+            //app.UsePcMonitoring(
+            //cpuHandler =>
+            //{
+            //    cpuHandler.HandleCpu();
+            //},
+            //ramHandler =>
+            //{
+            //    ramHandler.HandleRam();
+            //},
+            //procHandler =>
+            //{
+            //    procHandler.HandleProc();
+            //},
+            // httpHandler =>
+            // {
+            //     httpHandler.HandleHttp();
+            // }
+            //);
 
-            app.UsePcMonitoringMessage(messageHandler =>
-            {
-                messageHandler.HandleMessageMonitoringPc();
-            }
-            );
+            //app.UsePcMonitoringMessage(messageHandler =>
+            //{
+            //    messageHandler.HandleMessageMonitoringPc();
+            //}
+            //);
 
-            app.UseVideoControl(videoControlHandler =>
-            {
-                videoControlHandler.Handle();
-            }
-            );
+            //app.UseVideoControl(videoControlHandler =>
+            //{
+            //    videoControlHandler.Handle();
+            //}
+            //);
 
-            app.UseMetrika(metrikaHandler =>
-            {
-                metrikaHandler.Handle();
-            }
-            );
+            //app.UseMetrika(metrikaHandler =>
+            //{
+            //    metrikaHandler.Handle();
+            //}
+            //);
 
-            app.UseMonitoringDomens(domensHandler =>
-            {
-                domensHandler.Handle();
-            }
-            );
+            //app.UseMonitoringDomens(domensHandler =>
+            //{
+            //    domensHandler.Handle();
+            //}
+            //);
             #endregion
         }
     }
