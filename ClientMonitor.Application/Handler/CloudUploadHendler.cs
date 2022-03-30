@@ -126,7 +126,7 @@ namespace ClientMonitor.Application.Handler
         {
             DateTime twoday = dateTime.AddDays(-1);
             MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(twoday.Month);
-            string data = $"{twoday.Year}/{monthTypes}/{twoday.Day}";
+            string data = $"{twoday.Year}\\{monthTypes}\\{twoday.Day}";
             return data;
         }
 

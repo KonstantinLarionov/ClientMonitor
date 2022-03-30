@@ -70,7 +70,9 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         private void Error(object sender, Vlc.DotNet.Core.VlcMediaPlayerEncounteredErrorEventArgs e)
         {
             ConnectionErrorEvent?.Invoke(sender, new ErrorEventArgs(new Exception(e.ToString())));
-            _mediaPlayer.Stop();
+            //StopMonitoring();
+            //Thread.Sleep(20000);
+            //StartMonitoring();
         }
 
         /// <summary>
@@ -93,20 +95,20 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         /// <param name="e"></param>
         private void Log(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
         {
-            if (Check)
-            {
-                Thread.Sleep(30000);
-                FileInfo file = new FileInfo(VideoName);
-                long size = file.Length / 1024;
-                if (size < 50)
-                {
-                    _mediaPlayer.Stop();
-                    _mediaPlayer.Play();
-                }
-                Check = false;
+            //if (Check)
+            //{
+            //    Thread.Sleep(30000);
+            //    FileInfo file = new FileInfo(VideoName);
+            //    long size = file.Length / 1024;
+            //    if (size < 50)
+            //    {
+            //        _mediaPlayer.Stop();
+            //        _mediaPlayer.Play();
+            //    }
+            //    Check = false;
 
                 
-            }
+            //}
         }
 
         /// <summary>

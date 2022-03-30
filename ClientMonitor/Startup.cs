@@ -32,22 +32,22 @@ namespace ClientMonitor
             services.AddControllersWithViews();
 
             services.AddControllers();
+            services.AddInfrastructureHandler();
             services.AddInfrastructureCloudManager();
             services.AddInfrastructureNotifications();
-            services.AddInfrastructureHandler();
             services.AddInfrastructureMonitor();
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
-            services.AddInfrastructureMonitoringDomens();
-            services.AddInfrastructureMetrika();
+            //services.AddInfrastructureMonitoringDomens();
+            //services.AddInfrastructureMetrika();
 
-            services.AddHostedService<VideoControlBackgroundWorker>();
-            services.AddHostedService<CloudUploadingBackgroundWorker>();
-            services.AddHostedService<StatPcBackgroundWorker>();
-            services.AddHostedService<ExternalMonitorBackgroundWorker>();
-            services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
-            services.AddHostedService<DomenMonitorBackgroundWorker>();
-            services.AddHostedService<MetrikaBackgroundWorker>();
+            //services.AddHostedService<VideoControlBackgroundWorker>();
+            //services.AddHostedService<CloudUploadingBackgroundWorker>();
+            //services.AddHostedService<StatPcBackgroundWorker>();
+            //services.AddHostedService<ExternalMonitorBackgroundWorker>();
+            //services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
+            //services.AddHostedService<DomenMonitorBackgroundWorker>();
+            //services.AddHostedService<MetrikaBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {
@@ -81,10 +81,10 @@ namespace ClientMonitor
 
 
             #region [WorkBehind]
-            //app.UseCloudUploading(cloudHandler =>
-            //{
-            //    cloudHandler.Handle();
-            //});
+            app.UseCloudUploading(cloudHandler =>
+            {
+                cloudHandler.Handle();
+            });
 
             //app.UseExternalMonitor(externalMonitorHandler =>
             //{
@@ -116,11 +116,11 @@ namespace ClientMonitor
             //}
             //);
 
-            //app.UseVideoControl(videoControlHandler =>
-            //{
-            //    videoControlHandler.Handle();
-            //}
-            //);
+            app.UseVideoControl(videoControlHandler =>
+            {
+                videoControlHandler.Handle();
+            }
+            );
 
             //app.UseMetrika(metrikaHandler =>
             //{

@@ -11,11 +11,11 @@ namespace ClientMonitor.Application
         {
             //var assembly = typeof(ServiceCollection).GetTypeInfo().Assembly;
             services.AddSingleton<ICludUploadHendler, CloudUploadHendler>();
-            services.AddSingleton<IExternalMonitorHandler, ExternalMonitorHandler>();
-            services.AddSingleton<IPcMonitoringHandler, PcMonitoringHandler>();
+            //services.AddSingleton<IExternalMonitorHandler, ExternalMonitorHandler>();
+            //services.AddSingleton<IPcMonitoringHandler, PcMonitoringHandler>();
             services.AddSingleton<IVideoControlHandler, VideoControlHandler>();
-            services.AddSingleton<IRegruHandler, RegruHandler>();
-            services.AddSingleton<IMetrikaHandler, MetrikaHandler>();
+            //services.AddSingleton<IRegruHandler, RegruHandler>();
+            //services.AddSingleton<IMetrikaHandler, MetrikaHandler>();
         }
     }
 }
