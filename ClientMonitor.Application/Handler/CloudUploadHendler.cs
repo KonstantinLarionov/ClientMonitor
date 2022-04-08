@@ -97,7 +97,7 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="WB-ПГ-Выдача",
-                LocDownloadVideo=@"Компьютер DESKTOP-UCI85FS/C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача",
                 FormatFiles="*.avi",
             },
