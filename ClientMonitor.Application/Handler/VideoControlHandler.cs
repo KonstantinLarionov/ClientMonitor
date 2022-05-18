@@ -86,6 +86,12 @@ namespace ClientMonitor.Application.Handler
                 Name="WB-ПГ-Склад",
                 PathStream=new Uri("rtsp://WbPgSklad:123456@192.168.1.6:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад"
+            },
+            new ControlVideoInfo
+            {
+                Name="Ломбард1-ПГ",
+                PathStream=new Uri("rtsp://LombardPg:123456@188.186.238.120:6060/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ломбард\Ломбард1"
             }
         };
 
