@@ -70,6 +70,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         private void Error(object sender, Vlc.DotNet.Core.VlcMediaPlayerEncounteredErrorEventArgs e)
         {
             ConnectionErrorEvent?.Invoke(sender, new ErrorEventArgs(new Exception(e.ToString())));
+
             //StopMonitoring();
             //Thread.Sleep(20000);
             //StartMonitoring();
