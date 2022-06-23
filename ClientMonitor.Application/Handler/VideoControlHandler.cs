@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
 {
@@ -30,7 +31,7 @@ namespace ClientMonitor.Application.Handler
             //new ControlVideoInfo
             //{
             //    Name="Баг",
-            //    PathStream=new Uri("rtsp://Goldencat:123456@92.255.240.7:9093/stream1"),
+            //    PathStream=new Uri("rtsp://PoligonnayaZal:123456@92.255.240.7:9095/stream2"),
             //    PathDownload=@"C:\Test\Баг"
             //},
             new ControlVideoInfo
@@ -113,7 +114,7 @@ namespace ClientMonitor.Application.Handler
         /// <summary>
         /// Бизнес-логика? 
         /// </summary>
-        public void Handle()
+        public async Task Handle()
         {
             DateTime dt = DateTime.Now;
             if (_videoControlFactory.CreateAdaptors(_listReceiveVideoInfoIp, VideoMonitoringTypes.IpCamera))
@@ -123,25 +124,48 @@ namespace ClientMonitor.Application.Handler
                     .ToList();
             }
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
-
+            int i = -1;
             foreach (var item in _listCam)
             {
-                Thread thread = new Thread(() =>
+                Thread thread = new Thread(async () =>
                 {
-                    item.ConnectionErrorEvent += (obj, error) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                    var tokenSource = new CancellationTokenSource();
+                    //item.ConnectionErrorEvent += (obj, error) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                    item.ConnectionErrorEvent += (obj, error)=> 
+                    {
+                        if (item.Name != "Озон-ПГ-Тамбур-2")
+                        {
+                            notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                        }
+                        tokenSource.Cancel();
+                    };
                     //item.InfoAboutLog += (obj, message) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
 
                     while (true)
                     {
                         item.StartMonitoring();
-                        Thread.Sleep(480000);
+                        //Thread.Sleep(480000);
+                        try
+                        {
+                            await Task.Delay(480000, tokenSource.Token);
+                        }
+                        catch { Thread.Sleep(10000); }
+                        tokenSource = new CancellationTokenSource();
                         item.StopMonitoring();
                         Thread.Sleep(2000);
                     }
                 });
                 _threads.Add(thread);
+                i++;
             }
             _threads.ForEach(x => x.Start());
         }
+
+        //private void Error(int i)
+        //{
+        //    _threads[i].();
+        //    Thread.Sleep(20000);
+        //    _threads[i].Start();
+        //}
     }
 }
