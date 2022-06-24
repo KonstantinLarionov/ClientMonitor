@@ -34,6 +34,44 @@ namespace ClientMonitor.Application
         }
 
         /// <summary>
+        /// проверка на запуск яндекс диска
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
+        public static void UseCheckYandexDisk(this IApplicationBuilder application, Action<ICheckYandexDiskHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<ICheckYandexDiskHandler>();
+                while (true)
+                {
+                    handle.Invoke(service);
+                    Thread.Sleep(14400000);
+                }
+            });
+            thread.Start();
+        }
+
+        /// <summary>
+        /// проверка на размер файлов
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
+        public static void UseCheckFile(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<ICheckFileHandler>();
+                while (true)
+                {
+                    handle.Invoke(service);
+                    Thread.Sleep(480000);
+                }
+            });
+            thread.Start();
+        }
+
+        /// <summary>
         /// Ежечасовая проверка сайтов и серверов
         /// </summary>
         /// <param name="application"></param>

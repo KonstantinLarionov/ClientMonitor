@@ -133,10 +133,10 @@ namespace ClientMonitor.Application.Handler
                     //item.ConnectionErrorEvent += (obj, error) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
                     item.ConnectionErrorEvent += (obj, error)=> 
                     {
-                        if (item.Name != "Озон-ПГ-Тамбур-2")
-                        {
-                            notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
-                        }
+                        //if (item.Name != "Озон-ПГ-Тамбур-2")
+                        //{
+                        //    notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
+                        //}
                         tokenSource.Cancel();
                     };
                     //item.InfoAboutLog += (obj, message) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");

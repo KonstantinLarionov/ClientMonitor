@@ -1,7 +1,6 @@
 using ClientMonitor.Application;
 using ClientMonitor.Infrastructure.Notifications;
 using ClientMonitor.Infrastructure.Database;
-using ClientMonitor.Infrastructure.MonitoringDomen;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,9 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ClientMonitor.BckgrndWorker;
 using ClientMonitor.Infrastructure.CloudManager;
-using ClientMonitor.Infrastructure.Monitor;
 using ClientMonitor.Infrastructure.VideoControl;
-using ClientMonitor.Infrastructure.Metrika;
 
 namespace ClientMonitor
 {
@@ -35,7 +32,6 @@ namespace ClientMonitor
             services.AddInfrastructureHandler();
             services.AddInfrastructureCloudManager();
             services.AddInfrastructureNotifications();
-            services.AddInfrastructureMonitor();
             services.AddInfrastructureVideoMonitor();
             services.AddInfrastructureDatabase();
             //services.AddInfrastructureMonitoringDomens();
@@ -81,58 +77,25 @@ namespace ClientMonitor
 
 
             #region [WorkBehind]
+
             app.UseCloudUploading(cloudHandler =>
             {
                 cloudHandler.Handle();
             });
-
-            //app.UseExternalMonitor(externalMonitorHandler =>
-            //{
-            //    externalMonitorHandler.Handle();
-            //});
-
-            //app.UsePcMonitoring(
-            //cpuHandler =>
-            //{
-            //    cpuHandler.HandleCpu();
-            //},
-            //ramHandler =>
-            //{
-            //    ramHandler.HandleRam();
-            //},
-            //procHandler =>
-            //{
-            //    procHandler.HandleProc();
-            //},
-            // httpHandler =>
-            // {
-            //     httpHandler.HandleHttp();
-            // }
-            //);
-
-            //app.UsePcMonitoringMessage(messageHandler =>
-            //{
-            //    messageHandler.HandleMessageMonitoringPc();
-            //}
-            //);
-
             app.UseVideoControl(videoControlHandler =>
             {
                 videoControlHandler.Handle();
             }
             );
+            app.UseCheckYandexDisk(checkYandeDiskHandler =>
+            {
+                checkYandeDiskHandler.CheckYandexHandle();
+            });
+            app.UseCheckFile(checkfileHandler =>
+            {
+                checkfileHandler.CheckFileHandle();
+            });
 
-            //app.UseMetrika(metrikaHandler =>
-            //{
-            //    metrikaHandler.Handle();
-            //}
-            //);
-
-            //app.UseMonitoringDomens(domensHandler =>
-            //{
-            //    domensHandler.Handle();
-            //}
-            //);
             #endregion
         }
     }

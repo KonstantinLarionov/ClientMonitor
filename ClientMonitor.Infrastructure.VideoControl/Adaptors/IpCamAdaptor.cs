@@ -69,14 +69,14 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             //_mediaPlayer.Log += Log;
         }
 
-        private void Error(object sender, Vlc.DotNet.Core.VlcMediaPlayerEncounteredErrorEventArgs e)
-        {
-            ConnectionErrorEvent?.Invoke(sender, new ErrorEventArgs(new Exception(e.ToString())));
+        //private void Error(object sender, Vlc.DotNet.Core.VlcMediaPlayerEncounteredErrorEventArgs e)
+        //{
+        //    ConnectionErrorEvent?.Invoke(sender, new ErrorEventArgs(new Exception(e.ToString())));
 
-            //StopMonitoring();
-            //Thread.Sleep(20000);
-            //StartMonitoring();
-        }
+        //    //StopMonitoring();
+        //    //Thread.Sleep(20000);
+        //    //StartMonitoring();
+        //}
 
         /// <summary>
         /// Получение названия папки по дате
@@ -124,7 +124,8 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
             //_mediaPlayer.EncounteredError += (objec, message) =>
             //    ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
-            _mediaPlayer.EncounteredError += Error;
+            _mediaPlayer.EncounteredError += (objec, message) =>
+                ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
             _mediaPlayer.EndReached += (objec, message) =>
                 ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
             _mediaPlayer.Log += Log;
