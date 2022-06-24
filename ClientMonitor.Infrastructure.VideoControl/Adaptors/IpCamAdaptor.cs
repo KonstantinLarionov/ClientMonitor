@@ -47,8 +47,8 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         public event EventHandler InfoAboutLog;
 
         private readonly ControlVideoInfo _videoInfo;
-        private  string _currentDirectory;
-        private  DirectoryInfo _libDirectory;
+        private readonly string _currentDirectory;
+        private readonly DirectoryInfo _libDirectory;
         private  Vlc.DotNet.Core.VlcMediaPlayer _mediaPlayer;
         private string VideoName;
         /// <summary>
@@ -58,24 +58,24 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         public IpCamAdaptor(ControlVideoInfo info)
         {
             _videoInfo = info;
-            //_currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            //_libDirectory = new DirectoryInfo(Path.Combine(_currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
-            //_mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
-            ////_mediaPlayer.EncounteredError += (objec, message) =>
-            ////    ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
-            //_mediaPlayer.EncounteredError += Error;
-            //_mediaPlayer.EndReached += (objec, message) =>
+            _currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            _libDirectory = new DirectoryInfo(Path.Combine(_currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
+            _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
+            //_mediaPlayer.EncounteredError += (objec, message) =>
             //    ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
-            //_mediaPlayer.Log += Log;
+            _mediaPlayer.EncounteredError += Error;
+            _mediaPlayer.EndReached += (objec, message) =>
+                ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
+            _mediaPlayer.Log += Log;
         }
 
         private void Error(object sender, Vlc.DotNet.Core.VlcMediaPlayerEncounteredErrorEventArgs e)
         {
-            ConnectionErrorEvent?.Invoke(sender, new ErrorEventArgs(new Exception(e.ToString())));
-
-            //StopMonitoring();
-            //Thread.Sleep(20000);
-            //StartMonitoring();
+            _mediaPlayer.Dispose();
+            _mediaPlayer = null;
+            _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
+            Thread.Sleep(20000);
+            StartMonitoring();
         }
 
         /// <summary>
@@ -98,19 +98,11 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         /// <param name="e"></param>
         private void Log(object sender, Vlc.DotNet.Core.VlcMediaPlayerLogEventArgs e)
         {
-            //if (Check)
+            //if (e.Message.Contains("avi file without video track isn't a good idea") || /*e.Message.Contains("Connection to server failed") ||*/ e.Message.Contains("no more input streams for this mux") /*|| e.Message.Contains("Failed to connect with")*/)
             //{
-            //    Thread.Sleep(30000);
-            //    FileInfo file = new FileInfo(VideoName);
-            //    long size = file.Length / 1024;
-            //    if (size < 50)
-            //    {
-            //        _mediaPlayer.Stop();
-            //        _mediaPlayer.Play();
-            //    }
-            //    Check = false;
-
-                
+            //    //_mediaPlayer.Dispose();
+            //    Thread.Sleep(20000);
+            //    StartMonitoring();
             //}
         }
 
@@ -119,16 +111,6 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         /// </summary>
         public void StartMonitoring()
         {
-            _currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            _libDirectory = new DirectoryInfo(Path.Combine(_currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
-            _mediaPlayer = new Vlc.DotNet.Core.VlcMediaPlayer(_libDirectory);
-            //_mediaPlayer.EncounteredError += (objec, message) =>
-            //    ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
-            _mediaPlayer.EncounteredError += Error;
-            _mediaPlayer.EndReached += (objec, message) =>
-                ConnectionErrorEvent?.Invoke(objec, new ErrorEventArgs(new Exception(message.ToString())));
-            _mediaPlayer.Log += Log;
-
             if (SetInfo())
             {
                 _mediaPlayer.Play();
