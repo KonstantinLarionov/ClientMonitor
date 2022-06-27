@@ -79,7 +79,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Выдача-2",
-                PathStream=new Uri("rtsp://WbPgVidacha2:123456@192.168.1.5:554/stream1"),
+                PathStream=new Uri("rtsp://WbPgVidacha2:123456@188.186.238.120:6061/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2"
             },
             new ControlVideoInfo
