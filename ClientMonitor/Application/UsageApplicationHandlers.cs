@@ -34,6 +34,25 @@ namespace ClientMonitor.Application
         }
 
         /// <summary>
+        /// Загрузка в облако
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
+        public static void UseCheckFile(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<ICheckFileHandler>();
+                while (true)
+                {
+                    handle.Invoke(service);
+                    Thread.Sleep(7200000);
+                }
+            });
+            thread.Start();
+        }
+
+        /// <summary>
         /// Ежечасовая проверка сайтов и серверов
         /// </summary>
         /// <param name="application"></param>
