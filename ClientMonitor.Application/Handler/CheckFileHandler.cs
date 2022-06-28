@@ -42,7 +42,7 @@ namespace ClientMonitor.Application.Handler
                         break;
                     }
                 }
-                if (i>10)
+                if (i>20)
                 {
                     notifyer.SendMessage("-742266994", $"{listClouds.Name} : Слишком много дефектных файлов");
                 }

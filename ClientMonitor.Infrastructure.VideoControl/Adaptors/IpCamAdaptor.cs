@@ -39,7 +39,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
                 {
                     dirInfo.Create();
                 }
-
+                Pathfile= _videoInfo.PathDownload + "\\" + MonthStats(dt)+ $"\\{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.avi";
                 return Path.Combine(_videoInfo.PathDownload + "\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.avi");
             }
         }
@@ -50,7 +50,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         private readonly MediaPlayer _mediaPlayer;
         private Media _media;
         LibVLC _libVLC;
-
+        private string Pathfile;
         /// <summary>
         /// Настройка плеера, подгрузка библиотек
         /// </summary>
@@ -61,14 +61,40 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             _libVLC = new LibVLC();
             _mediaPlayer = new MediaPlayer(_libVLC);
             _mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
-            _mediaPlayer.EncounteredError+=(_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
+            ////_mediaPlayer.EncounteredError+=(_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
+            //_mediaPlayer.Stopped += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
+            ////_mediaPlayer.Playing += (_2, _3) => RestartMediaPlayer(_libVLC, _mediaPlayer);
+            //_mediaPlayer.Paused += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
+            //_mediaPlayer.LengthChanged+= CheckSize;
+        }
+        private bool Check = false;
+        private void CheckSize(LibVLC libVLC, MediaPlayer mediaPlayer)
+        {
+            if (Check)
+            {
+                Check = false;
+                Thread.Sleep(30000);
+                long length = new FileInfo(Pathfile).Length / 1024;
+                if (length < 400)
+                {
+                    _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
+                }
+            }
+        }
+
+        private void RestartMediaPlayer(LibVLC libVLC, MediaPlayer mediaPlayer)
+        {
+            Thread.Sleep(30000);
+            long length = new FileInfo(Pathfile).Length / 1024;
+            if (length < 400)
+            {
+                _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
+            }
         }
 
         private void DelayRestartMediaPlayer(LibVLC libVLC, MediaPlayer mediaPlayer)
         {
             Thread.Sleep(5000);
-            System.Diagnostics.Debug.WriteLine("Retrying to connect.");
-
             _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
         }
 
@@ -90,12 +116,20 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         /// </summary>
         public void StartMonitoring()
         {
+            Check = true;
             //_mediaPlayer.Play();
             _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
             _media.AddOption(":sout=#file{dst=" + NameFile + "}");
             _media.AddOption(":sout-keep");
             _media.AddOption(":live-caching=300");
             _mediaPlayer.Play(_media);
+
+            Thread.Sleep(30000);
+            long length = new FileInfo(Pathfile).Length / 1024;
+            if (length < 400)
+            {
+                _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
+            }
         }
 
         /// <summary>
