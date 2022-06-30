@@ -26,7 +26,7 @@ namespace ClientMonitor.Application
                 var service = application.ApplicationServices.GetRequiredService<ICludUploadHendler>();
                 while (true)
                 {
-                    if (DateTime.Now.Hour > 9 && DateTime.Now.Hour<11 )
+                    if (DateTime.Now.Hour > 9 || DateTime.Now.Hour<11 )
                     {
                         handle.Invoke(service);
                         Thread.Sleep(3600000);

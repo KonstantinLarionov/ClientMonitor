@@ -125,15 +125,18 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             _mediaPlayer.Play(_media);
 
             Thread.Sleep(30000);
-            try
+            if (!_videoInfo.Name.Contains("Озон-ПГ-Тамбур-2"))
             {
-                long length = new FileInfo(Pathfile).Length / 1024;
-                if (length < 400)
+                try
                 {
-                    _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
+                    long length = new FileInfo(Pathfile).Length / 1024;
+                    if (length < 400)
+                    {
+                        _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
+                    }
                 }
+                catch { }
             }
-            catch { }
         }
 
         /// <summary>

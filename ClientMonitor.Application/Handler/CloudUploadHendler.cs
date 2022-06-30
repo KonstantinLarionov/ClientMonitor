@@ -135,7 +135,7 @@ namespace ClientMonitor.Application.Handler
 
         public int summ = 0;
         /// <summary>
-        /// Логика загрузки в облако
+        /// Логика очистки
         /// </summary>
         /// <returns></returns>
         public async Task Handle()
@@ -151,77 +151,17 @@ namespace ClientMonitor.Application.Handler
 
                         if (Directory.Exists(path))
                         {
-
-                            string[] getFilesFromHall = Directory.GetFiles(path, listClouds.FormatFiles);
-
-                            if (getFilesFromHall.Length != 0)
-                            {
-                                try
-                                {        
-                                    DirectoryInfo dirInfo = new DirectoryInfo(path);
-                                    dirInfo.Delete(true);
-                                }
-                                catch (Exception e)
-                                {
-                                    Thread.Sleep(60000);
-                                }
-                            }
+                                DirectoryInfo dirInfo = new DirectoryInfo(path);
+                                dirInfo.Delete();
                         }
                         else
                         {
                             Thread.Sleep(10000);
                         }
                     }
-                    catch (Exception e) {  }
+                    catch (Exception e) { }
                 }
             }
-            //if (summ > 10)
-            //{
-            //    try
-            //    {
-            //        await _telegramNotification.SendMessage(idChatTg, $"!~~~ОЗОН/Wb_ПГ_Файлов отправлено на диск: {summ} Время: {DateTime.Now}~~~!");
-            //        summ = 0;
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        AddInBd($"Уведы в телеге : {e.Message} : {DateTime.Now}", 1);
-            //    }
-            //}
-            //if (summ == 0)
-            //{
-            //    Thread.Sleep(10000);
-            //}
-        }
-
-        /// <summary>
-        /// Информация о загружаемом файле
-        /// </summary>
-        /// <param name="fileInf">Параметры файла</param>
-        /// <param name="pathToLoad">Путь загрузки</param>
-        /// <returns></returns>
-        private UploadedFilesInfo GetUploadFile(FileInfo fileInf, string pathToLoad)
-        {
-            UploadedFilesInfo uploadedFiles = new UploadedFilesInfo();
-            uploadedFiles.Name = fileInf.Name;
-            uploadedFiles.Extension = fileInf.Extension;
-            uploadedFiles.Create = fileInf.CreationTime;
-            uploadedFiles.Path = fileInf.DirectoryName;
-            uploadedFiles.FolderName = pathToLoad;
-            return uploadedFiles;
-        }
-
-        /// <summary>
-        /// Загрузка в облако
-        /// </summary>
-        /// <param name="mas">Массив</param>
-        /// <param name="leght">Длина</param>
-        /// <returns></returns>
-        private string[] GetWitoutLastElement(string[] mas, int leght)
-        {
-            string[] files = new string[leght - 2];
-            for (int i = 0; i < leght - 2; i++)
-                files[i] = mas[i];
-            return files;
         }
     }
 }
