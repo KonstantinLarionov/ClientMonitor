@@ -86,10 +86,10 @@ namespace ClientMonitor
                 cloudHandler.Handle();
             });
 
-            app.UseCheckFile(checkFileHandler =>
-            {
-                checkFileHandler.CheckFileHandle();
-            });
+            //app.UseCheckFile(checkFileHandler =>
+            //{
+            //    checkFileHandler.CheckFileHandle();
+            //});
             //app.UseExternalMonitor(externalMonitorHandler =>
             //{
             //    externalMonitorHandler.Handle();

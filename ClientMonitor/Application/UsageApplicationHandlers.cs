@@ -26,7 +26,7 @@ namespace ClientMonitor.Application
                 var service = application.ApplicationServices.GetRequiredService<ICludUploadHendler>();
                 while (true)
                 {
-                    if (DateTime.Now.Hour > 9 || DateTime.Now.Hour<11 )
+                    if (DateTime.Now.Hour > 1 || DateTime.Now.Hour<2 )
                     {
                         handle.Invoke(service);
                         Thread.Sleep(3600000);
@@ -40,34 +40,34 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
-        /// <summary>
-        /// Загрузка в облако
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="handle"></param>
-        public static void UseCheckFile(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
-        {
-            Thread thread = new Thread(() =>
-            {
-                var service = application.ApplicationServices.GetRequiredService<ICheckFileHandler>();
-                while (true)
-                {
-                    if (DateTime.Now.Hour > 0 || DateTime.Now.Hour < 9)
-                    {
-                        if (DateTime.Now.Minute > 10)
-                        {
-                            handle.Invoke(service);
-                            Thread.Sleep(7200000);
-                        }
-                    }
-                    else
-                    {
-                        Thread.Sleep(60000);
-                    }
-                }
-            });
-            thread.Start();
-        }
+        ///// <summary>
+        ///// Загрузка в облако
+        ///// </summary>
+        ///// <param name="application"></param>
+        ///// <param name="handle"></param>
+        //public static void UseCheckFile(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
+        //{
+        //    Thread thread = new Thread(() =>
+        //    {
+        //        var service = application.ApplicationServices.GetRequiredService<ICheckFileHandler>();
+        //        while (true)
+        //        {
+        //            if (DateTime.Now.Hour > 0 || DateTime.Now.Hour < 9)
+        //            {
+        //                if (DateTime.Now.Minute > 10)
+        //                {
+        //                    handle.Invoke(service);
+        //                    Thread.Sleep(7200000);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                Thread.Sleep(60000);
+        //            }
+        //        }
+        //    });
+        //    thread.Start();
+        //}
 
         /// <summary>
         /// Ежечасовая проверка сайтов и серверов
