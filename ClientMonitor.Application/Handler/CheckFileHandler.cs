@@ -27,25 +27,31 @@ namespace ClientMonitor.Application.Handler
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
             foreach (var listClouds in _listClouds)
             {
-                DateTime dt = DateTime.Now;
-                string[] allFoundFiles = Directory.GetFiles(listClouds.LocDownloadVideo + "\\" + MonthStats(dt), "", SearchOption.AllDirectories);
-                int i = 0;
-                foreach (string file in allFoundFiles)
+                try
                 {
-                    FileInfo fi = new FileInfo(file);
-                    if (fi.Length < 3072)
+                    DateTime dt = DateTime.Now;
+
+                    DirectoryInfo dirInfo = new DirectoryInfo(listClouds.LocDownloadVideo + "\\" + MonthStats(dt));
+                    DirectoryInfo dirVideoInfo = new DirectoryInfo(listClouds.LocDownloadCloud + "\\" + MonthStats(dt));
+                    if (!dirVideoInfo.Exists)
                     {
-                        i++;
+                        dirVideoInfo.Create();
                     }
-                    if (i>10)
+
+                    string[] allFoundFiles = Directory.GetFiles(listClouds.LocDownloadVideo + "\\" + MonthStats(dt), "", SearchOption.AllDirectories);
+
+                    foreach (var file in allFoundFiles)
                     {
-                        break;
+                        FileInfo fileInf = new FileInfo(file);
+
+                        if (fileInf.Length > 300000)
+                        {
+                            fileInf.MoveTo(listClouds.LocDownloadCloud + "\\" + MonthStats(dt) + "\\" + fileInf.Name);
+                        }
                     }
+                    dirInfo.Delete(true);
                 }
-                if (i>20)
-                {
-                    notifyer.SendMessage("-742266994", $"{listClouds.Name} : Слишком много дефектных файлов");
-                }
+                catch { }
             }
         }
 
@@ -54,75 +60,82 @@ namespace ClientMonitor.Application.Handler
         /// </summary>
         private readonly static List<ListDownloadCloud> _listClouds = new List<ListDownloadCloud>()
         {
+            //new ListDownloadCloud
+            //{
+            //    Name="Озон-ПГ-Зал",
+            //    LocDownloadVideo=@"C:\Test\Баг2",
+            //    LocDownloadCloud=@"C:\Test\Баг",
+            //    FormatFiles="*.avi",
+            //},
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Зал",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Зал",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Зал",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Зал",
                 FormatFiles="*.avi",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур",
                 FormatFiles="*.avi",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Выдача",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Выдача1",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Выдача",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Выдача",
                 FormatFiles="*.avi",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад1",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад",
                 FormatFiles="*.avi",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Склад-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад2",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2",
                 FormatFiles="*.avi",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур2",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур2",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур2",
                 FormatFiles="*.avi",
             },
 
             new ListDownloadCloud
             {
                 Name="WB-ПГ-Выдача",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
                 FormatFiles="*.avi",
             },
             new ListDownloadCloud
             {
                 Name="WB-ПГ-Выдача2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача2",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2",
                 FormatFiles="*.avi",
             },
             new ListDownloadCloud
             {
                 Name="WB-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
                 FormatFiles="*.avi",
             },
             new ListDownloadCloud
             {
                 Name="Ломбард1-ПГ",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ломбард\Ломбард1",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ломбард/Ломбард1",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард1",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ломбард\Ломбард1",
                 FormatFiles="*.avi",
             },
         };
@@ -134,8 +147,9 @@ namespace ClientMonitor.Application.Handler
         /// <returns></returns>
         private static string MonthStats(DateTime dateTime)
         {
-            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(dateTime.Month);
-            string data = $"{dateTime.Year}\\{monthTypes}\\{dateTime.Day}";
+            DateTime twoday = dateTime.AddDays(-1);
+            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(twoday.Month);
+            string data = $"{twoday.Year}\\{monthTypes}\\{twoday.Day}";
             return data;
         }
     }

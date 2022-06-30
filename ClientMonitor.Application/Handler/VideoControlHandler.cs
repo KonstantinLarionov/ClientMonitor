@@ -32,67 +32,67 @@ namespace ClientMonitor.Application.Handler
             //{
             //    Name="Баг",
             //    PathStream=new Uri("rtsp://PoligonnayaZal:123456@92.255.240.7:9095/stream2"),
-            //    PathDownload=@"C:\Test\Баг"
+            //    PathDownload=@"C:\Test\Баг2"
             //},
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Зал",
                 PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.3:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Зал"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур",
                 PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.10:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Выдача",
                 PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.9:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Выдача"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Выдача"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад",
                 PathStream=new Uri("rtsp://PoligonnayaSklad:123456@192.168.1.11:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад-2",
                 PathStream=new Uri("rtsp://PoligonnayaSklad1:123456@192.168.1.12:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад2"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур-2",
                 PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур2"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур2"
             },
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Выдача",
                 PathStream=new Uri("rtsp://WbPgVidacha1:123456@192.168.1.4:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача"
             },
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Выдача-2",
                 PathStream=new Uri("rtsp://WbPgVidacha2:123456@188.186.238.120:6061/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача2"
             },
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Склад",
                 PathStream=new Uri("rtsp://WbPgSklad:123456@192.168.1.6:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад"
             },
             new ControlVideoInfo
             {
                 Name="Ломбард1-ПГ",
                 PathStream=new Uri("rtsp://LombardPg:123456@188.186.238.120:6060/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ломбард\Ломбард1"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард1"
             }
         };
 
@@ -114,7 +114,7 @@ namespace ClientMonitor.Application.Handler
         /// <summary>
         /// Бизнес-логика? 
         /// </summary>
-        public async Task Handle()
+        public void Handle()
         {
             DateTime dt = DateTime.Now;
             if (_videoControlFactory.CreateAdaptors(_listReceiveVideoInfoIp, VideoMonitoringTypes.IpCamera))
@@ -127,12 +127,8 @@ namespace ClientMonitor.Application.Handler
             int i = -1;
             foreach (var item in _listCam)
             {
-                Thread thread = new Thread(async () =>
+                Thread thread = new Thread(() =>
                 {
-                    var tokenSource = new CancellationTokenSource();
-                    //item.ConnectionErrorEvent += (obj, error) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
-                    //item.InfoAboutLog += (obj, message) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
-
                     while (true)
                     {
                         item.StartMonitoring();
@@ -146,12 +142,5 @@ namespace ClientMonitor.Application.Handler
             }
             _threads.ForEach(x => x.Start());
         }
-
-        //private void Error(int i)
-        //{
-        //    _threads[i].();
-        //    Thread.Sleep(20000);
-        //    _threads[i].Start();
-        //}
     }
 }

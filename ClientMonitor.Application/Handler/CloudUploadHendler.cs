@@ -19,8 +19,6 @@ namespace ClientMonitor.Application.Handler
         readonly ICloud _cloud;
         readonly INotification _telegramNotification;
         readonly INotification _maileNotification;
-        readonly IRepository<LogInfo> _dbLog;
-        readonly IRepository<DataForEditInfo> _dbData;
 
         /// <summary>
         /// Подключение библиотек
@@ -29,13 +27,11 @@ namespace ClientMonitor.Application.Handler
         /// <param name="notification">Уведомления</param>
         /// <param name="repositoryLog">Репоз логов</param>
         /// <param name="repositoryData">Репоз параметров</param>
-        public CloudUploadHendler(ICloudFactory cloud, INotificationFactory notification, IRepository<LogInfo> repositoryLog, IRepository<DataForEditInfo> repositoryData)
+        public CloudUploadHendler(ICloudFactory cloud, INotificationFactory notification)
         {
             _cloud = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
             _telegramNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
             _maileNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Mail);
-            _dbLog = repositoryLog;
-            _dbData = repositoryData;
         }
 
         //СДЕЛАТЬ ЕСЛИ ВЫЛЕТАЕТ ОШИБКА ПОДКЛЮЧЕНИЯ ТО ЧЕРЕЗ ЛОГИ ЧТОБЫ ВЫЗЫВАЛАСЬ ФУНКЦИЯ СТОПА ВИДЕО И НОВыЙ СТАРТ ЗАПИСИ
@@ -144,12 +140,6 @@ namespace ClientMonitor.Application.Handler
         /// <returns></returns>
         public async Task Handle()
         {
-            string idChatTg = "-742266994";
-            //if (_dbData.GetData("IdChatServer") != "")
-            //{
-            //    idChatTg = _dbData.GetData("IdChatServer");
-            //}
-            //await _telegramNotification.SendMessage("-742266994", "~~~Приложение ClientMonitor было запущено~~~");
             foreach (var listClouds in _listClouds)
             {
                 if (Directory.Exists(listClouds.LocDownloadVideo))
@@ -164,76 +154,25 @@ namespace ClientMonitor.Application.Handler
 
                             string[] getFilesFromHall = Directory.GetFiles(path, listClouds.FormatFiles);
 
-                            FileSystemInfo[] fileSystemInfo = new DirectoryInfo(path).GetFileSystemInfos();
-                            DateTime dt1 = new DateTime(1990, 1, 1);
-                            string fileName = "";
-                            //поиск последнего файла
-                            foreach (FileSystemInfo fileSI in fileSystemInfo)
-                            {
-                                if (fileSI.Extension == ".avi")//добавить нужные форматы
-                                {
-                                    if (dt1 < Convert.ToDateTime(fileSI.CreationTime))
-                                    {
-                                        dt1 = Convert.ToDateTime(fileSI.CreationTime);
-                                        fileName = fileSI.Name;
-                                    }
-                                }
-                            }
                             if (getFilesFromHall.Length != 0)
                             {
-                                FileInfo fileInf = new FileInfo(path + "\\" + fileName);
-                                var month = fileInf.CreationTime.Month;
-                                var year = fileInf.CreationTime.Year;
-                                MonthTypes day = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(month);
-                                var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud + "/" + MonthStats(fileInf.CreationTime));
                                 try
-                                {
-                                    //await _cloud.UploadFiles(uploadFile);
-                                    
+                                {        
                                     DirectoryInfo dirInfo = new DirectoryInfo(path);
                                     dirInfo.Delete(true);
-                                    AddInBd($"Директория: {path} удалена: {DateTime.Now}", 2);
-                                    //fileInf.Delete();
-                                    summ++;
                                 }
                                 catch (Exception e)
                                 {
-                                    AddInBd($"Какая-то фигня с проверкой файла Дата: {DateTime.Now}", 2);
                                     Thread.Sleep(60000);
                                 }
                             }
                         }
-                        //if (getFilesFromHall.Length != 0)
-                        //{
-                        //    string[] files = GetWitoutLastElement(getFilesFromHall, getFilesFromHall.Length);
-                        //    foreach (var file in files)
-                        //    {
-                        //        FileInfo fileInf = new FileInfo(file);
-                        //        var month = fileInf.CreationTime.Month;
-                        //        var year = fileInf.CreationTime.Year;
-                        //        MonthTypes day = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(month);
-                        //        var uploadFile = GetUploadFile(fileInf, listClouds.LocDownloadCloud + "/" + MonthStats(fileInf.CreationTime));
-                        //        try
-                        //        {
-                        //            await _cloud.UploadFiles(uploadFile);
-                        //            AddInBd($"Файл: {uploadFile.Name} загружен: {DateTime.Now}", 2);
-                        //            fileInf.Delete();
-                        //            summ++;
-                        //        }
-                        //        catch (Exception e)
-                        //        {
-                        //            AddInBd($"Какая-то фигня с проверкой файла Дата: {DateTime.Now}", 2);
-                        //            Thread.Sleep(60000);
-                        //        }
-                        //    }
-                        //}
                         else
                         {
-                            AddInBd($"!~~~ОЗОН/Wb_ПГ_Файлы не были отправлены из папки: {listClouds.Name} так как она пуста.~~~!", 1);
                             Thread.Sleep(10000);
                         }
                     }
-                    catch (Exception e) { AddInBd($"Какая-то фигня в целом с хендлером проверки файлов {e.Message} : {DateTime.Now}", 1); }
+                    catch (Exception e) {  }
                 }
             }
             //if (summ > 10)
@@ -283,27 +222,6 @@ namespace ClientMonitor.Application.Handler
             for (int i = 0; i < leght - 2; i++)
                 files[i] = mas[i];
             return files;
-        }
-
-        /// <summary>
-        /// Добавление логов в бд
-        /// </summary>
-        /// <param name="message"></param>
-        private void AddInBd(string message, int error)
-        {
-            LogTypes type = LogTypes.Information;
-            if (error == 1)
-            {
-                type = LogTypes.Error;
-            }
-
-            LogInfo log = new LogInfo
-            {
-                TypeLog = type,
-                Text = message,
-                DateTime = DateTime.Now
-            };
-            _dbLog.AddInDb(log);
         }
     }
 }
