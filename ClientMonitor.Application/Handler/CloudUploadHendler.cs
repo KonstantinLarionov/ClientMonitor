@@ -128,16 +128,9 @@ namespace ClientMonitor.Application.Handler
                     {
                         DateTime dt = DateTime.Now;
                         string path = listClouds.LocDownloadVideo + "\\" + MonthStats(dt);
+                        DirectoryInfo dirInfo = new DirectoryInfo(path);
+                        dirInfo.Delete();
 
-                        if (Directory.Exists(path))
-                        {
-                            DirectoryInfo dirInfo = new DirectoryInfo(path);
-                            dirInfo.Delete();
-                        }
-                        else
-                        {
-                            Thread.Sleep(10000);
-                        }
                     }
                     catch (Exception e) { }
                 }
