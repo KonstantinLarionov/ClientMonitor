@@ -33,7 +33,7 @@ namespace ClientMonitor.Application.Handler
 
                     DirectoryInfo dirInfo = new DirectoryInfo(listClouds.LocDownloadVideo + "\\" + MonthStats(dt));
                     DirectoryInfo dirVideoInfo = new DirectoryInfo(listClouds.LocDownloadCloud + "\\" + MonthStats(dt));
-                    if (!dirVideoInfo.Exists)
+                    if (dirVideoInfo.Exists)
                     {
                         dirVideoInfo.Create();
                     }

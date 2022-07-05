@@ -37,19 +37,19 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Зал",
-                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.3:554/stream1"),
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.9:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур",
-                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.10:554/stream1"),
+                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.7:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Выдача",
-                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.9:554/stream1"),
+                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.3:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Выдача"
             },
             new ControlVideoInfo
@@ -124,7 +124,6 @@ namespace ClientMonitor.Application.Handler
                     .ToList();
             }
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
-            int i = -1;
             foreach (var item in _listCam)
             {
                 Thread thread = new Thread(() =>
@@ -138,7 +137,6 @@ namespace ClientMonitor.Application.Handler
                     }
                 });
                 _threads.Add(thread);
-                i++;
             }
             _threads.ForEach(x => x.Start());
         }
