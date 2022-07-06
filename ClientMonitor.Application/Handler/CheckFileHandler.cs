@@ -33,7 +33,7 @@ namespace ClientMonitor.Application.Handler
 
                     DirectoryInfo dirInfo = new DirectoryInfo(listClouds.LocDownloadVideo + "\\" + MonthStats(dt));
                     DirectoryInfo dirVideoInfo = new DirectoryInfo(listClouds.LocDownloadCloud + "\\" + MonthStats(dt));
-                    if (dirVideoInfo.Exists)
+                    if (!dirVideoInfo.Exists)
                     {
                         dirVideoInfo.Create();
                     }
@@ -46,7 +46,8 @@ namespace ClientMonitor.Application.Handler
 
                         if (fileInf.Length > 300000)
                         {
-                            fileInf.MoveTo(listClouds.LocDownloadCloud + "\\" + MonthStats(dt) + "\\" + fileInf.Name);
+                            var k = listClouds.LocDownloadCloud + "\\" + MonthStats(dt) + "\\" + fileInf.Name;
+                            fileInf.MoveTo(k);
                         }
                         else 
                         {
@@ -55,7 +56,7 @@ namespace ClientMonitor.Application.Handler
                     }
                     //dirInfo.Delete(true);
                 }
-                catch { }
+                catch (Exception e) { }
             }
         }
 

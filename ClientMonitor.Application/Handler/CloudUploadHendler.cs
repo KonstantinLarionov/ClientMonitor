@@ -152,7 +152,7 @@ namespace ClientMonitor.Application.Handler
                         if (Directory.Exists(path))
                         {
                                 DirectoryInfo dirInfo = new DirectoryInfo(path);
-                                dirInfo.Delete();
+                                dirInfo.Delete(true);
                         }
                         else
                         {

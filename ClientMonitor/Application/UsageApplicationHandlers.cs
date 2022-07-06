@@ -28,7 +28,7 @@ namespace ClientMonitor.Application
                 {
                     try
                     {
-                        if (DateTime.Now.Hour > 9 & DateTime.Now.Hour < 11)
+                        if (DateTime.Now.Hour==9)
                         {
                             handle.Invoke(service);
                             Thread.Sleep(3600000);
@@ -58,7 +58,7 @@ namespace ClientMonitor.Application
                 {
                     try
                     {
-                        if (DateTime.Now.Hour > 0 & DateTime.Now.Hour < 2)
+                        if (DateTime.Now.Hour ==0)
                         {
                             if (DateTime.Now.Minute > 10)
                             {
