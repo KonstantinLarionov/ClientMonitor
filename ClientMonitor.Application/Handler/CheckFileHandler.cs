@@ -48,8 +48,12 @@ namespace ClientMonitor.Application.Handler
                         {
                             fileInf.MoveTo(listClouds.LocDownloadCloud + "\\" + MonthStats(dt) + "\\" + fileInf.Name);
                         }
+                        else 
+                        {
+                            fileInf.Delete();
+                        }
                     }
-                    dirInfo.Delete(true);
+                    //dirInfo.Delete(true);
                 }
                 catch { }
             }

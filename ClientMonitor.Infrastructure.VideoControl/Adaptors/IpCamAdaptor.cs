@@ -60,7 +60,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             _videoInfo = info;
             _libVLC = new LibVLC();
             _mediaPlayer = new MediaPlayer(_libVLC);
-            _mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
+            //_mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
             ////_mediaPlayer.EncounteredError+=(_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
             //_mediaPlayer.Stopped += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
             ////_mediaPlayer.Playing += (_2, _3) => RestartMediaPlayer(_libVLC, _mediaPlayer);

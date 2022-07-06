@@ -49,7 +49,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Выдача",
-                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.3:554/stream1"),
+                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.10:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Выдача"
             },
             new ControlVideoInfo
