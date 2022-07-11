@@ -14,7 +14,7 @@ namespace ClientMonitor.Application
             //services.AddSingleton<IExternalMonitorHandler, ExternalMonitorHandler>();
             //services.AddSingleton<IPcMonitoringHandler, PcMonitoringHandler>();
             services.AddSingleton<IVideoControlHandler, VideoControlHandler>();
-            services.AddSingleton<ISwapFileHandler, SwapFileHandler>();
+            services.AddSingleton<ICheckFileHandler, CheckFileHandler>();
             //services.AddSingleton<IRegruHandler, RegruHandler>();
             //services.AddSingleton<IMetrikaHandler, MetrikaHandler>();
         }

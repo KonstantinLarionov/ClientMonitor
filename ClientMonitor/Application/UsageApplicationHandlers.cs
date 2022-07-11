@@ -49,41 +49,11 @@ namespace ClientMonitor.Application
         /// </summary>
         /// <param name="application"></param>
         /// <param name="handle"></param>
-        public static void UseCheckFiles(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
+        public static void UseCheckFile(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
         {
             Thread thread = new Thread(() =>
             {
                 var service = application.ApplicationServices.GetRequiredService<ICheckFileHandler>();
-                while (true)
-                {
-                    try
-                    {
-                        if (DateTime.Now.Hour > 2)
-                        {
-                            handle.Invoke(service);
-                            Thread.Sleep(3600000);
-                        }
-                        else
-                        {
-                            Thread.Sleep(3600000);
-                        }
-                    }
-                    catch { }
-                }
-            });
-            thread.Start();
-        }
-
-        /// <summary>
-        /// Загрузка в облако
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="handle"></param>
-        public static void UseSwapFile(this IApplicationBuilder application, Action<ISwapFileHandler> handle)
-        {
-            Thread thread = new Thread(() =>
-            {
-                var service = application.ApplicationServices.GetRequiredService<ISwapFileHandler>();
                 while (true)
                 {
                     try
