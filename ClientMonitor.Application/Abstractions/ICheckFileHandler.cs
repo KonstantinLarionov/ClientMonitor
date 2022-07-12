@@ -1,5 +1,4 @@
-﻿
-namespace ClientMonitor.Application.Abstractions
+﻿namespace ClientMonitor.Application.Abstractions
 {
     /// <summary>
     /// интерфейс хендлера на проверку фАЙЛОВ

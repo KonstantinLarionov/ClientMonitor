@@ -86,12 +86,7 @@ namespace ClientMonitor
                 cloudHandler.Handle();
             });
 
-            app.UseSwapFile(checkFileHandler =>
-            {
-                checkFileHandler.SwapFileHandle();
-            });
-
-            app.UseCheckFiles(checkFileHandler =>
+            app.UseCheckFile(checkFileHandler =>
             {
                 checkFileHandler.CheckFileHandle();
             });

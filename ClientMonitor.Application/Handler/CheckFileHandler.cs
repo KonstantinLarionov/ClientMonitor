@@ -17,7 +17,7 @@ namespace ClientMonitor.Application.Handler
         /// <summary>
         /// Подключение библиотек
         /// </summary>
-        public CheckFileHandler(INotificationFactory notificationFactory) 
+        public CheckFileHandler(INotificationFactory notificationFactory)
         {
             NotificationFactory = notificationFactory;
         }
@@ -27,27 +27,38 @@ namespace ClientMonitor.Application.Handler
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
             foreach (var listClouds in _listClouds)
             {
-                if (Directory.Exists(listClouds.LocDownloadVideo))
+                try
                 {
                     DateTime dt = DateTime.Now;
-                    string[] allFoundFiles = Directory.GetFiles(listClouds.LocDownloadVideo + "\\" + MonthStats(dt), "", SearchOption.AllDirectories);
-                    int i = 0;
-                    foreach (string file in allFoundFiles)
+
+                    DirectoryInfo dirInfo = new DirectoryInfo(listClouds.LocDownloadVideo + "\\" + MonthStats(dt));
+                    DirectoryInfo dirVideoInfo = new DirectoryInfo(listClouds.LocDownloadCloud + "\\" + MonthStats(dt));
+                    if (!dirVideoInfo.Exists)
                     {
-                        FileInfo fi = new FileInfo(file);
-                        if (fi.Length < 3072)
+                        dirVideoInfo.Create();
+                    }
+
+                    string[] allFoundFiles = Directory.GetFiles(listClouds.LocDownloadVideo + "\\" + MonthStats(dt), "", SearchOption.AllDirectories);
+
+                    foreach (var file in allFoundFiles)
+                    {
+                        FileInfo fileInf = new FileInfo(file);
+
+                        if (fileInf.Length > 300000)
                         {
-                            i++;
+                            var k = listClouds.LocDownloadCloud + "\\" + MonthStats(dt) + "\\" + fileInf.Name;
+                            fileInf.MoveTo(k);
+                        }
+                        else 
+                        {
+                            fileInf.Delete();
                         }
                     }
-                    if (i>30)
-                    {
-                        notifyer.SendMessage("-742266994", listClouds.Name+" Не пишет видосики");
-                    }
+                    //dirInfo.Delete(true);
                 }
+                catch (Exception e) { }
             }
         }
-
 
         /// <summary>
         /// Список параметров для выгрузки в облако
