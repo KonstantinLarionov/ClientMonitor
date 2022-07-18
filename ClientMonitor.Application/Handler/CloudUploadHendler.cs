@@ -107,7 +107,7 @@ namespace ClientMonitor.Application.Handler
         /// <returns></returns>
         private static string MonthStats(DateTime dateTime)
         {
-            DateTime twoday = dateTime.AddDays(-1);
+            DateTime twoday = dateTime.AddDays(-2);
             MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(twoday.Month);
             string data = $"{twoday.Year}\\{monthTypes}\\{twoday.Day}";
             return data;
@@ -129,7 +129,7 @@ namespace ClientMonitor.Application.Handler
                         DateTime dt = DateTime.Now;
                         string path = listClouds.LocDownloadVideo + "\\" + MonthStats(dt);
                         DirectoryInfo dirInfo = new DirectoryInfo(path);
-                        dirInfo.Delete();
+                        dirInfo.Delete(true);
 
                     }
                     catch (Exception e) { }
