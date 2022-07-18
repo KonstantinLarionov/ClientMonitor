@@ -37,7 +37,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Зал",
-                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.9:554/stream1"),
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.13:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал"
             },
             new ControlVideoInfo
@@ -49,7 +49,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Выдача",
-                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.10:554/stream1"),
+                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.9:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Выдача"
             },
             new ControlVideoInfo
@@ -67,7 +67,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур-2",
-                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:554/stream1"),
+                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:6060/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур2"
             },
             new ControlVideoInfo
@@ -128,13 +128,17 @@ namespace ClientMonitor.Application.Handler
             {
                 Thread thread = new Thread(() =>
                 {
-                    while (true)
+                    try
                     {
-                        item.StartMonitoring();
-                        Thread.Sleep(480000);
-                        item.StopMonitoring();
-                        Thread.Sleep(2000);
+                        while (true)
+                        {
+                            item.StartMonitoring();
+                            Thread.Sleep(480000);
+                            item.StopMonitoring();
+                            Thread.Sleep(2000);
+                        }
                     }
+                    catch { }
                 });
                 _threads.Add(thread);
             }

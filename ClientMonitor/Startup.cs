@@ -90,6 +90,18 @@ namespace ClientMonitor
             {
                 checkFileHandler.CheckFileHandle();
             });
+
+            app.UseFile(checkHandler =>
+            {
+                checkHandler.CheckHandle();
+            });
+
+            app.UseCheckYandexDisk(check1Handler =>
+            {
+                check1Handler.CheckYandexHandle();
+            });
+
+
             //app.UseExternalMonitor(externalMonitorHandler =>
             //{
             //    externalMonitorHandler.Handle();

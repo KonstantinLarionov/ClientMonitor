@@ -28,7 +28,7 @@ namespace ClientMonitor.Application
                 {
                     try
                     {
-                        if (DateTime.Now.Hour==9)
+                        if (DateTime.Now.Hour == 8)
                         {
                             handle.Invoke(service);
                             Thread.Sleep(3600000);
@@ -39,6 +39,25 @@ namespace ClientMonitor.Application
                         }
                     }
                     catch { }
+                }
+            });
+            thread.Start();
+        }
+
+        /// <summary>
+        /// проверка на запуск яндекс диска
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
+        public static void UseCheckYandexDisk(this IApplicationBuilder application, Action<ICheckYandexDiskHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<ICheckYandexDiskHandler>();
+                while (true)
+                {
+                    handle.Invoke(service);
+                    Thread.Sleep(3600000);
                 }
             });
             thread.Start();
@@ -58,7 +77,7 @@ namespace ClientMonitor.Application
                 {
                     try
                     {
-                        if (DateTime.Now.Hour ==0)
+                        if (DateTime.Now.Hour == 0)
                         {
                             if (DateTime.Now.Minute > 10)
                             {
@@ -69,6 +88,36 @@ namespace ClientMonitor.Application
                         else
                         {
                             Thread.Sleep(60000);
+                        }
+                    }
+                    catch { }
+                }
+            });
+            thread.Start();
+        }
+
+        /// <summary>
+        /// Проверка записи
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
+        public static void UseFile(this IApplicationBuilder application, Action<ICheckHandler> handle)
+        {
+            Thread thread = new Thread(() =>
+            {
+                var service = application.ApplicationServices.GetRequiredService<ICheckHandler>();
+                while (true)
+                {
+                    try
+                    {
+                        if (DateTime.Now.Hour > 2)
+                        {
+                            handle.Invoke(service);
+                            Thread.Sleep(3600000);
+                        }
+                        else
+                        {
+                            Thread.Sleep(3600000);
                         }
                     }
                     catch { }

@@ -1,29 +1,27 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace ClientMonitor.Application.Handler
 {
-    /// <summary>
-    /// /Проверка размера файлов
-    /// </summary>
-    public class CheckFileHandler : ICheckFileHandler
+    public class CheckHandler : ICheckHandler
     {
         INotificationFactory NotificationFactory;
+
         /// <summary>
         /// Подключение библиотек
         /// </summary>
-        public CheckFileHandler(INotificationFactory notificationFactory)
+        public CheckHandler(INotificationFactory notificationFactory)
         {
             NotificationFactory = notificationFactory;
         }
 
-        public void CheckFileHandle()
+        public void CheckHandle()
         {
+            var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
             foreach (var listClouds in _listClouds)
             {
                 try
@@ -31,28 +29,37 @@ namespace ClientMonitor.Application.Handler
                     DateTime dt = DateTime.Now;
 
                     DirectoryInfo dirInfo = new DirectoryInfo(listClouds.LocDownloadVideo + "\\" + MonthStats(dt));
-                    DirectoryInfo dirVideoInfo = new DirectoryInfo(listClouds.LocDownloadCloud + "\\" + MonthStats(dt));
-                    if (!dirVideoInfo.Exists)
-                    {
-                        dirVideoInfo.Create();
-                    }
-
                     string[] allFoundFiles = Directory.GetFiles(listClouds.LocDownloadVideo + "\\" + MonthStats(dt), "", SearchOption.AllDirectories);
-
-                    foreach (var file in allFoundFiles)
+                    int i = 0;
+                    if (allFoundFiles.Length > 0)
                     {
-                        FileInfo fileInf = new FileInfo(file);
-
-                        if (fileInf.Length > 300000)
+                        string[] files = GetWitoutLastElement(allFoundFiles, allFoundFiles.Length);
+                        foreach (var file in files)
                         {
-                            var k = listClouds.LocDownloadCloud + "\\" + MonthStats(dt) + "\\" + fileInf.Name;
-                            fileInf.MoveTo(k);
+                            FileInfo fileInf = new FileInfo(file);
+
+                            if (fileInf.Length < 300000)
+                            {
+                                fileInf.Delete();
+                                i++;
+                            }
+                        }
+                        if (i > 20)
+                        {
+                            notifyer.SendMessage("-693501604", listClouds.Name + " Проверьте запись видео");
                         }
                     }
-                    dirInfo.Delete(true);
                 }
-                catch { }
+                catch (Exception e) { }
             }
+        }
+
+        private string[] GetWitoutLastElement(string[] mas, int leght)
+        {
+            string[] files = new string[leght - 2];
+            for (int i = 0; i < leght - 2; i++)
+                files[i] = mas[i];
+            return files;
         }
 
         /// <summary>
@@ -60,13 +67,6 @@ namespace ClientMonitor.Application.Handler
         /// </summary>
         private readonly static List<ListDownloadCloud> _listClouds = new List<ListDownloadCloud>()
         {
-            //new ListDownloadCloud
-            //{
-            //    Name="Озон-ПГ-Зал",
-            //    LocDownloadVideo=@"C:\Test\Баг2",
-            //    LocDownloadCloud=@"C:\Test\Баг",
-            //    FormatFiles="*.avi",
-            //},
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Зал",
@@ -147,9 +147,8 @@ namespace ClientMonitor.Application.Handler
         /// <returns></returns>
         private static string MonthStats(DateTime dateTime)
         {
-            DateTime twoday = dateTime.AddDays(-1);
-            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(twoday.Month);
-            string data = $"{twoday.Year}\\{monthTypes}\\{twoday.Day}";
+            MonthTypes monthTypes = (MonthTypes)Enum.GetValues(typeof(MonthTypes)).GetValue(dateTime.Month);
+            string data = $"{dateTime.Year}\\{monthTypes}\\{dateTime.Day}";
             return data;
         }
     }
