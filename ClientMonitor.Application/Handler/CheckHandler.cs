@@ -40,13 +40,21 @@ namespace ClientMonitor.Application.Handler
 
                             if (fileInf.Length < 300000)
                             {
-                                fileInf.Delete();
                                 i++;
                             }
                         }
                         if (i > 20)
                         {
                             notifyer.SendMessage("-693501604", listClouds.Name + " Проверьте запись видео");
+                            foreach (var file1 in files)
+                            {
+                                FileInfo fileInf = new FileInfo(file1);
+
+                                if (fileInf.Length < 300000)
+                                {
+                                    fileInf.Delete();
+                                }
+                            }
                         }
                     }
                 }

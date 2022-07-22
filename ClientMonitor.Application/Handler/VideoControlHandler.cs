@@ -37,7 +37,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Зал",
-                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.13:554/stream1"),
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.5:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал"
             },
             new ControlVideoInfo
@@ -67,7 +67,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур-2",
-                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:6060/stream1"),
+                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:6060/stream2"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур2"
             },
             new ControlVideoInfo
@@ -79,7 +79,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Выдача-2",
-                PathStream=new Uri("rtsp://WbPgVidacha2:123456@188.186.238.120:6061/stream1"),
+                PathStream=new Uri("rtsp://WbPgVidacha2:123456@188.186.238.120:6061/stream2"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача2"
             },
             new ControlVideoInfo
@@ -91,7 +91,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Ломбард1-ПГ",
-                PathStream=new Uri("rtsp://LombardPg:123456@188.186.238.120:6060/stream1"),
+                PathStream=new Uri("rtsp://LombardPg:123456@188.186.238.120:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард1"
             }
         };

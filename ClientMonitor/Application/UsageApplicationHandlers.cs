@@ -35,7 +35,7 @@ namespace ClientMonitor.Application
                         }
                         else
                         {
-                            Thread.Sleep(3600000);
+                            Thread.Sleep(600000);
                         }
                     }
                     catch { }
