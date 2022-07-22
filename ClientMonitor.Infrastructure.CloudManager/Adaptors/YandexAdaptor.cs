@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using YandexDisk.Client.Clients;
-using YandexDisk.Client.Http;
-using YandexDisk.Client.Protocol;
+//using YandexDisk.Client.Clients;
+//using YandexDisk.Client.Http;
+//using YandexDisk.Client.Protocol;
 
 
 namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
@@ -25,25 +25,25 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
 
         public async Task<List<CloudFilesInfo>> GetFilesAndFoldersAsync()
         {
-
-            var conect = new DiskHttpApi(CloudOptions.Token);
-            var rootFolderData = await conect.MetaInfo.GetInfoAsync(new ResourceRequest { Path = CloudOptions.Path });
-            List<CloudFilesInfo> filesAndFoldersList = new List<CloudFilesInfo>();
-            var items = rootFolderData.Embedded.Items;
-            foreach (var item in items)
-            {
-                filesAndFoldersList.Add(new CloudFilesInfo()
-                {
-                    Name = item.Name,
-                    MimeType = item.MimeType,
-                    Type = (Application.Domanes.Enums.FilesTypes)item.Type,
-                    Created = item.Created,
-                    Size = item.Size,
-                    PublicUrl = item.PublicUrl,
-                    Path = item.Path
-                });
-            }
-            return filesAndFoldersList;
+        throw new System.NotImplementedException();
+            //var conect = new DiskHttpApi(CloudOptions.Token);
+            //var rootFolderData = await conect.MetaInfo.GetInfoAsync(new ResourceRequest { Path = CloudOptions.Path });
+            //List<CloudFilesInfo> filesAndFoldersList = new List<CloudFilesInfo>();
+            //var items = rootFolderData.Embedded.Items;
+            //foreach (var item in items)
+            //{
+            //    filesAndFoldersList.Add(new CloudFilesInfo()
+            //    {
+            //        Name = item.Name,
+            //        MimeType = item.MimeType,
+            //        Type = (Application.Domanes.Enums.FilesTypes)item.Type,
+            //        Created = item.Created,
+            //        Size = item.Size,
+            //        PublicUrl = item.PublicUrl,
+            //        Path = item.Path
+            //    });
+            //}
+            //return filesAndFoldersList;
         }
 
         readonly string _token = "AQAAAAA0xXEYAAdv3jbmZQ52CEQyv4Hw3ibzF_o";
@@ -55,15 +55,21 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
         /// <returns></returns>
         public async Task UploadFiles(UploadedFilesInfo uploadedFilesInfo)
         {
-            //var rootFolderData = await GetFilesAndFoldersAsync();
+        throw new System.NotImplementedException();
+        ////var rootFolderData = await GetFilesAndFoldersAsync();
 
-            var conect = new DiskHttpApi(_token);
-            var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
-            using (var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
-            {
-                await conect.Files.UploadAsync(link, fs);
-            }
-        }
+        //var conect = new DiskHttpApi(_token);
+        //ResourceRequest req = new ResourceRequest();
+        //req.Path = uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name;
+        //var k = await conect.MetaInfo.GetInfoAsync(req);
+        ////await conect.Commands.CreateDictionaryAsync(CloudOptions.Path + uploadedFilesInfo.FolderName);
+        ////var link = await conect.Files.GetUploadLinkAsync(CloudOptions.Path + uploadedFilesInfo.FolderName + "/" + uploadedFilesInfo.Name, overwrite: false);
+        ////using ( var fs = File.OpenRead(uploadedFilesInfo.Path + "/" + uploadedFilesInfo.Name))
+        ////{
+        ////    //await conect.Files.UploadAsync(link, fs, CancellationToken.None);
+        ////    await conect.Files.UploadAsync(link, fs, CancellationToken.None).ConfigureAwait(false);
+        ////}
+    }
 
         /// <summary>
         /// Скачивание файла
@@ -74,9 +80,10 @@ namespace ClientMonitor.Infrastructure.CloudManager.Adaptors
         /// <returns></returns>
         public async Task<bool> DawnloadFiles(string cloudpath, string name, string downloadpath)
         {
-            var conect = new DiskHttpApi(CloudOptions.Token);
-            await conect.Files.DownloadFileAsync(path: Path.Combine(cloudpath, name), Path.Combine(downloadpath, name));
-            return true;
+            throw new System.NotImplementedException();
+            //var conect = new DiskHttpApi(CloudOptions.Token);
+            //await conect.Files.DownloadFileAsync(path: Path.Combine(cloudpath, name), Path.Combine(downloadpath, name));
+            //return true;
         }
     }
 }

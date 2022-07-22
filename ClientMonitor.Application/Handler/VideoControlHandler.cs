@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
 {
@@ -30,62 +31,68 @@ namespace ClientMonitor.Application.Handler
             //new ControlVideoInfo
             //{
             //    Name="Баг",
-            //    PathStream=new Uri("http://158.58.130.148/mjpg/video.mjpg"),
-            //    PathDownload=@"C:\Test\Баг"
+            //    PathStream=new Uri("rtsp://PoligonnayaZal:123456@92.255.240.7:9095/stream2"),
+            //    PathDownload=@"C:\Test\Баг2"
             //},
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Зал",
-                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.7:554/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Зал"
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.5:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур",
-                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.5:554/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур"
+                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.7:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Выдача",
-                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.9:554/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Выдача"
+                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.9:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Выдача"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад",
-                PathStream=new Uri("rtsp://PoligonnayaSklad:123456@192.168.1.11:554/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад"
+                PathStream=new Uri("rtsp://PoligonnayaSklad:123456@192.168.1.11:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад-2",
-                PathStream=new Uri("rtsp://PoligonnayaSklad1:123456@192.168.1.10:554/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Склад2"
+                PathStream=new Uri("rtsp://PoligonnayaSklad1:123456@192.168.1.12:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад2"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур-2",
-                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:554/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Ozon\Тамбур2"
+                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:6060/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур2"
             },
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Выдача",
-                PathStream=new Uri("rtsp://WbPgVidacha1:123456@192.168.1.4:554/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача"
+                PathStream=new Uri("rtsp://WbPgVidacha1:123456@192.168.1.4:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача"
             },
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Выдача-2",
-                PathStream=new Uri("rtsp://WbPgVidacha2:123456@192.168.1.3:554/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Выдача2"
+                PathStream=new Uri("rtsp://WbPgVidacha2:123456@188.186.238.120:6061/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача2"
             },
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Склад",
-                PathStream=new Uri("rtsp://WbPgSklad:123456@192.168.1.6:554/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ТестКамер\Wildberries\Склад"
+                PathStream=new Uri("rtsp://WbPgSklad:123456@192.168.1.6:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад"
+            },
+            new ControlVideoInfo
+            {
+                Name="Ломбард1-ПГ",
+                PathStream=new Uri("rtsp://LombardPg:123456@188.186.238.120:554/stream1"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард1"
             }
         };
 
@@ -117,21 +124,21 @@ namespace ClientMonitor.Application.Handler
                     .ToList();
             }
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
-
             foreach (var item in _listCam)
             {
                 Thread thread = new Thread(() =>
                 {
-                    item.ConnectionErrorEvent += (obj, error) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
-                    //item.InfoAboutLog += (obj, message) => notifyer.SendMessage("-742266994", $"{item.Name} : Ошибка подключения к камере");
-
-                    while (true)
+                    try
                     {
-                        item.StartMonitoring();
-                        Thread.Sleep(480000);
-                        item.StopMonitoring();
-                        Thread.Sleep(2000);
+                        while (true)
+                        {
+                            item.StartMonitoring();
+                            Thread.Sleep(480000);
+                            item.StopMonitoring();
+                            Thread.Sleep(2000);
+                        }
                     }
+                    catch { }
                 });
                 _threads.Add(thread);
             }

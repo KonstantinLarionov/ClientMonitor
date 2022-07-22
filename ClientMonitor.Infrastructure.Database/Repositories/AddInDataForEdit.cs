@@ -1,14 +1,10 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes;
 using ClientMonitor.Infrastructure.Database.Contexts;
-using ClientMonitor.Infrastructure.Database.Entities;
-using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.Database.Repositories
 {

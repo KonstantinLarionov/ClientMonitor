@@ -2,7 +2,7 @@
 using ClientMonitor.Application.Domanes;
 
 using Microsoft.Extensions.Hosting;
-
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,22 +31,16 @@ namespace ClientMonitor.BckgrndWorker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                //var repository = _db;
-                //if (repository.GetData("onOff") != "")
-                //{
-                //    isEnable = ParseBool(repository.GetData("onOff"));
-                //}
-                //if (isEnable == false)
-                //{
+                DateTime dt = DateTime.Now;
+                if (dt.Hour >= 9 && dt.Hour < 11)
+                {
                     await _handle.Handle();
-                    //Thread.Sleep(60000);
-                //}
-                //else
-                //{
-                //    Thread.Sleep(10000);
-                //}
-                await Task.Delay(1000, stoppingToken);
+                    Thread.Sleep(60000);
+                }
+                Thread.Sleep(60000);
+
             }
+            await Task.Delay(1000, stoppingToken);
         }
 
         /// <summary>
