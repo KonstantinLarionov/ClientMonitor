@@ -32,62 +32,62 @@ namespace ClientMonitor.Application.Handler
             {
                 Name="Озон-МГ-Вход",
                 PathStream=new Uri("rtsp://Mgvhod:123456@192.168.2.4:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Вход"
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Ozon\Вход"
             },
             new ControlVideoInfo
             {
                 Name="Озон-МГ-Зал",
                 PathStream=new Uri("rtsp://Mgzall:123456@192.168.2.6:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Зал"
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Ozon\Зал"
             },
             new ControlVideoInfo
             {
                 Name="Озон-МГ-Склад",
                 PathStream=new Uri("rtsp://Mgsklad:123456@192.168.2.7:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Склад"
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Ozon\Склад"
             },
             new ControlVideoInfo
             {
                 Name="Озон-МГ-Склад2",
                 PathStream=new Uri("rtsp://Mgsklad2:123456@192.168.2.5:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Склад2"
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Ozon\Склад2"
             },
 
             new ControlVideoInfo
             {
                 Name="Озон-Wb-Зал",
                 PathStream=new Uri("rtsp://WbMgZal:123456@192.168.2.3:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал"
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Wb\Зал"
             },
             new ControlVideoInfo
             {
                 Name="Озон-Wb-Зал2",
                 PathStream=new Uri("rtsp://WbMgZal2:123456@192.168.2.12:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал2"
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Wb\Зал2"
             },
             new ControlVideoInfo
             {
                 Name="Озон-Wb-Зал3",
                 PathStream=new Uri("rtsp://WbMgZal3:123456@192.168.2.16:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал3"
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Wb\Зал3"
             },
             new ControlVideoInfo
             {
                 Name="Озон-Wb-Кухня",
                 PathStream=new Uri("rtsp://WbMgKyh:123456@192.168.2.15:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Кухня"
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Wb\Кухня"
             },
             new ControlVideoInfo
             {
                 Name="Озон-Wb-Тамбур",
                 PathStream=new Uri("rtsp://WbMgTambur:123456@192.168.2.14:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Тамбур"
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Wb\Тамбур"
             },
             new ControlVideoInfo
             {
                 Name="Озон-Wb-Склад2",
-                PathStream=new Uri("rtsp://WbMgTambur:123456@192.168.2.16:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Склад2"
+                PathStream=new Uri("rtsp://WbMgTambur:123456@192.168.2.19:554/stream1"),
+                PathDownload=@"C:\Users\arina\Documents\Записи с камер\Wb\Склад2"
             }
         };
 

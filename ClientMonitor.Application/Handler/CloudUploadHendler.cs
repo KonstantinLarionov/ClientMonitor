@@ -43,28 +43,28 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="Озон-МГ-Вход",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Вход",
+                LocDownloadVideo=@"C:\Users\arina\Documents\Записи с камер\Ozon\Вход",
                 LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Вход",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-МГ-Зал",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Зал",
+                LocDownloadVideo=@"C:\Users\arina\Documents\Записи с камер\Ozon\Зал",
                 LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Зал",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-МГ-Склад",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Склад",
+                LocDownloadVideo=@"C:\Users\arina\Documents\Записи с камер\Ozon\Склад",
                 LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-МГ-Склад2",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Склад2",
+                LocDownloadVideo=@"C:\Users\arina\Documents\Записи с камер\Ozon\Склад2",
                 LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад2",
                 FormatFiles="*.mp4",
             },
@@ -73,35 +73,35 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="Озон-Wb-Зал",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал",
+                LocDownloadVideo=@"C:\Users\arina\Documents\Записи с камер\Wb\Зал",
                 LocDownloadCloud="ЗаписиКамерыПГ/Wb/Зал",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-Wb-Зал2",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал2",
+                LocDownloadVideo=@"C:\Users\arina\Documents\Записи с камер\Wb\Зал2",
                 LocDownloadCloud="ЗаписиКамерыПГ/Wb/Зал2",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-Wb-Кухня",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Кухня",
+                LocDownloadVideo=@"C:\Users\arina\Documents\Записи с камер\Wb\Кухня",
                 LocDownloadCloud="ЗаписиКамерыПГ/Wb/Кухня",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-Wb-Тамбур",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Тамбур",
+                LocDownloadVideo=@"C:\Users\arina\Documents\Записи с камер\Wb\Тамбур",
                 LocDownloadCloud="ЗаписиКамерыПГ/Wb/Тамбур",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-Wb-Склад2",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Тамбур",
+                LocDownloadVideo=@"C:\Users\arina\Documents\Записи с камер\Wb\Тамбур",
                 LocDownloadCloud="ЗаписиКамерыПГ/Wb/Склад2",
                 FormatFiles="*.mp4",
             }
