@@ -97,13 +97,13 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             Check = true;
             //_mediaPlayer.Play();
             _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-            _media.AddOption(":sout=#gather:file{dst=" + NameFile + "}");
+            _media.AddOption(":sout=#file{dst=" + NameFile + "}");
             _media.AddOption(":sout-keep");
-            _media.AddOption(":live-caching=300");
-            _media.AddOption(":loop");
-            _media.AddOption(":network-caching=1500");
+            //_media.AddOption(":live-caching=300");
+           // _media.AddOption(":loop");
+            //_media.AddOption(":network-caching=1500");
             
-            _media.AddOption(":sout-transcode-venc=x264");
+            //_media.AddOption(":sout-transcode-venc=x264");
 
             //_media.AddOption(":sout-x264-tune=stillimage");
             //_media.AddOption(":sout-x264-lookahead=1");
