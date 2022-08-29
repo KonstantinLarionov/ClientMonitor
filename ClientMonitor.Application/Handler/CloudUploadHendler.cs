@@ -68,12 +68,10 @@ namespace ClientMonitor.Application.Handler
                 LocDownloadCloud="ЗаписиКамерыПГ/Ozon/Склад2",
                 FormatFiles="*.mp4",
             },
-
-
             new ListDownloadCloud
             {
-                Name="Озон-Wb-Зал",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал",
+                Name="Озон-Wb-Зал3",
+                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал3",
                 LocDownloadCloud="ЗаписиКамерыПГ/Wb/Зал",
                 FormatFiles="*.mp4",
             },
