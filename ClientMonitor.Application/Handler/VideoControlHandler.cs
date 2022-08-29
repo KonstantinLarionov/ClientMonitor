@@ -37,13 +37,13 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Зал",
-                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.5:554/stream1"),
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.7:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур",
-                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.7:554/stream1"),
+                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.11:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур"
             },
             new ControlVideoInfo
@@ -55,13 +55,13 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад",
-                PathStream=new Uri("rtsp://PoligonnayaSklad:123456@192.168.1.11:554/stream1"),
+                PathStream=new Uri("rtsp://PoligonnayaSklad:123456@188.186.238.120:9090/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад-2",
-                PathStream=new Uri("rtsp://PoligonnayaSklad1:123456@192.168.1.12:554/stream1"),
+                PathStream=new Uri("rtsp://PoligonnayaSklad1:123456@188.186.238.120:9091/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад2"
             },
             new ControlVideoInfo
@@ -73,7 +73,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Выдача",
-                PathStream=new Uri("rtsp://WbPgVidacha1:123456@192.168.1.4:554/stream1"),
+                PathStream=new Uri("rtsp://WbPgVidacha1:123456@192.168.1.10:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача"
             },
             new ControlVideoInfo
@@ -85,7 +85,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Склад",
-                PathStream=new Uri("rtsp://WbPgSklad:123456@192.168.1.6:554/stream1"),
+                PathStream=new Uri("rtsp://WbPgSklad:123456@192.168.1.9:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад"
             },
             new ControlVideoInfo
@@ -109,6 +109,19 @@ namespace ClientMonitor.Application.Handler
             _threads = new List<Thread>();
             _listCam = new List<IVideoControl>();
             NotificationFactory = notificationFactory;
+
+            using (StreamReader reader = new StreamReader("camers.txt"))
+            {
+                string line;
+                int i = 0;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    
+                    string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    _listReceiveVideoInfoIp[i].PathStream = new Uri(words[1]);
+                    i++;
+                }
+            }
         }
 
         /// <summary>
