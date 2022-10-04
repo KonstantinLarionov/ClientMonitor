@@ -37,7 +37,7 @@ namespace ClientMonitor.Application.Handler
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Зал",
-                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.7:554/stream1"),
+                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.6:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал"
             },
             new ControlVideoInfo
