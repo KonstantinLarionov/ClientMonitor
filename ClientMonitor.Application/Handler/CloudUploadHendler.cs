@@ -71,15 +71,22 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="Озон-Wb-Зал3",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал3",
+                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал",
                 LocDownloadCloud="ЗаписиКамерыПГ/Wb/Зал",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-Wb-Зал2",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал2",
-                LocDownloadCloud="ЗаписиКамерыПГ/Wb/Зал2",
+                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Склад",
+                LocDownloadCloud="ЗаписиКамерыПГ/Wb/Склад",
+                FormatFiles="*.mp4",
+            },
+            new ListDownloadCloud
+            {
+                Name="Озон-Wb-Склад",
+                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал3",
+                LocDownloadCloud="ЗаписиКамерыПГ/Wb/Зал3",
                 FormatFiles="*.mp4",
             },
             new ListDownloadCloud

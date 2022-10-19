@@ -61,9 +61,9 @@ namespace ClientMonitor.Application.Handler
             },
             new ControlVideoInfo
             {
-                Name="Озон-Wb-Зал2",
+                Name="Озон-Wb-Склад",
                 PathStream=new Uri("rtsp://WbMgZal2:123456@192.168.2.12:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал2"
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Склад"
             },
             new ControlVideoInfo
             {
