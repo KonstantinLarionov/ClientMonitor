@@ -29,7 +29,6 @@
     <ProjectReference Include="..\ClientMonitor.Infrastructure.MonitoringDomen\ClientMonitor.Infrastructure.MonitoringDomen.csproj" />
     <ProjectReference Include="..\ClientMonitor.Infrastructure.Monitor\ClientMonitor.Infrastructure.Monitor.csproj" />
     <ProjectReference Include="..\ClientMonitor.Infrastructure.Notifications\ClientMonitor.Infrastructure.Notifications.csproj" />
-    <ProjectReference Include="..\ClientMonitor.Infrastructure.ScreenRecording\ClientMonitor.Infrastructure.ScreenRecording.csproj" />
     <ProjectReference Include="..\ClientMonitor.Infrastructure.VideoControl\ClientMonitor.Infrastructure.VideoControl.csproj" />
   </ItemGroup>
 

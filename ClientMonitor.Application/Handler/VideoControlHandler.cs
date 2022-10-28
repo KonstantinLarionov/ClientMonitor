@@ -93,6 +93,12 @@ namespace ClientMonitor.Application.Handler
                 Name="Ломбард1-ПГ",
                 PathStream=new Uri("rtsp://LombardPg:123456@188.186.238.120:554/stream1"),
                 PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард1"
+            },
+            new ControlVideoInfo
+            {
+                Name="Ломбард2-ПГ",
+                PathStream=new Uri("rtsp://LombardPg:123456@92.255.240.7:9088/stream2"),
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард2"
             }
         };
 
@@ -116,7 +122,6 @@ namespace ClientMonitor.Application.Handler
                 int i = 0;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    
                     string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     _listReceiveVideoInfoIp[i].PathStream = new Uri(words[1]);
                     i++;

@@ -118,6 +118,13 @@ namespace ClientMonitor.Application.Handler
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ломбард/Ломбард1",
                 FormatFiles="*.avi",
             },
+            new ListDownloadCloud
+            {
+                Name="Ломбард2-ПГ",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ломбард\Ломбард2",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ломбард/Ломбард2",
+                FormatFiles="*.avi",
+            },
         };
 
         /// <summary>
