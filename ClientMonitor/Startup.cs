@@ -1,19 +1,13 @@
 using ClientMonitor.Application;
 using ClientMonitor.Infrastructure.Notifications;
-using ClientMonitor.Infrastructure.Database;
-using ClientMonitor.Infrastructure.MonitoringDomen;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using ClientMonitor.BckgrndWorker;
 using ClientMonitor.Infrastructure.CloudManager;
-using ClientMonitor.Infrastructure.Monitor;
 using ClientMonitor.Infrastructure.VideoControl;
-using ClientMonitor.Infrastructure.Metrika;
 
 namespace ClientMonitor
 {
@@ -35,19 +29,7 @@ namespace ClientMonitor
             services.AddInfrastructureHandler();
             services.AddInfrastructureCloudManager();
             services.AddInfrastructureNotifications();
-            services.AddInfrastructureMonitor();
             services.AddInfrastructureVideoMonitor();
-            services.AddInfrastructureDatabase();
-            //services.AddInfrastructureMonitoringDomens();
-            //services.AddInfrastructureMetrika();
-
-            //services.AddHostedService<VideoControlBackgroundWorker>();
-            //services.AddHostedService<CloudUploadingBackgroundWorker>();
-            //services.AddHostedService<StatPcBackgroundWorker>();
-            //services.AddHostedService<ExternalMonitorBackgroundWorker>();
-            //services.AddHostedService<PcMonitoringMessageBackgroundWorker>();
-            //services.AddHostedService<DomenMonitorBackgroundWorker>();
-            //services.AddHostedService<MetrikaBackgroundWorker>();
 
             services.AddSwaggerGen(c =>
             {
@@ -72,12 +54,12 @@ namespace ClientMonitor
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Home}/{id?}");
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Home}/{action=Home}/{id?}");
+            //});
 
 
             #region [WorkBehind]
@@ -101,54 +83,11 @@ namespace ClientMonitor
                 check1Handler.CheckYandexHandle();
             });
 
-
-            //app.UseExternalMonitor(externalMonitorHandler =>
-            //{
-            //    externalMonitorHandler.Handle();
-            //});
-
-            //app.UsePcMonitoring(
-            //cpuHandler =>
-            //{
-            //    cpuHandler.HandleCpu();
-            //},
-            //ramHandler =>
-            //{
-            //    ramHandler.HandleRam();
-            //},
-            //procHandler =>
-            //{
-            //    procHandler.HandleProc();
-            //},
-            // httpHandler =>
-            // {
-            //     httpHandler.HandleHttp();
-            // }
-            //);
-
-            //app.UsePcMonitoringMessage(messageHandler =>
-            //{
-            //    messageHandler.HandleMessageMonitoringPc();
-            //}
-            //);
-
             app.UseVideoControl(videoControlHandler =>
             {
                 videoControlHandler.Handle();
             }
             );
-
-            //app.UseMetrika(metrikaHandler =>
-            //{
-            //    metrikaHandler.Handle();
-            //}
-            //);
-
-            //app.UseMonitoringDomens(domensHandler =>
-            //{
-            //    domensHandler.Handle();
-            //}
-            //);
             #endregion
         }
     }
