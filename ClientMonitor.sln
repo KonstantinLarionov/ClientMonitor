@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32819.101
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor", "ClientMonitor\ClientMonitor.csproj", "{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.CloudManager", "ClientMonitor.Infrastructure.CloudManager\ClientMonitor.Infrastructure.CloudManager.csproj", "{26F0B314-D15A-4080-BB18-BE629FFBAA61}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Application", "ClientMonitor.Application\ClientMonitor.Application.csproj", "{5502BBFD-43D5-4CFD-8EAF-FA0D2C92E96B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.Notifications", "ClientMonitor.Infrastructure.Notifications\ClientMonitor.Infrastructure.Notifications.csproj", "{199DEEF6-207B-4CBE-BEE5-15DD584A7170}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.VideoControl", "ClientMonitor.Infrastructure.VideoControl\ClientMonitor.Infrastructure.VideoControl.csproj", "{A785DDC9-45DA-4407-A846-F306C060BEB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegHelper", "FFmpegHelper\FFmpegHelper.csproj", "{B4084C17-983C-4F92-9BA0-48FA3EC4ACA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor", "ClientMonitor\ClientMonitor.csproj", "{A0646DDA-5A8A-4134-909C-2C29CEC95744}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26F0B314-D15A-4080-BB18-BE629FFBAA61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26F0B314-D15A-4080-BB18-BE629FFBAA61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26F0B314-D15A-4080-BB18-BE629FFBAA61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26F0B314-D15A-4080-BB18-BE629FFBAA61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5502BBFD-43D5-4CFD-8EAF-FA0D2C92E96B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5502BBFD-43D5-4CFD-8EAF-FA0D2C92E96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5502BBFD-43D5-4CFD-8EAF-FA0D2C92E96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +31,14 @@ Global
 		{A785DDC9-45DA-4407-A846-F306C060BEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A785DDC9-45DA-4407-A846-F306C060BEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A785DDC9-45DA-4407-A846-F306C060BEB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4084C17-983C-4F92-9BA0-48FA3EC4ACA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4084C17-983C-4F92-9BA0-48FA3EC4ACA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4084C17-983C-4F92-9BA0-48FA3EC4ACA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4084C17-983C-4F92-9BA0-48FA3EC4ACA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0646DDA-5A8A-4134-909C-2C29CEC95744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0646DDA-5A8A-4134-909C-2C29CEC95744}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0646DDA-5A8A-4134-909C-2C29CEC95744}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0646DDA-5A8A-4134-909C-2C29CEC95744}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

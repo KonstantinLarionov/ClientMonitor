@@ -1,6 +1,4 @@
 ﻿using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Application.Abstractions.Metrika;
-using ClientMonitor.Application.Domanes;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,11 +17,11 @@ namespace ClientMonitor.Application
         /// </summary>
         /// <param name="application"></param>
         /// <param name="handle"></param>
-        public static void UseCloudUploading(this IApplicationBuilder application, Action<ICludUploadHendler> handle)
+        public static void UseCloudUploading(this IApplicationBuilder application, Action<IOldFileDeleteHandler> handle)
         {
             Thread thread = new Thread(() =>
             {
-                var service = application.ApplicationServices.GetRequiredService<ICludUploadHendler>();
+                var service = application.ApplicationServices.GetRequiredService<IOldFileDeleteHandler>();
                 while (true)
                 {
                     try

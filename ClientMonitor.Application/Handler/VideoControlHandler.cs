@@ -18,7 +18,6 @@ namespace ClientMonitor.Application.Handler
     {
 
         private readonly IVideoControlFactory _videoControlFactory;
-        private readonly IRepository<LogInfo> _dbLog;
         private readonly List<Thread> _threads;
         private List<IVideoControl> _listCam;
         INotificationFactory NotificationFactory;
@@ -31,8 +30,20 @@ namespace ClientMonitor.Application.Handler
             //new ControlVideoInfo
             //{
             //    Name="Баг",
-            //    PathStream=new Uri("rtsp://PoligonnayaZal:123456@92.255.240.7:9095/stream2"),
-            //    PathDownload=@"C:\Test\Баг2"
+            //    PathStream=new Uri("rtsp://LombardPg:123456@92.255.240.7:9088/stream2"),
+            //    PathDownload=@"C:\Projects\AFC\Камеры\Баг2"
+            //},
+            //new ControlVideoInfo
+            //{
+            //    Name="Баг3",
+            //    PathStream=new Uri("rtsp://PoligonnayaZal:123456@92.255.240.7:9094/stream2"),
+            //    PathDownload=@"C:\Projects\AFC\Камеры\Баг3"
+            //},
+            //new ControlVideoInfo
+            //{
+            //    Name="Баг4",
+            //    PathStream=new Uri("rtsp://Goldencat:123456@92.255.240.7:9095/stream2"),
+            //    PathDownload=@"C:\Projects\AFC\Камеры\Баг4"
             //},
             new ControlVideoInfo
             {
@@ -108,31 +119,30 @@ namespace ClientMonitor.Application.Handler
         /// <param name="videoFactory">Видео</param>
         /// <param name="repositoryLog">Репозиторий логов</param>
         /// <param name="notificationFactory">Уведомления</param>
-        public VideoControlHandler(IVideoControlFactory videoFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory)
+        public VideoControlHandler(IVideoControlFactory videoFactory, INotificationFactory notificationFactory)
         {
             _videoControlFactory = videoFactory;
-            _dbLog = repositoryLog;
             _threads = new List<Thread>();
             _listCam = new List<IVideoControl>();
             NotificationFactory = notificationFactory;
 
-            using (StreamReader reader = new StreamReader("camers.txt"))
-            {
-                string line;
-                int i = 0;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    _listReceiveVideoInfoIp[i].PathStream = new Uri(words[1]);
-                    i++;
-                }
-            }
+            //using (StreamReader reader = new StreamReader("camers.txt"))
+            //{
+            //    string line;
+            //    int i = 0;
+            //    while ((line = reader.ReadLine()) != null)
+            //    {
+            //        string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            //        _listReceiveVideoInfoIp[i].PathStream = new Uri(words[1]);
+            //        i++;
+            //    }
+            //}
         }
 
         /// <summary>
         /// Бизнес-логика? 
         /// </summary>
-        public void Handle()
+        public async Task Handle()
         {
             DateTime dt = DateTime.Now;
             if (_videoControlFactory.CreateAdaptors(_listReceiveVideoInfoIp, VideoMonitoringTypes.IpCamera))
@@ -144,15 +154,13 @@ namespace ClientMonitor.Application.Handler
             var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
             foreach (var item in _listCam)
             {
-                Thread thread = new Thread(() =>
+                Thread thread = new Thread(async () =>
                 {
                     try
                     {
                         while (true)
                         {
-                            item.StartMonitoring();
-                            Thread.Sleep(480000);
-                            item.StopMonitoring();
+                            await item.StartMonitoring();
                             Thread.Sleep(2000);
                         }
                     }

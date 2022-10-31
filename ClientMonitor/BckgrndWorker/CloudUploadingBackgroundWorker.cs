@@ -1,6 +1,5 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes;
-
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
@@ -13,13 +12,11 @@ namespace ClientMonitor.BckgrndWorker
     /// </summary>
     public class CloudUploadingBackgroundWorker : BackgroundService
     {
-        readonly ICludUploadHendler _handle;
-        readonly IRepository<DataForEditInfo> _db;
+        readonly IOldFileDeleteHandler _handle;
         private static bool isEnable = false;
-        public CloudUploadingBackgroundWorker(ICludUploadHendler handle, IRepository<DataForEditInfo> db)
+        public CloudUploadingBackgroundWorker(IOldFileDeleteHandler handle)
         {
             _handle = handle;
-            _db = db;
         }
 
         /// <summary>

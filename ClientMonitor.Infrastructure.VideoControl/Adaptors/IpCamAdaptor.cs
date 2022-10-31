@@ -1,11 +1,10 @@
 ﻿using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Domanes.Enums;
 using ClientMonitor.Application.Domanes.Objects;
-using LibVLCSharp.Shared;
+using ColinChang.FFmpegHelper;
 using System;
 using System.IO;
-using System.Reflection;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
 {
@@ -47,9 +46,6 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         public event EventHandler InfoAboutLog;
 
         private readonly ControlVideoInfo _videoInfo;
-        private readonly MediaPlayer _mediaPlayer;
-        private Media _media;
-        LibVLC _libVLC;
         private string Pathfile;
         /// <summary>
         /// Настройка плеера, подгрузка библиотек
@@ -58,22 +54,6 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         public IpCamAdaptor(ControlVideoInfo info)
         {
             _videoInfo = info;
-            _libVLC = new LibVLC();
-            _mediaPlayer = new MediaPlayer(_libVLC);
-
-            _mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
-            ////_mediaPlayer.EncounteredError+=(_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
-            //_mediaPlayer.Stopped += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
-            ////_mediaPlayer.Playing += (_2, _3) => RestartMediaPlayer(_libVLC, _mediaPlayer);
-            //_mediaPlayer.Paused += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
-            //_mediaPlayer.LengthChanged+= CheckSize;
-        }
-        private bool Check = false;
-        
-        private void DelayRestartMediaPlayer(LibVLC libVLC, MediaPlayer mediaPlayer)
-        {
-            Thread.Sleep(10000);
-            _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
         }
 
         /// <summary>
@@ -88,48 +68,18 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
             return data;
         }
 
-
         /// <summary>
         /// запуск плеера
         /// </summary>
-        public void StartMonitoring()
+        public async Task StartMonitoring()
         {
-            Check = true;
-            //_mediaPlayer.Play();
-            _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-            _media.AddOption(":sout=#gather:file{dst=" + NameFile + "}");
-            _media.AddOption(":sout-keep");
-            _media.AddOption(":live-caching=300");
-            _media.AddOption(":loop");
-            _media.AddOption(":network-caching=1500");
-            //_media.AddOption(":live-caching=300");
-            //_media.AddOption(":loop");
-            //_media.AddOption(":network-caching=1500");
-
-            _mediaPlayer.Play(_media);
-
-            Thread.Sleep(50000);
-
-            //try
-            //{
-            //    long length = new FileInfo(Pathfile).Length / 1024;
-            //    if (length < 400)
-            //    {
-            //        _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
-            //    }
-            //}
-            //catch { }
-        }
-
-        /// <summary>
-        /// остановка плеера
-        /// </summary>
-        public void StopMonitoring()
-        {
-            if (_mediaPlayer.IsPlaying == true)
-            {
-                _mediaPlayer.Stop();
-            }
+            RtspHelper rtsp = new RtspHelper(_videoInfo.PathStream.ToString(), 3000);
+            await rtsp.Record2VideoFileAsync(
+                NameFile,
+                TimeSpan.FromSeconds(480),
+                null,
+                Transport.Tcp
+            );
         }
     }
 }
