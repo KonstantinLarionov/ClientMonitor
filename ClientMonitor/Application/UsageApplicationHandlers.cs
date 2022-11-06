@@ -1,7 +1,4 @@
 ﻿using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Application.Abstractions.Metrika;
-using ClientMonitor.Application.Domanes;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

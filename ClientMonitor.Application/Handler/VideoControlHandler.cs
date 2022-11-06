@@ -18,100 +18,84 @@ namespace ClientMonitor.Application.Handler
     {
 
         private readonly IVideoControlFactory _videoControlFactory;
-        private readonly IRepository<LogInfo> _dbLog;
         private readonly List<Thread> _threads;
         private List<IVideoControl> _listCam;
         INotificationFactory NotificationFactory;
 
-        /// <summary>
-        /// Лист с параметрами камер, stream1 - 1080p (1920×1080) stream2 - 360p (640×360)
-        /// </summary>
-        private readonly List<ControlVideoInfo> _listReceiveVideoInfoIp = new List<ControlVideoInfo>()
+    private readonly List<ControlVideoInfo> _listReceiveVideoInfoIp = new List<ControlVideoInfo>()
         {
-            //new ControlVideoInfo
-            //{
-            //    Name="Баг",
-            //    PathStream=new Uri("rtsp://PoligonnayaZal:123456@92.255.240.7:9095/stream2"),
-            //    PathDownload=@"C:\Test\Баг2"
-            //},
             new ControlVideoInfo
             {
-                Name="Озон-ПГ-Зал",
-                PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.6:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал"
+                Name="Озон-МГ-Вход",
+                PathStream=new Uri("rtsp://Mgvhod:123456@192.168.2.4:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Ozon\Вход"
             },
             new ControlVideoInfo
             {
-                Name="Озон-ПГ-Тамбур",
-                PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.11:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур"
+                Name="Озон-МГ-Зал",
+                PathStream=new Uri("rtsp://Mgzall:123456@192.168.2.6:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Ozon\Зал"
             },
             new ControlVideoInfo
             {
-                Name="Озон-ПГ-Выдача",
-                PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.8:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Выдача"
+                Name="Озон-МГ-Склад",
+                PathStream=new Uri("rtsp://Mgsklad:123456@192.168.2.11:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Ozon\Склад"
             },
             new ControlVideoInfo
             {
-                Name="Озон-ПГ-Склад",
-                PathStream=new Uri("rtsp://PoligonnayaSklad:123456@188.186.238.120:9090/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад"
+                Name="Озон-МГ-Склад2",
+                PathStream=new Uri("rtsp://Mgsklad2:123456@192.168.2.5:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Ozon\Склад2"
+            },
+
+            new ControlVideoInfo
+            {
+                Name="Wb-МГ-Зал",
+                PathStream=new Uri("rtsp://WbMgZal:123456@192.168.2.3:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Зал"
             },
             new ControlVideoInfo
             {
-                Name="Озон-ПГ-Склад-2",
-                PathStream=new Uri("rtsp://PoligonnayaSklad1:123456@188.186.238.120:9091/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад2"
+                Name="Wb-МГ-Склад",
+                PathStream=new Uri("rtsp://WbMgZal2:123456@192.168.2.12:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Склад"
             },
             new ControlVideoInfo
             {
-                Name="Озон-ПГ-Тамбур-2",
-                PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:6060/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур2"
+                Name="Wb-МГ-Зал3",
+                PathStream=new Uri("rtsp://WbMgZal3:123456@192.168.2.16:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Зал3"
             },
             new ControlVideoInfo
             {
-                Name="WB-ПГ-Выдача",
-                PathStream=new Uri("rtsp://WbPgVidacha1:123456@192.168.1.10:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача"
+                Name="Wb-МГ-Кухня",
+                PathStream=new Uri("rtsp://WbMgKyh:123456@192.168.2.15:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Кухня"
             },
             new ControlVideoInfo
             {
-                Name="WB-ПГ-Выдача-2",
-                PathStream=new Uri("rtsp://WbPgVidacha2:123456@188.186.238.120:6061/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача2"
+                Name="Wb-МГ-Тамбур",
+                PathStream=new Uri("rtsp://WbMgTambur:123456@192.168.2.14:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Тамбур"
             },
             new ControlVideoInfo
             {
-                Name="WB-ПГ-Склад",
-                PathStream=new Uri("rtsp://WbPgSklad:123456@192.168.1.9:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад"
-            },
-            new ControlVideoInfo
-            {
-                Name="Ломбард1-ПГ",
-                PathStream=new Uri("rtsp://LombardPg:123456@188.186.238.120:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард1"
-            },
-            new ControlVideoInfo
-            {
-                Name="Ломбард2-ПГ",
-                PathStream=new Uri("rtsp://LombardPg:123456@92.255.240.7:9088/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард2"
+                Name="Wb-МГ-Склад2",
+                PathStream=new Uri("rtsp://MgWbSklad:123456@192.168.2.19:554/stream1"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Склад2"
             }
         };
 
-        /// <summary>
-        /// Подключение библиотек
-        /// </summary>
-        /// <param name="videoFactory">Видео</param>
-        /// <param name="repositoryLog">Репозиторий логов</param>
-        /// <param name="notificationFactory">Уведомления</param>
-        public VideoControlHandler(IVideoControlFactory videoFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory)
+    /// <summary>
+    /// Подключение библиотек
+    /// </summary>
+    /// <param name="videoFactory">Видео</param>
+    /// <param name="repositoryLog">Репозиторий логов</param>
+    /// <param name="notificationFactory">Уведомления</param>
+    public VideoControlHandler(IVideoControlFactory videoFactory, INotificationFactory notificationFactory)
         {
             _videoControlFactory = videoFactory;
-            _dbLog = repositoryLog;
             _threads = new List<Thread>();
             _listCam = new List<IVideoControl>();
             NotificationFactory = notificationFactory;

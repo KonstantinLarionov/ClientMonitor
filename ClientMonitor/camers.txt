@@ -1,0 +1,10 @@
+Озон-МГ-Вход rtsp://Mgvhod:123456@192.168.2.4:554/stream1
+Озон-МГ-Зал rtsp://Mgzall:123456@192.168.2.6:554/stream1
+Озон-МГ-Склад rtsp://Mgsklad:123456@192.168.2.11:554/stream1
+Озон-МГ-Склад2 rtsp://Mgsklad2:123456@192.168.2.5:554/stream1
+WB-МГ-Зал rtsp://WbMgZal:123456@192.168.2.3:554/stream1
+WB-МГ-Склад rtsp://WbMgZal2:123456@192.168.2.12:554/stream1
+WB-МГ-Зал3 rtsp://WbMgZal3:123456@192.168.2.16:554/stream1
+WB-МГ-Кухня rtsp://WbMgKyh:123456@192.168.2.15:554/stream1
+Wb-МГ-Тамбур rtsp://WbMgTambur:123456@192.168.2.14:554/stream1
+WB-МГ-Склад2 rtsp://MgWbSklad:123456@192.168.2.19:554/stream1
