@@ -1,5 +1,4 @@
 ﻿using ClientMonitor.Application.Abstractions;
-using ClientMonitor.Application.Abstractions.Metrika;
 using ClientMonitor.Application.Domanes;
 
 using Microsoft.AspNetCore.Builder;
@@ -33,119 +32,147 @@ namespace ClientMonitor.Application
             thread.Start();
         }
 
-        ///// <summary>
-        ///// Загрузка в облако
-        ///// </summary>
-        ///// <param name="application"></param>
-        ///// <param name="handle"></param>
-        //public static void UseCheckFile(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
-        //{
-        //    Thread thread = new Thread(() =>
-        //    {
-        //        var service = application.ApplicationServices.GetRequiredService<ICheckFileHandler>();
-        //        while (true)
-        //        {
-        //            if (DateTime.Now.Hour > 0 || DateTime.Now.Hour < 9)
-        //            {
-        //                if (DateTime.Now.Minute > 10)
-        //                {
-        //                    handle.Invoke(service);
-        //                    Thread.Sleep(7200000);
-        //                }
-        //            }
-        //            else
-        //            {
-        //                Thread.Sleep(60000);
-        //            }
-        //        }
-        //    });
-        //    thread.Start();
-        //}
+    ///// <summary>
+    ///// Загрузка в облако
+    ///// </summary>
+    ///// <param name="application"></param>
+    ///// <param name="handle"></param>
+    //public static void UseCheckFile(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
+    //{
+    //    Thread thread = new Thread(() =>
+    //    {
+    //        var service = application.ApplicationServices.GetRequiredService<ICheckFileHandler>();
+    //        while (true)
+    //        {
+    //            if (DateTime.Now.Hour > 0 || DateTime.Now.Hour < 9)
+    //            {
+    //                if (DateTime.Now.Minute > 10)
+    //                {
+    //                    handle.Invoke(service);
+    //                    Thread.Sleep(7200000);
+    //                }
+    //            }
+    //            else
+    //            {
+    //                Thread.Sleep(60000);
+    //            }
+    //        }
+    //    });
+    //    thread.Start();
+    //}
+    /// <summary>
+    /// Проверка записи
+    /// </summary>
+    /// <param name="application"></param>
+    /// <param name="handle"></param>
+    public static void UseFile(this IApplicationBuilder application, Action<ICheckHandler> handle)
+    {
+      Thread thread = new Thread(() =>
+      {
+        var service = application.ApplicationServices.GetRequiredService<ICheckHandler>();
+        while (true)
+        {
+          try
+          {
+            if (DateTime.Now.Hour > 2)
+            {
+              handle.Invoke(service);
+              Thread.Sleep(3600000);
+            }
+            else
+            {
+              Thread.Sleep(3600000);
+            }
+          }
+          catch { }
+        }
+      });
+      thread.Start();
+    }
+    /// <summary>
+    /// Ежечасовая проверка сайтов и серверов
+    /// </summary>
+    /// <param name="application"></param>
+    /// <param name="handle"></param>
+    //public static void UseExternalMonitor(this IApplicationBuilder application, Action<IExternalMonitorHandler> handle)
+    //{
+    //    Thread thread = new Thread(() =>
+    //    {
+    //        var service = application.ApplicationServices.GetRequiredService<IExternalMonitorHandler>();
+    //        while (true)
+    //        {
+    //            int time = 3600000;
+    //            handle.Invoke(service);
+    //            Thread.Sleep(time);
 
-        /// <summary>
-        /// Ежечасовая проверка сайтов и серверов
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="handle"></param>
-        //public static void UseExternalMonitor(this IApplicationBuilder application, Action<IExternalMonitorHandler> handle)
-        //{
-        //    Thread thread = new Thread(() =>
-        //    {
-        //        var service = application.ApplicationServices.GetRequiredService<IExternalMonitorHandler>();
-        //        while (true)
-        //        {
-        //            int time = 3600000;
-        //            handle.Invoke(service);
-        //            Thread.Sleep(time);
+    //        }
+    //    });
+    //    thread.Start();
+    //}
 
-        //        }
-        //    });
-        //    thread.Start();
-        //}
+    /// <summary>
+    /// Ежесекундная статистика ПК по ЦП, РАМ, ПАКЕТАМ HTTP, ПРОЦЕССАМ
+    /// </summary>
+    /// <param name="application"></param>
+    /// <param name="handlers"></param>
+    //public static void UsePcMonitoring(this IApplicationBuilder application, params Action<IPcMonitoringHandler>[] handlers)
+    //{
+    //    foreach (var i in handlers)
+    //    {
+    //        Thread thread = new Thread(() =>
+    //        {
+    //            var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
+    //            while (true)
+    //            {
+    //                i.Invoke(service);
+    //                Thread.Sleep(1000);
+    //            }
+    //        });
+    //        thread.Start();
+    //    }
+    //}
 
-        /// <summary>
-        /// Ежесекундная статистика ПК по ЦП, РАМ, ПАКЕТАМ HTTP, ПРОЦЕССАМ
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="handlers"></param>
-        //public static void UsePcMonitoring(this IApplicationBuilder application, params Action<IPcMonitoringHandler>[] handlers)
-        //{
-        //    foreach (var i in handlers)
-        //    {
-        //        Thread thread = new Thread(() =>
-        //        {
-        //            var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-        //            while (true)
-        //            {
-        //                i.Invoke(service);
-        //                Thread.Sleep(1000);
-        //            }
-        //        });
-        //        thread.Start();
-        //    }
-        //}
+    /// <summary>
+    /// Ежедневная статистика утром и вечером за день
+    /// </summary>
+    /// <param name="application"></param>
+    /// <param name="handle"></param>
+    //public static void UsePcMonitoringMessage(this IApplicationBuilder application, Action<IPcMonitoringHandler> handle)
+    //{
+    //    Thread thread = new Thread(() =>
+    //    {
+    //        var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
+    //        DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 30, 0);
+    //        DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0);
+    //        while (true)
+    //        {
+    //            var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
 
-        /// <summary>
-        /// Ежедневная статистика утром и вечером за день
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="handle"></param>
-        //public static void UsePcMonitoringMessage(this IApplicationBuilder application, Action<IPcMonitoringHandler> handle)
-        //{
-        //    Thread thread = new Thread(() =>
-        //    {
-        //        var service = application.ApplicationServices.GetRequiredService<IPcMonitoringHandler>();
-        //        DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 30, 0);
-        //        DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0);
-        //        while (true)
-        //        {
-        //            var repository = application.ApplicationServices.GetRequiredService<IRepository<DataForEditInfo>>();
+    //            DateTime dateTime = DateTime.Now;
+    //            if (date.Hour == dateTime.Hour && dateTime.Minute > 30)
+    //            {
+    //                handle.Invoke(service);
+    //                Thread.Sleep(32400000);
+    //            }
+    //            else if (date1.Hour == dateTime.Hour && dateTime.Minute > 30)
+    //            {
+    //                handle.Invoke(service);
+    //                Thread.Sleep(32400000);
+    //            }
+    //            Thread.Sleep(10000);
 
-        //            DateTime dateTime = DateTime.Now;
-        //            if (date.Hour == dateTime.Hour && dateTime.Minute > 30)
-        //            {
-        //                handle.Invoke(service);
-        //                Thread.Sleep(32400000);
-        //            }
-        //            else if (date1.Hour == dateTime.Hour && dateTime.Minute > 30)
-        //            {
-        //                handle.Invoke(service);
-        //                Thread.Sleep(32400000);
-        //            }
-        //            Thread.Sleep(10000);
-
-        //        }
-        //    });
-        //    thread.Start();
-        //}
+    //        }
+    //    });
+    //    thread.Start();
+    //}
 
 
-        /// <summary>
-        /// Видеопоток
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="handle"></param>
-        public static void UseVideoControl(this IApplicationBuilder application, Action<IVideoControlHandler> handle)
+    /// <summary>
+    /// Видеопоток
+    /// </summary>
+    /// <param name="application"></param>
+    /// <param name="handle"></param>
+    public static void UseVideoControl(this IApplicationBuilder application, Action<IVideoControlHandler> handle)
         {
             Thread thread = new Thread(() =>
             {
