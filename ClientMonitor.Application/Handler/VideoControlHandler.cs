@@ -66,7 +66,7 @@ namespace ClientMonitor.Application.Handler
             {
                 Name="Wb-МГ-Зал3",
                 PathStream=new Uri("rtsp://WbMgZal3:123456@192.168.2.16:554/stream1"),
-                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Зал3"
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал3"
             },
             new ControlVideoInfo
             {
