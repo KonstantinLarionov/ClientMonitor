@@ -7,8 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using ClientMonitor.BckgrndWorker;
-using ClientMonitor.Infrastructure.CloudManager;
 using ClientMonitor.Infrastructure.VideoControl;
 
 namespace ClientMonitor
@@ -29,7 +27,6 @@ namespace ClientMonitor
 
             services.AddControllers();
             services.AddInfrastructureHandler();
-            services.AddInfrastructureCloudManager();
             services.AddInfrastructureNotifications();
             services.AddInfrastructureVideoMonitor();
             //services.AddInfrastructureMonitoringDomens();
