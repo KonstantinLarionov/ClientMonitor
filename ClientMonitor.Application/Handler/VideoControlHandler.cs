@@ -11,22 +11,21 @@ using System.Threading.Tasks;
 
 namespace ClientMonitor.Application.Handler
 {
+  /// <summary>
+  /// Бизнес-логика?
+  /// </summary>
+  public class VideoControlHandler : IVideoControlHandler
+  {
+
+    private readonly IVideoControlFactory _videoControlFactory;
+    private readonly List<Thread> _threads;
+    private List<IVideoControl> _listCam;
+    INotificationFactory NotificationFactory;
+
     /// <summary>
-    /// Бизнес-логика?
+    /// Лист с параметрами камер, stream1 - 1080p (1920×1080) stream2 - 360p (640×360)
     /// </summary>
-    public class VideoControlHandler : IVideoControlHandler
-    {
-
-        private readonly IVideoControlFactory _videoControlFactory;
-        private readonly IRepository<LogInfo> _dbLog;
-        private readonly List<Thread> _threads;
-        private List<IVideoControl> _listCam;
-        INotificationFactory NotificationFactory;
-
-        /// <summary>
-        /// Лист с параметрами камер, stream1 - 1080p (1920×1080) stream2 - 360p (640×360)
-        /// </summary>
-        private readonly List<ControlVideoInfo> _listReceiveVideoInfoIp = new List<ControlVideoInfo>()
+    private readonly List<ControlVideoInfo> _listReceiveVideoInfoIp = new List<ControlVideoInfo>()
         {
             //new ControlVideoInfo
             //{
@@ -54,15 +53,15 @@ namespace ClientMonitor.Application.Handler
             },
             new ControlVideoInfo
             {
-                Name="Озон-ПГ-Склад",
+                Name="Wb-ПГ-Склад",
                 PathStream=new Uri("rtsp://PoligonnayaSklad:123456@188.186.238.120:9090/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад"
             },
             new ControlVideoInfo
             {
-                Name="Озон-ПГ-Склад-2",
+                Name="Wb-ПГ-Склад-2",
                 PathStream=new Uri("rtsp://PoligonnayaSklad1:123456@188.186.238.120:9091/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад2"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад2"
             },
             new ControlVideoInfo
             {
@@ -84,9 +83,9 @@ namespace ClientMonitor.Application.Handler
             },
             new ControlVideoInfo
             {
-                Name="WB-ПГ-Склад",
+                Name="Озон-ПГ-Склад",
                 PathStream=new Uri("rtsp://WbPgSklad:123456@192.168.1.9:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад"
             },
             new ControlVideoInfo
             {
@@ -96,71 +95,74 @@ namespace ClientMonitor.Application.Handler
             },
             new ControlVideoInfo
             {
-                Name="Ломбард2-ПГ",
+                Name="Озон-ПГ-Склад-2",
                 PathStream=new Uri("rtsp://LombardPg:123456@92.255.240.7:9088/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард2"
+                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад2"
             }
         };
 
-        /// <summary>
-        /// Подключение библиотек
-        /// </summary>
-        /// <param name="videoFactory">Видео</param>
-        /// <param name="repositoryLog">Репозиторий логов</param>
-        /// <param name="notificationFactory">Уведомления</param>
-        public VideoControlHandler(IVideoControlFactory videoFactory, IRepository<LogInfo> repositoryLog, INotificationFactory notificationFactory)
-        {
-            _videoControlFactory = videoFactory;
-            _dbLog = repositoryLog;
-            _threads = new List<Thread>();
-            _listCam = new List<IVideoControl>();
-            NotificationFactory = notificationFactory;
+    /// <summary>
+    /// Подключение библиотек
+    /// </summary>
+    /// <param name="videoFactory">Видео</param>
+    /// <param name="repositoryLog">Репозиторий логов</param>
+    /// <param name="notificationFactory">Уведомления</param>
+    public VideoControlHandler(IVideoControlFactory videoFactory, INotificationFactory notificationFactory)
+    {
+      _videoControlFactory = videoFactory;
+      _threads = new List<Thread>();
+      _listCam = new List<IVideoControl>();
+      NotificationFactory = notificationFactory;
 
-            using (StreamReader reader = new StreamReader("camers.txt"))
-            {
-                string line;
-                int i = 0;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    _listReceiveVideoInfoIp[i].PathStream = new Uri(words[1]);
-                    i++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Бизнес-логика? 
-        /// </summary>
-        public void Handle()
+      using (StreamReader reader = new StreamReader("camers.txt"))
+      {
+        string line;
+        int i = 0;
+        while ((line = reader.ReadLine()) != null)
         {
-            DateTime dt = DateTime.Now;
-            if (_videoControlFactory.CreateAdaptors(_listReceiveVideoInfoIp, VideoMonitoringTypes.IpCamera))
-            {
-                _listCam = _videoControlFactory
-                    .GetAdaptors(VideoMonitoringTypes.IpCamera)
-                    .ToList();
-            }
-            var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
-            foreach (var item in _listCam)
-            {
-                Thread thread = new Thread(() =>
-                {
-                    try
-                    {
-                        while (true)
-                        {
-                            item.StartMonitoring();
-                            Thread.Sleep(480000);
-                            item.StopMonitoring();
-                            Thread.Sleep(2000);
-                        }
-                    }
-                    catch { }
-                });
-                _threads.Add(thread);
-            }
-            _threads.ForEach(x => x.Start());
+          string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+          _listReceiveVideoInfoIp[i].PathStream = new Uri(words[1]);
+          i++;
         }
+      }
     }
+
+    /// <summary>
+    /// Бизнес-логика? 
+    /// </summary>
+    public void Handle()
+    {
+      DateTime dt = DateTime.Now;
+      if (_videoControlFactory.CreateAdaptors(_listReceiveVideoInfoIp, VideoMonitoringTypes.IpCamera))
+      {
+        _listCam = _videoControlFactory
+            .GetAdaptors(VideoMonitoringTypes.IpCamera)
+            .ToList();
+      }
+
+      var notifyer = NotificationFactory.GetNotification(NotificationTypes.Telegram);
+
+      foreach (var item in _listCam)
+      {
+        Thread thread = new Thread(() =>
+        {
+          while (true)
+          {
+            try
+            {
+              item.StartMonitoring();
+              Thread.Sleep(480000);
+              item.StopMonitoring();
+              Thread.Sleep(10000);
+            }
+            catch { }
+          }
+        });
+
+        _threads.Add(thread);
+      }
+
+      _threads.ForEach(x => x.Start());
+    }
+  }
 }

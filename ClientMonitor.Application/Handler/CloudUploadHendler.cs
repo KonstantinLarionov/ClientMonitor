@@ -52,42 +52,42 @@ namespace ClientMonitor.Application.Handler
                 Name="Озон-ПГ-Зал",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Зал",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Зал",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Выдача",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Выдача",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Выдача1",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
-                Name="Озон-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад",
+                Name="Wb-ПГ-Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад1",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
-                Name="Озон-ПГ-Склад-2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2",
+                Name="Wb-ПГ-Склад-2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад2",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад2",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур-2",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Тамбур2",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Тамбур2",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
 
             new ListDownloadCloud
@@ -95,35 +95,35 @@ namespace ClientMonitor.Application.Handler
                 Name="WB-ПГ-Выдача",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="WB-ПГ-Выдача2",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Выдача2",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
-                Name="WB-ПГ-Склад",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
-                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Wildberries/Склад",
-                FormatFiles="*.avi",
+                Name="Озон-ПГ-Склад",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад",
+                LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ozon/Склад",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Ломбард1-ПГ",
                 LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ломбард\Ломбард1",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ломбард/Ломбард1",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
-                Name="Ломбард2-ПГ",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ломбард\Ломбард2",
+                Name="Озон-ПГ-Склад2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Ozon\Склад2",
                 LocDownloadCloud="Компьютер DESKTOP-UCI85FS/ЗаписиКамер/Ломбард/Ломбард2",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
         };
 

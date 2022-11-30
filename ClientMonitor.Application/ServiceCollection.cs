@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ClientMonitor.Application.Abstractions;
 using ClientMonitor.Application.Handler;
-using ClientMonitor.Application.Abstractions.Metrika;
 
 namespace ClientMonitor.Application
 {

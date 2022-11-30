@@ -14,12 +14,10 @@ namespace ClientMonitor.BckgrndWorker
     public class CloudUploadingBackgroundWorker : BackgroundService
     {
         readonly ICludUploadHendler _handle;
-        readonly IRepository<DataForEditInfo> _db;
         private static bool isEnable = false;
-        public CloudUploadingBackgroundWorker(ICludUploadHendler handle, IRepository<DataForEditInfo> db)
+        public CloudUploadingBackgroundWorker(ICludUploadHendler handle)
         {
             _handle = handle;
-            _db = db;
         }
 
         /// <summary>

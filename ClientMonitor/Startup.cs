@@ -1,7 +1,5 @@
 using ClientMonitor.Application;
 using ClientMonitor.Infrastructure.Notifications;
-using ClientMonitor.Infrastructure.Database;
-using ClientMonitor.Infrastructure.MonitoringDomen;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,9 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ClientMonitor.BckgrndWorker;
 using ClientMonitor.Infrastructure.CloudManager;
-using ClientMonitor.Infrastructure.Monitor;
 using ClientMonitor.Infrastructure.VideoControl;
-using ClientMonitor.Infrastructure.Metrika;
 
 namespace ClientMonitor
 {
@@ -35,9 +31,7 @@ namespace ClientMonitor
             services.AddInfrastructureHandler();
             services.AddInfrastructureCloudManager();
             services.AddInfrastructureNotifications();
-            services.AddInfrastructureMonitor();
             services.AddInfrastructureVideoMonitor();
-            services.AddInfrastructureDatabase();
             //services.AddInfrastructureMonitoringDomens();
             //services.AddInfrastructureMetrika();
 
@@ -96,10 +90,10 @@ namespace ClientMonitor
                 checkHandler.CheckHandle();
             });
 
-            app.UseCheckYandexDisk(check1Handler =>
-            {
-                check1Handler.CheckYandexHandle();
-            });
+            //app.UseCheckYandexDisk(check1Handler =>
+            //{
+            //    check1Handler.CheckYandexHandle();
+            //});
 
 
             //app.UseExternalMonitor(externalMonitorHandler =>
