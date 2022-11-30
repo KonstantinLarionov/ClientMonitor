@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor", "ClientMonitor\ClientMonitor.csproj", "{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.CloudManager", "ClientMonitor.Infrastructure.CloudManager\ClientMonitor.Infrastructure.CloudManager.csproj", "{26F0B314-D15A-4080-BB18-BE629FFBAA61}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Api", "ClientMonitor.Api\ClientMonitor.Api.csproj", "{D5EF2806-CCB2-4F6B-963F-F0E2B551DD27}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Application", "ClientMonitor.Application\ClientMonitor.Application.csproj", "{5502BBFD-43D5-4CFD-8EAF-FA0D2C92E96B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientMonitor.Infrastructure.Notifications", "ClientMonitor.Infrastructure.Notifications\ClientMonitor.Infrastructure.Notifications.csproj", "{199DEEF6-207B-4CBE-BEE5-15DD584A7170}"
@@ -25,14 +21,6 @@ Global
 		{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76E24A6C-ABF2-4177-B2CF-F66A57FEBADF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26F0B314-D15A-4080-BB18-BE629FFBAA61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26F0B314-D15A-4080-BB18-BE629FFBAA61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26F0B314-D15A-4080-BB18-BE629FFBAA61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26F0B314-D15A-4080-BB18-BE629FFBAA61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5EF2806-CCB2-4F6B-963F-F0E2B551DD27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5EF2806-CCB2-4F6B-963F-F0E2B551DD27}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5EF2806-CCB2-4F6B-963F-F0E2B551DD27}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5EF2806-CCB2-4F6B-963F-F0E2B551DD27}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5502BBFD-43D5-4CFD-8EAF-FA0D2C92E96B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5502BBFD-43D5-4CFD-8EAF-FA0D2C92E96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5502BBFD-43D5-4CFD-8EAF-FA0D2C92E96B}.Release|Any CPU.ActiveCfg = Release|Any CPU

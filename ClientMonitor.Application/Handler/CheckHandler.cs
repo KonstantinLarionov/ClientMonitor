@@ -80,42 +80,42 @@ namespace ClientMonitor.Application.Handler
                 Name="Озон-МГ-Вход",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Вход",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Вход",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-МГ-Зал",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Зал",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Зал",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-МГ-Склад",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Склад",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Склад",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="Озон-МГ-Склад2",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Склад2",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Ozon\Склад2",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="WB-МГ-Зал",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="WB-МГ-Склад",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Склад",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Склад",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
 
             new ListDownloadCloud
@@ -123,28 +123,28 @@ namespace ClientMonitor.Application.Handler
                 Name="WB-МГ-Зал3",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал3",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Зал3",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="WB-МГ-Кухня",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Кухня",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Кухня",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="WB-МГ-Тамбур",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Тамбур",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Тамбур",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             },
             new ListDownloadCloud
             {
                 Name="WB-МГ-Склад2",
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Склад2",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Склад2",
-                FormatFiles="*.avi",
+                FormatFiles="*.mp4",
             }
         };
 

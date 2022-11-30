@@ -134,10 +134,15 @@ namespace ClientMonitor.Application.Handler
         {
           while (true)
           {
-            item.StartMonitoring();
-            Thread.Sleep(480000);
-            item.StopMonitoring();
-            Thread.Sleep(2000);
+            try
+            {
+              item.StartMonitoring();
+              Thread.Sleep(480000);
+              item.StopMonitoring();
+              Thread.Sleep(8000);
+            }
+            catch
+            { }
           }
         });
         _threads.Add(thread);
