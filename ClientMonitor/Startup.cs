@@ -82,10 +82,10 @@ namespace ClientMonitor
                 checkFileHandler.CheckFileHandle();
             });
 
-            app.UseFile(checkHandler =>
-            {
-                checkHandler.CheckHandle();
-            });
+            //app.UseFile(checkHandler =>
+            //{
+            //    checkHandler.CheckHandle();
+            //});
 
             //app.UseCheckYandexDisk(check1Handler =>
             //{
@@ -123,11 +123,11 @@ namespace ClientMonitor
             //}
             //);
 
-            app.UseVideoControl(videoControlHandler =>
-            {
-                videoControlHandler.Handle();
-            }
-            );
+            //app.UseVideoControl(videoControlHandler =>
+            //{
+            //    videoControlHandler.Handle();
+            //}
+            //);
 
             //app.UseMetrika(metrikaHandler =>
             //{

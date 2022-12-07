@@ -9,7 +9,7 @@ namespace ClientMonitor.Application.Domanes.Objects
     public class UploadedFilesInfo
     {
         public string Name { get; set; }
-        public string Extension { get; set; } = "*.mp4";
+        public string Extension { get; set; } = "*.avi";
         public DateTime Create { get; set; }
         public string Path { get; set; } 
         public string FolderName { get; set; }
