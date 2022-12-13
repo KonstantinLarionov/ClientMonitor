@@ -16,7 +16,6 @@ namespace ClientMonitor.Application.Handler
     /// </summary>
     public class CloudUploadHendler : ICludUploadHendler
     {
-        readonly ICloud _cloud;
         readonly INotification _telegramNotification;
         readonly INotification _maileNotification;
 
@@ -27,9 +26,8 @@ namespace ClientMonitor.Application.Handler
         /// <param name="notification">Уведомления</param>
         /// <param name="repositoryLog">Репоз логов</param>
         /// <param name="repositoryData">Репоз параметров</param>
-        public CloudUploadHendler(ICloudFactory cloud, INotificationFactory notification)
+        public CloudUploadHendler(INotificationFactory notification)
         {
-            _cloud = cloud.GetCloud(Application.Domanes.Enums.CloudTypes.YandexCloud);
             _telegramNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Telegram);
             _maileNotification = notification.GetNotification(Domanes.Enums.NotificationTypes.Mail);
         }

@@ -4,7 +4,6 @@ using ClientMonitor.Application.Domanes.Objects;
 using LibVLCSharp.Shared;
 using System;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 
 namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
@@ -39,8 +38,8 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         {
           dirInfo.Create();
         }
-        Pathfile = _videoInfo.PathDownload + "\\" + MonthStats(dt) + $"\\{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.avi";
-        return Path.Combine(_videoInfo.PathDownload + "\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.avi");
+        Pathfile = _videoInfo.PathDownload + "\\" + MonthStats(dt) + $"\\{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.mp4";
+        return Path.Combine(_videoInfo.PathDownload + "\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.mp4");
       }
     }
     public event EventHandler ConnectionErrorEvent;
@@ -96,6 +95,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     {
       _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
       _media.AddOption(":sout=#file{dst=" + NameFile + "}");
+      ////_media.AddOption(":sout=#transcode{acodec=mp4a, vcodec=h265}:file{dst=" + NameFile + "}");
       _media.AddOption(":sout-keep");
       _media.AddOption(":live-caching=300");
       _media.AddOption(":loop");
