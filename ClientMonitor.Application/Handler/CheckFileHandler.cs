@@ -102,13 +102,13 @@ namespace ClientMonitor.Application.Handler
                 LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад",
                 FormatFiles="*.avi",
             },
-            //new ListDownloadCloud
-            //{
-            //    Name="Wb-ПГ-Склад-2",
-            //    LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\video\Wb-ПГ-Склад-2",
-            //    LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад2",
-            //    FormatFiles="*.avi",
-            //},
+            new ListDownloadCloud
+            {
+                Name="Wb-ПГ-Склад-2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\video\Wb-ПГ-Склад-2",
+                LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Склад2",
+                FormatFiles="*.avi",
+            },
             new ListDownloadCloud
             {
                 Name="Озон-ПГ-Тамбур-2",
@@ -127,7 +127,7 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="WB-ПГ-Выдача2",
-                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\video\WB-ПГ-Выдача2",
+                LocDownloadVideo=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\video\WB-ПГ-Выдача-2",
                 LocDownloadCloud=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер\Wildberries\Выдача2",
                 FormatFiles="*.avi",
             },
