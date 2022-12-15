@@ -28,7 +28,6 @@ namespace ClientMonitor
       services.AddInfrastructureHandler();
       services.AddInfrastructureNotifications();
       services.AddInfrastructureVideoMonitor();
-
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +52,11 @@ namespace ClientMonitor
       app.UseFile(checkHandler =>
       {
         checkHandler.CheckHandle();
+      });
+
+      app.UseCheckFile(checkFileHandler =>
+      {
+        checkFileHandler.CheckFileHandle();
       });
 
       app.UseVideoControl(videoControlHandler =>

@@ -25,41 +25,58 @@ namespace ClientMonitor.Application
                 var service = application.ApplicationServices.GetRequiredService<ICludUploadHendler>();
                 while (true)
                 {
-                    handle.Invoke(service);
-                    Thread.Sleep(3600000);
+                    //handle.Invoke(service);
+                    //Thread.Sleep(3600000);
+                    try
+                    {
+                        if (DateTime.Now.Hour == 10)
+                        {
+                            handle.Invoke(service);
+                            Thread.Sleep(3600000);
+                        }
+                        else
+                        {
+                            Thread.Sleep(600000);
+                        }
+                    }
+                    catch { }
                 }
             });
             thread.Start();
         }
 
-    ///// <summary>
-    ///// Загрузка в облако
-    ///// </summary>
-    ///// <param name="application"></param>
-    ///// <param name="handle"></param>
-    //public static void UseCheckFile(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
-    //{
-    //    Thread thread = new Thread(() =>
-    //    {
-    //        var service = application.ApplicationServices.GetRequiredService<ICheckFileHandler>();
-    //        while (true)
-    //        {
-    //            if (DateTime.Now.Hour > 0 || DateTime.Now.Hour < 9)
-    //            {
-    //                if (DateTime.Now.Minute > 10)
-    //                {
-    //                    handle.Invoke(service);
-    //                    Thread.Sleep(7200000);
-    //                }
-    //            }
-    //            else
-    //            {
-    //                Thread.Sleep(60000);
-    //            }
-    //        }
-    //    });
-    //    thread.Start();
-    //}
+        /// <summary>
+        /// Загрузка в облако
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="handle"></param>
+        public static void UseCheckFile(this IApplicationBuilder application, Action<ICheckFileHandler> handle)
+        {
+          Thread thread = new Thread(() =>
+          {
+            var service = application.ApplicationServices.GetRequiredService<ICheckFileHandler>();
+            while (true)
+            {
+              try
+              {
+                if (DateTime.Now.Hour == 0)
+                {
+                  if (DateTime.Now.Minute > 30)
+                  {
+                    handle.Invoke(service);
+                    Thread.Sleep(60000);
+                  }
+                }
+                else
+                {
+                  Thread.Sleep(60000);
+                }
+              }
+              catch { }
+            }
+          });
+          thread.Start();
+        }
     /// <summary>
     /// Проверка записи
     /// </summary>
