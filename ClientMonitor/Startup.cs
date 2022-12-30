@@ -82,65 +82,65 @@ namespace ClientMonitor
                 checkFileHandler.CheckFileHandle();
             });
 
-            //app.UseFile(checkHandler =>
-            //{
-            //    checkHandler.CheckHandle();
-            //});
+      app.UseFile(checkHandler =>
+      {
+        checkHandler.CheckHandle();
+      });
 
-            //app.UseCheckYandexDisk(check1Handler =>
-            //{
-            //    check1Handler.CheckYandexHandle();
-            //});
+      //app.UseCheckYandexDisk(check1Handler =>
+      //{
+      //    check1Handler.CheckYandexHandle();
+      //});
 
 
-            //app.UseExternalMonitor(externalMonitorHandler =>
-            //{
-            //    externalMonitorHandler.Handle();
-            //});
+      //app.UseExternalMonitor(externalMonitorHandler =>
+      //{
+      //    externalMonitorHandler.Handle();
+      //});
 
-            //app.UsePcMonitoring(
-            //cpuHandler =>
-            //{
-            //    cpuHandler.HandleCpu();
-            //},
-            //ramHandler =>
-            //{
-            //    ramHandler.HandleRam();
-            //},
-            //procHandler =>
-            //{
-            //    procHandler.HandleProc();
-            //},
-            // httpHandler =>
-            // {
-            //     httpHandler.HandleHttp();
-            // }
-            //);
+      //app.UsePcMonitoring(
+      //cpuHandler =>
+      //{
+      //    cpuHandler.HandleCpu();
+      //},
+      //ramHandler =>
+      //{
+      //    ramHandler.HandleRam();
+      //},
+      //procHandler =>
+      //{
+      //    procHandler.HandleProc();
+      //},
+      // httpHandler =>
+      // {
+      //     httpHandler.HandleHttp();
+      // }
+      //);
 
-            //app.UsePcMonitoringMessage(messageHandler =>
-            //{
-            //    messageHandler.HandleMessageMonitoringPc();
-            //}
-            //);
+      //app.UsePcMonitoringMessage(messageHandler =>
+      //{
+      //    messageHandler.HandleMessageMonitoringPc();
+      //}
+      //);
 
-            //app.UseVideoControl(videoControlHandler =>
-            //{
-            //    videoControlHandler.Handle();
-            //}
-            //);
+      app.UseVideoControl(videoControlHandler =>
+      {
+        videoControlHandler.Handle();
+      }
+      );
 
-            //app.UseMetrika(metrikaHandler =>
-            //{
-            //    metrikaHandler.Handle();
-            //}
-            //);
+      //app.UseMetrika(metrikaHandler =>
+      //{
+      //    metrikaHandler.Handle();
+      //}
+      //);
 
-            //app.UseMonitoringDomens(domensHandler =>
-            //{
-            //    domensHandler.Handle();
-            //}
-            //);
-            #endregion
-        }
+      //app.UseMonitoringDomens(domensHandler =>
+      //{
+      //    domensHandler.Handle();
+      //}
+      //);
+      #endregion
+    }
     }
 }

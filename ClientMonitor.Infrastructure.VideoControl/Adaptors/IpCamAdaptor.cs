@@ -38,8 +38,8 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         {
           dirInfo.Create();
         }
-        Pathfile = _videoInfo.PathDownload + "\\" + MonthStats(dt) + $"\\{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.avi";
-        return Path.Combine(_videoInfo.PathDownload + "\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.avi");
+        Pathfile = _videoInfo.PathDownload + "\\" + MonthStats(dt) + $"\\{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.mp4";
+        return Path.Combine(_videoInfo.PathDownload + "\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.mp4");
       }
     }
     public event EventHandler ConnectionErrorEvent;
@@ -72,8 +72,8 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     private void DelayRestartMediaPlayer(LibVLC libVLC, MediaPlayer mediaPlayer)
     {
       Thread.Sleep(10000);
-      StartMonitoring();
-      //_ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
+      //StartMonitoring();
+      _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
     }
 
     /// <summary>
@@ -95,15 +95,21 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     public void StartMonitoring()
     {
       _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-      _media.AddOption(":sout=#gather:file{dst=" + NameFile + "}");
+      _media.AddOption(":sout=#file{dst=" + NameFile + "}");
       _media.AddOption(":sout-keep");
-      _media.AddOption(":live-caching=1500");
+      _media.AddOption(":live-caching=300");
       _media.AddOption(":loop");
       _media.AddOption(":network-caching=1500");
-      ///
-      _media.AddOption(":http-reconnect");
-      _media.AddOption(":http-continuous");
-      //--http-reconnect, --no-http-reconnect
+      //_media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
+      //_media.AddOption(":sout=#gather:file{dst=" + NameFile + "}");
+      //_media.AddOption(":sout-keep");
+      //_media.AddOption(":live-caching=1500");
+      //_media.AddOption(":loop");
+      //_media.AddOption(":network-caching=1500");
+      /////
+      //_media.AddOption(":http-reconnect");
+      //_media.AddOption(":http-continuous");
+      ////--http-reconnect, --no-http-reconnect
       _mediaPlayer.Play(_media);
 
       //Thread.Sleep(40000);
