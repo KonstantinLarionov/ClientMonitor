@@ -124,7 +124,7 @@ namespace ClientMonitor.Application.Handler
             new ListDownloadCloud
             {
                 Name="WB-МГ-Кухня",
-                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Кухня",
+                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Кухня",
                 LocDownloadCloud=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Кухня",
                 FormatFiles="*.avi",
             },
