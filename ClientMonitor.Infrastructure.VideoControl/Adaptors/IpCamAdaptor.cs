@@ -60,7 +60,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
       _libVLC = new LibVLC();
       _mediaPlayer = new MediaPlayer(_libVLC);
 
-      _mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
+      ////_mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
             ////_mediaPlayer.EncounteredError+=(_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
             //_mediaPlayer.Stopped += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
             ////_mediaPlayer.Playing += (_2, _3) => RestartMediaPlayer(_libVLC, _mediaPlayer);
@@ -97,7 +97,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
       _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
       _media.AddOption(":sout=#file{dst=" + NameFile + "}");
       _media.AddOption(":sout-keep");
-      _media.AddOption(":live-caching=300");
+      _media.AddOption(":live-caching=1500");
       _media.AddOption(":loop");
       _media.AddOption(":network-caching=1500");
       //_media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
