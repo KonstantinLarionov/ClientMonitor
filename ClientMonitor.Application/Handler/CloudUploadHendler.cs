@@ -108,6 +108,24 @@ namespace ClientMonitor.Application.Handler
                 LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Склад2",
                 LocDownloadCloud="ЗаписиКамерыПГ/Wb/Тамбур",
                 FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-МГ-Парковка",
+                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Парковка",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-МГ-Склад3",
+                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Склад3",
+                FormatFiles="*.avi",
+            },
+            new ListDownloadCloud
+            {
+                Name="WB-МГ-Выгрузка",
+                LocDownloadVideo=@"C:\Users\BigLollipop\Documents\Записи с камер\Wb\Выгрузка",
+                FormatFiles="*.avi",
             }
         };
 

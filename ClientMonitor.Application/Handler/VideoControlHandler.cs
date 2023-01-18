@@ -85,6 +85,24 @@ namespace ClientMonitor.Application.Handler
                 Name="Wb-МГ-Склад2",
                 PathStream=new Uri("rtsp://MgWbSklad:123456@192.168.2.19:554/stream1"),
                 PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Склад2"
+            },
+            new ControlVideoInfo
+            {
+                Name="Wb-МГ-Парковка",
+                PathStream=new Uri("rtsp://WbMgParkovka:123456@192.168.88.233:9086/stream2"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Парковка"
+            },
+            new ControlVideoInfo
+            {
+                Name="Wb-МГ-Склад3",
+                PathStream=new Uri("rtsp://WbMgSklad1:123456@192.168.88.233:9087/stream2"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Склад3"
+            },
+            new ControlVideoInfo
+            {
+                Name="Wb-МГ-Выгрузка",
+                PathStream=new Uri("rtsp://WbMgVigruzka:123456@192.168.88.233:9085/stream2"),
+                PathDownload=@"C:\Users\BigLollipop\Documents\Записи с камер2\Wb\Выгрузка"
             }
         };
 
