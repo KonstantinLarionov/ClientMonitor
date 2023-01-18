@@ -150,10 +150,17 @@ namespace ClientMonitor.Application.Handler
           {
             try
             {
-              item.StartMonitoring();
-              Thread.Sleep(480000);
-              item.StopMonitoring();
-              Thread.Sleep(10000);
+              if (DateTime.Now.Hour > 6)
+              {
+                item.StartMonitoring();
+                Thread.Sleep(480000);
+                item.StopMonitoring();
+                Thread.Sleep(10000);
+              }
+              else
+              {
+                Thread.Sleep(100000);
+              }
             }
             catch { }
           }

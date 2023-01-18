@@ -112,11 +112,11 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
       ////--http-reconnect, --no-http-reconnect
       _mediaPlayer.Play(_media);
 
-      //Thread.Sleep(40000);
+      //Thread.Sleep(30000);
       //try
       //{
       //  long length = new FileInfo(Pathfile).Length / 1024;
-      //  if (length < 600)
+      //  if (length < 100)
       //  {
       //    StopMonitoring();
       //    _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());

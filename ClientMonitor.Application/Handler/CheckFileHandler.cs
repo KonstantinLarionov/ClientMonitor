@@ -30,7 +30,7 @@ namespace ClientMonitor.Application.Handler
                 {
                     DateTime dt = DateTime.Now;
 
-                    ////DirectoryInfo dirInfo = new DirectoryInfo(listClouds.LocDownloadVideo + "\\" + MonthStats(dt));
+                    DirectoryInfo dirInfo = new DirectoryInfo(listClouds.LocDownloadVideo + "\\" + MonthStats(dt));
                     DirectoryInfo dirVideoInfo = new DirectoryInfo(listClouds.LocDownloadCloud + "\\" + MonthStats(dt));
                     if (!dirVideoInfo.Exists)
                     {
@@ -56,7 +56,7 @@ namespace ClientMonitor.Application.Handler
                           }
                         }
                     }
-                    ////dirInfo.Delete(true);
+                    dirInfo.Delete(true);
                 }
                 catch { }
             }
