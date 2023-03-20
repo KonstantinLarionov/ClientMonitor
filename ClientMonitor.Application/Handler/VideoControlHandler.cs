@@ -150,7 +150,7 @@ namespace ClientMonitor.Application.Handler
           {
             try
             {
-              if (DateTime.Now.Hour > 6)
+              if (DateTime.Now.Hour > 7 && DateTime.Now.Hour < 22)
               {
                 item.StartMonitoring();
                 Thread.Sleep(480000);
