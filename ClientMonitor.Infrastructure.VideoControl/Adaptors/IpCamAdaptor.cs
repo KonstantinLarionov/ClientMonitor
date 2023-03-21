@@ -46,7 +46,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     public event EventHandler InfoAboutLog;
 
     private readonly ControlVideoInfo _videoInfo;
-    //private readonly MediaPlayer _mediaPlayer;
+    private readonly MediaPlayer _mediaPlayer;
     private readonly LibVLC _libVLC;
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     {
       _videoInfo = info;
       _libVLC = new LibVLC();
-      //_mediaPlayer = new MediaPlayer(_libVLC);
+      _mediaPlayer = new MediaPlayer(_libVLC);
       //_mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer();
     }
 
@@ -85,21 +85,14 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     /// </summary>
     public void StartMonitoring()
     {
-      var _mediaPlayer = new MediaPlayer(_libVLC);
       var _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-      _media.AddOption(":sout=#gather:file{dst=" + NameFile + "}");
+      _media.AddOption(":sout=#gather:file{access=file,mux=avi,dst=" + NameFile + "}");
       _media.AddOption(":sout-keep");
       _media.AddOption(":live-caching=1500");
       _media.AddOption(":no-loop");
       _media.AddOption(":network-caching=1500");
-      _media.AddOption(":no-repeat");
+
       _mediaPlayer.Play(_media);
-      Thread.Sleep(240000);
-      if (_mediaPlayer.IsPlaying == true)
-      {
-        _mediaPlayer.Stop();
-      }
-      Thread.Sleep(10000);
     }
 
     /// <summary>
@@ -107,10 +100,10 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     /// </summary>
     public void StopMonitoring()
     {
-      //if (_mediaPlayer.IsPlaying == true)
-      //{
-      //  _mediaPlayer.Stop();
-      //}
+      if (_mediaPlayer.IsPlaying == true)
+      {
+        _mediaPlayer.Stop();
+      }
     }
   }
 }
