@@ -86,7 +86,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     public void StartMonitoring()
     {
       var _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-      _media.AddOption(":sout=#gather:file{access=file,mux=avi,dst=" + NameFile + "}");
+      _media.AddOption(":sout=#gather:std{access=file,mux=avi,dst=" + NameFile + "}");
       _media.AddOption(":sout-keep");
       _media.AddOption(":live-caching=1500");
       _media.AddOption(":no-loop");
