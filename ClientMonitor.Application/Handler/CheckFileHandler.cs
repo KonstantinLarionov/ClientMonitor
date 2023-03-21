@@ -42,7 +42,7 @@ namespace ClientMonitor.Application.Handler
                     foreach (var file in allFoundFiles)
                     {
                         FileInfo fileInf = new FileInfo(file);
-                        if (fileInf.Extension == ".mp4" && fileInf.LastWriteTime.Date == DateTime.Now.AddDays(-1).Date)
+                        if (fileInf.LastWriteTime.Date == DateTime.Now.AddDays(-1).Date)
                         {
 
                           if (fileInf.Length > 300000)

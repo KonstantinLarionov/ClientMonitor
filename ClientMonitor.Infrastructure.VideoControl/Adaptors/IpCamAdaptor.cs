@@ -38,18 +38,17 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
         {
           dirInfo.Create();
         }
-        Pathfile = _videoInfo.PathDownload + "\\" + MonthStats(dt) + $"\\{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.mp4";
-        return Path.Combine(_videoInfo.PathDownload + "\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.mp4");
+
+        return Path.Combine(_videoInfo.PathDownload + "\\" + MonthStats(dt), $"{_videoInfo.Name}_{dt.Year}.{dt.Month}.{dt.Day}__{dt.Hour}-{dt.Minute}-{dt.Second}.avi");
       }
     }
     public event EventHandler ConnectionErrorEvent;
     public event EventHandler InfoAboutLog;
 
     private readonly ControlVideoInfo _videoInfo;
-    private readonly MediaPlayer _mediaPlayer;
-    private Media _media;
-    LibVLC _libVLC;
-    private string Pathfile;
+    //private readonly MediaPlayer _mediaPlayer;
+    private readonly LibVLC _libVLC;
+
     /// <summary>
     /// Настройка плеера, подгрузка библиотек
     /// </summary>
@@ -58,13 +57,11 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     {
       _videoInfo = info;
       _libVLC = new LibVLC();
-      _mediaPlayer = new MediaPlayer(_libVLC);
-
-      _mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
+      //_mediaPlayer = new MediaPlayer(_libVLC);
+      //_mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer();
     }
-    private bool Check = false;
 
-    private void DelayRestartMediaPlayer(LibVLC libVLC, MediaPlayer mediaPlayer)
+    private void DelayRestartMediaPlayer()
     {
       Thread.Sleep(10000);
       _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
@@ -88,14 +85,21 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     /// </summary>
     public void StartMonitoring()
     {
-      _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-      _media.AddOption(":sout=#gather:transcode{width=1920,canvas-height=1080,vcodec=h264,vb=800,scale=1,acodec=mp3,ab=128,channels=1,samplerate=44100}:file{dst=" + NameFile + "}");
+      var _mediaPlayer = new MediaPlayer(_libVLC);
+      var _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
+      _media.AddOption(":sout=#gather:file{dst=" + NameFile + "}");
       _media.AddOption(":sout-keep");
-      _media.AddOption(":live-caching=3000");
-      _media.AddOption(":loop");
-      _media.AddOption(":network-caching=3000");
-      _media.AddOption(":http-continuous");
+      _media.AddOption(":live-caching=1500");
+      _media.AddOption(":no-loop");
+      _media.AddOption(":network-caching=1500");
+      _media.AddOption(":no-repeat");
       _mediaPlayer.Play(_media);
+      Thread.Sleep(240000);
+      if (_mediaPlayer.IsPlaying == true)
+      {
+        _mediaPlayer.Stop();
+      }
+      Thread.Sleep(10000);
     }
 
     /// <summary>
@@ -103,10 +107,10 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     /// </summary>
     public void StopMonitoring()
     {
-      if (_mediaPlayer.IsPlaying == true)
-      {
-        _mediaPlayer.Stop();
-      }
+      //if (_mediaPlayer.IsPlaying == true)
+      //{
+      //  _mediaPlayer.Stop();
+      //}
     }
   }
 }
