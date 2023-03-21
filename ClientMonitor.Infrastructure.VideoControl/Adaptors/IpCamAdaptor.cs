@@ -89,7 +89,7 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     public void StartMonitoring()
     {
       _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-      _media.AddOption(":sout=#gather:transcode{width=1920,canvas-height=1080.vcodec=h264,vb=800,scale=1,acodec=mp3,ab=128,channels=1,samplerate=44100}:file{dst=" + NameFile + "}");
+      _media.AddOption(":sout=#gather:transcode{width=1920,canvas-height=1080,vcodec=h264,vb=800,scale=1,acodec=mp3,ab=128,channels=1,samplerate=44100}:file{dst=" + NameFile + "}");
       _media.AddOption(":sout-keep");
       _media.AddOption(":live-caching=3000");
       _media.AddOption(":loop");
