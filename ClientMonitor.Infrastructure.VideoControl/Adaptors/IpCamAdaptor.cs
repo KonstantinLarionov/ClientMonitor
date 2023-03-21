@@ -94,31 +94,11 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     public void StartMonitoring()
     {
       _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-      _media.AddOption(":sout=#transcode{acodec=mp3,vcodec=x264}:file{dst=" + NameFile + "}");
-      ////_media.AddOption(":sout=#transcode{acodec=mp4a, vcodec=h265}:file{dst=" + NameFile + "}");
+      _media.AddOption(":sout=#gather:file{access=file,mux=avi,dst=" + NameFile + "}");
       _media.AddOption(":sout-keep");
-      _media.AddOption(":live-caching=3000");
-      _media.AddOption(":loop");
-      _media.AddOption(":network-caching=300");
-      _media.AddOption(":http-continuous");
-
-      //_media.AddOption(":sout-transcode-venc=x264");
-
-      //_media.AddOption(":sout-x264-tune=stillimage");
-      //_media.AddOption(":sout-x264-lookahead=1");
-
-      // _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-      // ////_media.AddOption(":sout=#transcode{width=1920,canvas-height=1080.vcodec=avi,vb=800,scale=1,acodec=avia,ab=128,channels=1,samplerate=44100}:gather:file{dst=" + NameFile + "}");
-      ///// _media.AddOption(":sout=#transcode{width=1920,canvas-height=1080.vcodec=h264,vb=800,scale=1,acodec=mp3,ab=128,channels=1,samplerate=44100}:gather:file{dst=" + NameFile + "}");
-      // ////_media.AddOption(":sout=#gather:file{dst=" + NameFile + "}");
-      // _media.AddOption(":sout-keep");
-      // ///_media.AddOption(":live-caching=60000");
-      // _media.AddOption(":loop");
-      // ///_media.AddOption(":network-caching=60000");
-      // ///
-      // _media.AddOption(":http-reconnect");
-      // _media.AddOption(":http-continuous");
-      //--http-reconnect, --no-http-reconnect
+      _media.AddOption(":live-caching=1500");
+      _media.AddOption(":no-loop");
+      _media.AddOption(":network-caching=1500");
       _mediaPlayer.Play(_media);
     }
 
