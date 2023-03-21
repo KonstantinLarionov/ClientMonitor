@@ -60,19 +60,13 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
       _libVLC = new LibVLC();
       _mediaPlayer = new MediaPlayer(_libVLC);
 
-      ////_mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
-            ////_mediaPlayer.EncounteredError+=(_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
-            //_mediaPlayer.Stopped += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
-            ////_mediaPlayer.Playing += (_2, _3) => RestartMediaPlayer(_libVLC, _mediaPlayer);
-            //_mediaPlayer.Paused += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
-            //_mediaPlayer.LengthChanged+= CheckSize;
+      _mediaPlayer.EndReached += (_2, _3) => DelayRestartMediaPlayer(_libVLC, _mediaPlayer);
     }
     private bool Check = false;
 
     private void DelayRestartMediaPlayer(LibVLC libVLC, MediaPlayer mediaPlayer)
     {
       Thread.Sleep(10000);
-      //StartMonitoring();
       _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
     }
 
@@ -95,34 +89,13 @@ namespace ClientMonitor.Infrastructure.VideoControl.Adaptors
     public void StartMonitoring()
     {
       _media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-      _media.AddOption(":sout=#gather:file{dst=" + NameFile + "}");
+      _media.AddOption(":sout=#gather:transcode{width=1920,canvas-height=1080.vcodec=h264,vb=800,scale=1,acodec=mp3,ab=128,channels=1,samplerate=44100}:file{dst=" + NameFile + "}");
       _media.AddOption(":sout-keep");
-      _media.AddOption(":live-caching=1500");
+      _media.AddOption(":live-caching=3000");
       _media.AddOption(":loop");
-      _media.AddOption(":network-caching=1500");
-      //_media = new Media(_libVLC, _videoInfo.PathStream.ToString(), FromType.FromLocation);
-      //_media.AddOption(":sout=#gather:file{dst=" + NameFile + "}");
-      //_media.AddOption(":sout-keep");
-      //_media.AddOption(":live-caching=1500");
-      //_media.AddOption(":loop");
-      //_media.AddOption(":network-caching=1500");
-      /////
-      //_media.AddOption(":http-reconnect");
-      //_media.AddOption(":http-continuous");
-      ////--http-reconnect, --no-http-reconnect
+      _media.AddOption(":network-caching=3000");
+      _media.AddOption(":http-continuous");
       _mediaPlayer.Play(_media);
-
-      //Thread.Sleep(30000);
-      //try
-      //{
-      //  long length = new FileInfo(Pathfile).Length / 1024;
-      //  if (length < 100)
-      //  {
-      //    StopMonitoring();
-      //    _ = ThreadPool.QueueUserWorkItem(_ => StartMonitoring());
-      //  }
-      //}
-      //catch { }
     }
 
     /// <summary>
