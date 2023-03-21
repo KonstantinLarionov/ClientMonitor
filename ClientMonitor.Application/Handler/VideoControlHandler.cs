@@ -155,7 +155,7 @@ namespace ClientMonitor.Application.Handler
             try
             {
               item.StartMonitoring();
-              Thread.Sleep(480000);
+              Thread.Sleep(240000);
               item.StopMonitoring();
               Thread.Sleep(8000);
             }
