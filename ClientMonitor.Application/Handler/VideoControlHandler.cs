@@ -37,67 +37,67 @@ namespace ClientMonitor.Application.Handler
             {
                 Name="Озон-ПГ-Зал",
                 PathStream=new Uri("rtsp://Goldencat:123456@192.168.1.6:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Зал"
+                PathDownload=@"E:\ЗаписиКамерNew\Ozon\Зал"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур",
                 PathStream=new Uri("rtsp://Goldencat1:123456@192.168.1.11:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур"
+                PathDownload=@"E:\ЗаписиКамерNew\Ozon\Тамбур"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Выдача",
                 PathStream=new Uri("rtsp://PoligonnayaZal:123456@192.168.1.8:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Выдача"
+                PathDownload=@"E:\ЗаписиКамерNew\Ozon\Выдача"
             },
             new ControlVideoInfo
             {
                 Name="Wb-ПГ-Склад",
                 PathStream=new Uri("rtsp://PoligonnayaSklad:123456@188.186.238.120:9090/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад"
+                PathDownload=@"E:\ЗаписиКамерNew\Wildberries\Склад"
             },
             new ControlVideoInfo
             {
                 Name="Wb-ПГ-Склад-2",
                 PathStream=new Uri("rtsp://PoligonnayaSklad1:123456@188.186.238.120:9091/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Склад2"
+                PathDownload=@"E:\ЗаписиКамерNew\Wildberries\Склад2"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Тамбур-2",
                 PathStream=new Uri("rtsp://PoligonnayaVhod1:123456@188.186.238.120:6060/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Тамбур2"
+                PathDownload=@"E:\ЗаписиКамерNew\Ozon\Тамбур2"
             },
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Выдача",
                 PathStream=new Uri("rtsp://WbPgVidacha1:123456@192.168.1.10:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача"
+                PathDownload=@"E:\ЗаписиКамерNew\Wildberries\Выдача"
             },
             new ControlVideoInfo
             {
                 Name="WB-ПГ-Выдача-2",
                 PathStream=new Uri("rtsp://WbPgVidacha2:123456@188.186.238.120:6061/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Wildberries\Выдача2"
+                PathDownload=@"E:\ЗаписиКамерNew\Wildberries\Выдача2"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад",
                 PathStream=new Uri("rtsp://WbPgSklad:123456@192.168.1.9:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад"
+                PathDownload=@"E:\ЗаписиКамерNew\Ozon\Склад"
             },
             new ControlVideoInfo
             {
                 Name="Ломбард1-ПГ",
                 PathStream=new Uri("rtsp://LombardPg:123456@188.186.238.120:554/stream1"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ломбард\Ломбард1"
+                PathDownload=@"E:\ЗаписиКамерNew\Ломбард\Ломбард1"
             },
             new ControlVideoInfo
             {
                 Name="Озон-ПГ-Склад-2",
                 PathStream=new Uri("rtsp://LombardPg:123456@92.255.240.7:9088/stream2"),
-                PathDownload=@"C:\Users\Big Lolipop\Desktop\ЗаписиКамер2\Ozon\Склад2"
+                PathDownload=@"E:\ЗаписиКамерNew\Ozon\Склад2"
             }
         };
 
@@ -150,17 +150,10 @@ namespace ClientMonitor.Application.Handler
           {
             try
             {
-              if (DateTime.Now.Hour > 7 && DateTime.Now.Hour < 22)
-              {
-                item.StartMonitoring();
-                Thread.Sleep(240000);
-                item.StopMonitoring();
-                Thread.Sleep(10000);
-              }
-              else
-              {
-                Thread.Sleep(100000);
-              }
+				item.StartMonitoring();
+				Thread.Sleep(240000);
+				item.StopMonitoring();
+				Thread.Sleep(10000);
             }
             catch { }
           }
